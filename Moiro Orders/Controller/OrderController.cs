@@ -77,11 +77,8 @@ namespace Moiro_Orders.Controller
                 int j = 0;
                 foreach (var i in aa)
                 {
-                
                     j++;
                 }
-
-
             }
 
         }
