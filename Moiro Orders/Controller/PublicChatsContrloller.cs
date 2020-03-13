@@ -12,27 +12,23 @@ using Newtonsoft.Json;
 
 namespace Moiro_Orders.Controller
 {
-    class OrdersController
+    class PublicChatsController
     {
-        public OrdersController() { }
+        public PublicChatsController() { }
 
         //НАЧАЛО ИНТЕРФЕЙСНЫЕ МЕТОДЫ!!!!
-        public async Task CreateOrder()
+        public async Task CreatePublicChat()
         {
             // Update port # in the following line.
-
             try
             {
                 // Create a new order
-                Order order = new Order
+                PublicChat publicChat = new PublicChat
                 {
                     UserId = 1,
-                    Problem = "Gizmo",
-                    Description = "100",
-                    Status = "Widgets",
-                    // Date = DateTime.Now Генерится автоматически
+                    Message = "Hello World"
                 };
-                var url = await CreateOrderAsync(order);
+                var url = await CreatePublicChatAsync(publicChat);
                 //MessageBox.Show(url.ToString());
             }
             catch (Exception ex)
@@ -46,17 +42,17 @@ namespace Moiro_Orders.Controller
         // count is number of orders per page
         public async Task GetOrders(int count)
         {
-            await GetAllOrdersAsync(count);
+            await GetAllPublicChatsAsync(count);
         }
 
         public async Task DeleteOrder(int id)
         {
-            await DeleteOrderAsync(id);
+            await DeletePublicChatAsync(id);
         }
 
-        public async Task EditOrder(Order order)
+        public async Task EditOrder(PublicChat publicChat)
         {
-            await UpdateOrderAsync(order);
+            await UpdatePublicChatAsync(publicChat);
         }
 
         //КОНЕЦ ИНТЕРФЕЙСНЫЕ МЕТОДЫ!!!!
@@ -64,45 +60,45 @@ namespace Moiro_Orders.Controller
 
 
 
-        async Task<Uri> CreateOrderAsync(Order order)
+        async Task<Uri> CreatePublicChatAsync(PublicChat publicChat)
         {
             HttpResponseMessage response = await PublicResources.client.PostAsJsonAsync(
-                "api/OrdersAPI", order);
+                "api/PublicChatsAPI", publicChat);
             response.EnsureSuccessStatusCode();
 
             // return URI of the created resource.
             return response.Headers.Location;
         }
-      
-        async Task<List<Order>> GetAllOrdersAsync(int count)
+
+        async Task<List<PublicChat>> GetAllPublicChatsAsync(int count)
         {
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={PublicResources.Im.Id}&count={count}");
-            List<Order> aa = null;
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/PublicChatsAPI?userId={PublicResources.Im.Id}&count={count}");
+            List<PublicChat> aa = null;
             if (response.IsSuccessStatusCode)
             {
                 var a = await response.Content.ReadAsStringAsync();
-              
-                aa = JsonConvert.DeserializeObject<List<Order>>(a);
-                MessageBox.Show(aa[0].Problem, "Это проблема");
+
+                aa = JsonConvert.DeserializeObject<List<PublicChat>>(a);
+                MessageBox.Show(aa[0].Message, "Это проблема");
             }
             return aa;
         }
 
-        async Task<Order> UpdateOrderAsync(Order order)
+        async Task<PublicChat> UpdatePublicChatAsync(PublicChat publicChat)
         {
             HttpResponseMessage response = await PublicResources.client.PutAsJsonAsync(
-                $"api/OrdersAPI/{order.Id}", order);
+                $"api/PublicChatsAPI/{publicChat.Id}", publicChat);
             response.EnsureSuccessStatusCode();
 
             // Deserialize the updated order from the response body.
-            order = await response.Content.ReadAsAsync<Order>();
-            return order;
+            publicChat = await response.Content.ReadAsAsync<PublicChat>();
+            return publicChat;
         }
 
-        async Task<HttpStatusCode> DeleteOrderAsync(int id)
+        async Task<HttpStatusCode> DeletePublicChatAsync(int id)
         {
             HttpResponseMessage response = await PublicResources.client.DeleteAsync(
-                $"api/OrdersAPI/{id}");
+                $"api/PublicChatsAPI/{id}");
             return response.StatusCode;
         }
     }

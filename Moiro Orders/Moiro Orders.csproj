@@ -69,6 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controller\EventsController.cs" />
+    <Compile Include="Controller\PublicChatsContrloller.cs" />
     <Compile Include="Controller\UsersController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -35,7 +35,7 @@ namespace Moiro_Orders.Controller
                     Place = "General place"
                 };
                 var url = await CreateEventAsync(@event);
-                MessageBox.Show(url.ToString());
+                //MessageBox.Show(url.ToString());
                 // path messege
             }
             catch (Exception ex)
