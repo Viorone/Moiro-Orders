@@ -46,6 +46,14 @@ namespace Moiro_Orders
             OrdersController currentOrder = new OrdersController();
             currentOrder.GetOrders(20).GetAwaiter();                    
         }
+
+        private void Chat_Click(object sender, RoutedEventArgs e)
+        {
+            PublicChatsController publicChatsController = new PublicChatsController();
+            //publicChatsController.CreatePublicChat().GetAwaiter();
+            publicChatsController.GetPublicChat(20).GetAwaiter();
+        }
+
     }
 
 

@@ -40,17 +40,17 @@ namespace Moiro_Orders.Controller
 
         // get All orders by current user
         // count is number of orders per page
-        public async Task GetOrders(int count)
+        public async Task GetPublicChat(int count)
         {
             await GetAllPublicChatsAsync(count);
         }
 
-        public async Task DeleteOrder(int id)
+        public async Task DeletePublicChat(int id)
         {
             await DeletePublicChatAsync(id);
         }
 
-        public async Task EditOrder(PublicChat publicChat)
+        public async Task EditPublicChat(PublicChat publicChat)
         {
             await UpdatePublicChatAsync(publicChat);
         }
