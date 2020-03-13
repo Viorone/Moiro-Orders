@@ -12,10 +12,11 @@ using Newtonsoft.Json;
 
 namespace Moiro_Orders.Controller
 {
-    public class OrderController
+    class OrdersController
     {
-        public OrderController() { }
+        public OrdersController() { }
 
+        //НАЧАЛО ИНТЕРФЕЙСНЫЕ МЕТОДЫ!!!!
         public async Task CreateOrder()
         {
             // Update port # in the following line.
@@ -40,53 +41,29 @@ namespace Moiro_Orders.Controller
                 MessageBox.Show(ex.Message, "Error!!");
                 //вывод сообщения
             }
-
         }
-        async Task ChangeOrder()
+
+        // get All orders by current user
+        // count is number of orders per page
+        public async Task GetOrders(int count)
         {
-            // мб допилить авывод куда нитьб типо логов
+            await GetAllOrdersAsync(count);
+        }
 
+        public async Task DeleteOrder(int id)
+        {
+            await DeleteOrderAsync(id);
+        }
 
-
-            // Get the order
-            Order order = await GetOrderAsync(PublicResources.client.BaseAddress.PathAndQuery);
-          
-
-            // Update the order
-
-            order.Description = "dlfkbhdfjkhbvdfkg";
+        public async Task EditOrder(Order order)
+        {
             await UpdateOrderAsync(order);
-
-            // Get the updated order
-            order = await GetOrderAsync(PublicResources.client.BaseAddress.PathAndQuery);
-         
-
-            // Delete the order
-
-
-            // Get all orders
-
-            order = null;
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/orders/");
-            if (response.IsSuccessStatusCode)
-            {
-                var a = await response.Content.ReadAsStringAsync();
-                List<Order> aa;
-
-                aa = JsonConvert.DeserializeObject<List<Order>>(a);
-                int j = 0;
-                foreach (var i in aa)
-                {
-                    j++;
-                }
-            }
-
         }
-        async Task DeleteOrder(Order order)
-        {
-            var statusCode = await DeleteOrderAsync(order.Id);
-            Console.WriteLine($"Deleted (HTTP Status = {(int)statusCode})");
-        }
+
+        //КОНЕЦ ИНТЕРФЕЙСНЫЕ МЕТОДЫ!!!!
+
+
+
 
         async Task<Uri> CreateOrderAsync(Order order)
         {
@@ -97,20 +74,10 @@ namespace Moiro_Orders.Controller
             // return URI of the created resource.
             return response.Headers.Location;
         }
-
-        public async Task<Order> GetOrderAsync(string path)
+      
+        async Task<List<Order>> GetAllOrdersAsync(int count)
         {
-            Order order = null;
-            HttpResponseMessage response = await PublicResources.client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                order = await response.Content.ReadAsAsync<Order>();
-            }
-            return order;
-        }
-        public async Task<List<Order>> GetAllOrderAsync()
-        {
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={PublicResources.Im.Id}");
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={PublicResources.Im.Id}&count={count}");
             List<Order> aa = null;
             if (response.IsSuccessStatusCode)
             {

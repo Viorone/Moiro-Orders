@@ -29,21 +29,34 @@ namespace Moiro_Orders
         public MainWindow()
         {
             InitializeComponent();
+            //get User
+            UsersController currentUser = new UsersController();
+            currentUser.GetUserAsync("gybarev").GetAwaiter();
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            
-            UserController currentUser = new UserController();
-            currentUser.GetUserAsync("gybarev").GetAwaiter();
+            EventsController eventsController = new EventsController();
+            eventsController.GetEvents(20).GetAwaiter();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            OrderController currentOrder = new OrderController();
-            currentOrder.GetAllOrderAsync().GetAwaiter();
+            OrdersController currentOrder = new OrdersController();
+            currentOrder.GetOrders(20).GetAwaiter();                    
         }
     }
+
+
+
+
+
+
+
+
+
+
+
     public static class PublicResources
     {
         public static HttpClient client = new HttpClient()

@@ -13,9 +13,9 @@ using System.Windows;
 
 namespace Moiro_Orders.Controller
 {
-    class UserController
+    class UsersController
     {
-        public UserController(){}
+        public UsersController(){}
 
         public async Task<HttpStatusCode> GetUserAsync(string login)
         {

@@ -68,7 +68,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controller\UserController.cs" />
+    <Compile Include="Controller\EventsController.cs" />
+    <Compile Include="Controller\UsersController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -79,7 +80,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PublicChat.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Controller\OrderController.cs" />
+    <Compile Include="Controller\OrdersController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
