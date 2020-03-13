@@ -37,6 +37,7 @@ namespace Moiro_Orders
         private void Send_Click(object sender, RoutedEventArgs e)
         {
             EventsController eventsController = new EventsController();
+            //eventsController.CreateEvent().GetAwaiter();
             eventsController.GetEvents(20).GetAwaiter();
         }
 

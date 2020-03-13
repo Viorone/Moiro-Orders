@@ -27,7 +27,7 @@ namespace Moiro_Orders.Controller
                 Event @event = new Event
                 {
                     UserId = 1,
-                    NameEvent = "Gizmo",
+                    NameEvent = "Прикол",
                     Description = "100",
                     Status = "Widgets",
                     DateStart = DateTime.Now,
