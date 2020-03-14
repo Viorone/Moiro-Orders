@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Moiro_Orders.Roles;
 
 namespace Moiro_Orders
 {
@@ -25,7 +26,7 @@ namespace Moiro_Orders
     /// </summary>
     public partial class MainWindow : Window
     {
-       
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,25 +34,49 @@ namespace Moiro_Orders
             UsersController currentUser = new UsersController();
             currentUser.GetUserAsync("gybarev").GetAwaiter();
         }
-
+        CurrentUser currentUser = new CurrentUser();
         private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            EventsController eventsController = new EventsController();
-            //eventsController.CreateEvent().GetAwaiter();
-            eventsController.GetEvents(20).GetAwaiter();
+        {                
+            // Create a new event
+            Event @event = new Event
+            {
+                UserId = 1,
+                NameEvent = "Прикол",
+                Description = "100",
+                Status = "Widgets",
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now,
+                Place = "General place"
+            };
+            //currentUser.CrateEvent(@event).GetAwaiter();
+            currentUser.GetEvents().GetAwaiter();          
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            OrdersController currentOrder = new OrdersController();
-            currentOrder.GetOrders(20).GetAwaiter();                    
+            // Create a new order
+            Order order = new Order
+            {
+                UserId = 1,
+                Problem = "Gizmo",
+                Description = "100",
+                Status = "Widgets",
+            };
+            //currentUser.CreateOrder(order).GetAwaiter();
+            currentUser .GetOrders(20).GetAwaiter();
         }
 
         private void Chat_Click(object sender, RoutedEventArgs e)
         {
-            PublicChatsController publicChatsController = new PublicChatsController();
-            //publicChatsController.CreatePublicChat().GetAwaiter();
-            publicChatsController.GetPublicChat(20).GetAwaiter();
+            // Create a new publicChat
+            PublicChat publicChat = new PublicChat
+            {
+                UserId = 1,
+                Message = "Hello World"
+            };
+
+            //currentUser.CreatePublicChat(publicChat).GetAwaiter();
+            currentUser.GetPublicChat(20).GetAwaiter();
         }
 
     }
@@ -70,7 +95,7 @@ namespace Moiro_Orders
     {
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://10.10.0.34/")
+            BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
         };
 
         internal static User Im { get; set; } = new User();
@@ -81,7 +106,7 @@ namespace Moiro_Orders
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        
+
     }
 }
 

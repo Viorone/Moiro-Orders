@@ -16,86 +16,35 @@ namespace Moiro_Orders.Controller
     {
         public PublicChatsController() { }
 
-        //НАЧАЛО ИНТЕРФЕЙСНЫЕ МЕТОДЫ!!!!
-        public async Task CreatePublicChat()
-        {
-            // Update port # in the following line.
-            try
-            {
-                // Create a new order
-                PublicChat publicChat = new PublicChat
-                {
-                    UserId = 1,
-                    Message = "Hello World"
-                };
-                var url = await CreatePublicChatAsync(publicChat);
-                //MessageBox.Show(url.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error!!");
-                //вывод сообщения
-            }
-        }
-
-        // get All orders by current user
-        // count is number of orders per page
-        public async Task GetPublicChat(int count)
-        {
-            await GetAllPublicChatsAsync(count);
-        }
-
-        public async Task DeletePublicChat(int id)
-        {
-            await DeletePublicChatAsync(id);
-        }
-
-        public async Task EditPublicChat(PublicChat publicChat)
-        {
-            await UpdatePublicChatAsync(publicChat);
-        }
-
-        //КОНЕЦ ИНТЕРФЕЙСНЫЕ МЕТОДЫ!!!!
-
-
-
-
-        async Task<Uri> CreatePublicChatAsync(PublicChat publicChat)
+        public async Task<HttpStatusCode> CreatePublicChatAsync(PublicChat publicChat)
         {
             HttpResponseMessage response = await PublicResources.client.PostAsJsonAsync(
                 "api/PublicChatsAPI", publicChat);
             response.EnsureSuccessStatusCode();
-
-            // return URI of the created resource.
-            return response.Headers.Location;
+            return response.StatusCode;
         }
 
-        async Task<List<PublicChat>> GetAllPublicChatsAsync(int count)
+        public async Task<List<PublicChat>> GetAllPublicChatsAsync(int count)
         {
             HttpResponseMessage response = await PublicResources.client.GetAsync($"api/PublicChatsAPI?userId={PublicResources.Im.Id}&count={count}");
-            List<PublicChat> aa = null;
+            List<PublicChat> publicChats = null;
             if (response.IsSuccessStatusCode)
             {
-                var a = await response.Content.ReadAsStringAsync();
-
-                aa = JsonConvert.DeserializeObject<List<PublicChat>>(a);
-                MessageBox.Show(aa[0].Message, "Это проблема");
+                publicChats = await response.Content.ReadAsAsync<List<PublicChat>>();
             }
-            return aa;
+            return publicChats;
         }
 
-        async Task<PublicChat> UpdatePublicChatAsync(PublicChat publicChat)
+        public async Task<PublicChat> UpdatePublicChatAsync(PublicChat publicChat)
         {
             HttpResponseMessage response = await PublicResources.client.PutAsJsonAsync(
                 $"api/PublicChatsAPI/{publicChat.Id}", publicChat);
             response.EnsureSuccessStatusCode();
-
-            // Deserialize the updated order from the response body.
             publicChat = await response.Content.ReadAsAsync<PublicChat>();
             return publicChat;
         }
 
-        async Task<HttpStatusCode> DeletePublicChatAsync(int id)
+        public async Task<HttpStatusCode> DeletePublicChatAsync(int id)
         {
             HttpResponseMessage response = await PublicResources.client.DeleteAsync(
                 $"api/PublicChatsAPI/{id}");
