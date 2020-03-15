@@ -3,13 +3,14 @@ using Moiro_Orders.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace Moiro_Orders.Roles
 {
-    class CurrentUser
+    class CurrentUser : IUser, IAdmin
     {
         public CurrentUser() { }
 
@@ -18,78 +19,78 @@ namespace Moiro_Orders.Roles
         PublicChatsController publicChatsController = new PublicChatsController();
 
         //EVENTS
-        public async Task CrateEvent(Event @event)
+        public async Task<HttpStatusCode> CreateEvent(Event @event)
         {
             var status = await eventsController.CreateEventAsync(@event);
-            MessageBox.Show(status.ToString());
+            return status;
         }
 
-        // get All events by current user
-        // count is number of events per page
-        public async Task GetEvents()
+        public async Task<List<Event>> GetEventsList(int count, int id)
         {
-            var events = await eventsController.GetAllEventsAsync(20, PublicResources.Im.Id);
-            MessageBox.Show(events[0].NameEvent, "Это название мероприятия");
+            var events = await eventsController.GetAllEventsAsync(count, id);
+            return events;
         }
 
-        public async Task EditEvent(Event @event)        //поставить таймер на возможность редактирования (возможно на час)
+        public async Task<HttpStatusCode> EditEvent(Event @event)       
         {
-            await eventsController.UpdateEvetntAsync(@event);
+            var status = await eventsController.UpdateEvetntAsync(@event);
+            return status;
         }
 
-        public async Task DeleteEvent(int id)            //поставить таймер на возможность удаления (возможно на час)
+        public async Task<HttpStatusCode> DeleteEvent(int id)           
         {
-            await eventsController.DeleteEvetntAsync(id);
+            var status = await eventsController.DeleteEvetntAsync(id);
+            return status;
         }
 
         //ORDERS
-        public async Task CreateOrder(Order order)
+        public async Task<HttpStatusCode> CreateOrder(Order order)
         {
             var status = await ordersController.CreateOrderAsync(order);
-            MessageBox.Show(status.ToString());
+            return status;
         }
 
-        // get All orders by current user
-        // count is number of orders per page
-        public async Task GetOrders(int count)
+        public async Task<List<Order>> GetOrdersList(int count, int id)
         {
-            var orders = await ordersController.GetAllOrdersAsync(count);
-            MessageBox.Show(orders[0].Problem, "Это проблемма");
+            var orders = await ordersController.GetAllOrdersAsync(count, id);
+            return orders;
         }
 
-        public async Task DeleteOrder(int id)        //поставить таймер на возможность редактирования (возможно на час)
+        public async Task<HttpStatusCode> DeleteOrder(int id)        
         {
-            await ordersController.DeleteOrderAsync(id);
+            var status = await ordersController.DeleteOrderAsync(id);
+            return status;
         }
 
-        public async Task EditOrder(Order order)     //поставить таймер на возможность удаления (возможно на час)
+        public async Task<HttpStatusCode> EditOrder(Order order)    
         {
-            await ordersController.UpdateOrderAsync(order);
+            var status = await ordersController.UpdateOrderAsync(order);
+            return status;
         }
 
         //PUBLIC CHATS
-        public async Task CreatePublicChat(PublicChat publicChat)
+        public async Task<HttpStatusCode> CreatePublicChatMessage(PublicChat publicChat)
         {
             var status = await publicChatsController.CreatePublicChatAsync(publicChat);
-            MessageBox.Show(status.ToString());
+            return status;
         }
 
-        // get All publicChats by current user
-        // count is number of publicChats per page
-        public async Task GetPublicChat(int count)
+        public async Task<List<PublicChat>> GetPublicChatMessagesList(int count, int id)
         {
-            var publicChats = await publicChatsController.GetAllPublicChatsAsync(count);
-            MessageBox.Show(publicChats[0].Message, "Это сообщение");
+            var publicChats = await publicChatsController.GetAllPublicChatsAsync(count, id);
+            return publicChats;
         }
 
-        public async Task DeletePublicChat(int id)                         //поставить таймер на возможность редактирования (возможно на 10 минут)
+        public async Task<HttpStatusCode> DeletePublicChatMessage(int id)                       
         {
-            await publicChatsController.DeletePublicChatAsync(id);
+            var status = await publicChatsController.DeletePublicChatAsync(id);
+            return status;
         }
 
-        public async Task EditPublicChat(PublicChat publicChat)
+        public async Task<HttpStatusCode> EditPublicChatMessage(PublicChat publicChat)
         {
-            await publicChatsController.UpdatePublicChatAsync(publicChat); //поставить таймер на возможность редактирования (возможно на 10 минут)
+            var status = await publicChatsController.UpdatePublicChatAsync(publicChat);
+            return status;
         }
     }
 }

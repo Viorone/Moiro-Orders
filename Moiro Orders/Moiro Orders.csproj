@@ -62,6 +62,8 @@
     </ApplicationDefinition>
     <Compile Include="Roles\Admin.cs" />
     <Compile Include="Roles\CurrentUser.cs" />
+    <Compile Include="Roles\IAdmin.cs" />
+    <Compile Include="Roles\IUser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

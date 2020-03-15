@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Moiro_Orders.Models;
+using Moiro_Orders.Roles;
 using Newtonsoft.Json;
 
 namespace Moiro_Orders.Controller
@@ -24,9 +25,9 @@ namespace Moiro_Orders.Controller
             return response.StatusCode;
         }
 
-        public async Task<List<PublicChat>> GetAllPublicChatsAsync(int count)
+        public async Task<List<PublicChat>> GetAllPublicChatsAsync(int count, int id)
         {
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/PublicChatsAPI?userId={PublicResources.Im.Id}&count={count}");
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/PublicChatsAPI?userId={id}&count={count}");
             List<PublicChat> publicChats = null;
             if (response.IsSuccessStatusCode)
             {
@@ -35,13 +36,12 @@ namespace Moiro_Orders.Controller
             return publicChats;
         }
 
-        public async Task<PublicChat> UpdatePublicChatAsync(PublicChat publicChat)
+        public async Task<HttpStatusCode> UpdatePublicChatAsync(PublicChat publicChat)
         {
             HttpResponseMessage response = await PublicResources.client.PutAsJsonAsync(
                 $"api/PublicChatsAPI/{publicChat.Id}", publicChat);
             response.EnsureSuccessStatusCode();
-            publicChat = await response.Content.ReadAsAsync<PublicChat>();
-            return publicChat;
+            return response.StatusCode;
         }
 
         public async Task<HttpStatusCode> DeletePublicChatAsync(int id)

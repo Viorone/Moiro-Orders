@@ -1,5 +1,4 @@
 ﻿using Moiro_Orders.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +22,9 @@ namespace Moiro_Orders.Controller
                 $"api/UsersAPI?login={login}");
             if (response.IsSuccessStatusCode)
             {
-                var a = await response.Content.ReadAsStringAsync();
-                User aa;
-                aa = JsonConvert.DeserializeObject<User>(a);
-                PublicResources.Im = aa;
+                var user = await response.Content.ReadAsAsync<User>();
+
+                PublicResources.Im = user;
                 MessageBox.Show(PublicResources.Im.Id + " " + PublicResources.Im.FullName, "User");
             }
 

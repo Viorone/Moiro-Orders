@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Moiro_Orders.Models;
+using Moiro_Orders.Roles;
 using Newtonsoft.Json;
 
 namespace Moiro_Orders.Controller
@@ -24,9 +25,9 @@ namespace Moiro_Orders.Controller
             return response.StatusCode;
         }
       
-        public async Task<List<Order>> GetAllOrdersAsync(int count)
+        public async Task<List<Order>> GetAllOrdersAsync(int count, int id)
         {
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={PublicResources.Im.Id}&count={count}");
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={id}&count={count}");
             List<Order> orders = null;
             if (response.IsSuccessStatusCode)
             {
@@ -35,13 +36,12 @@ namespace Moiro_Orders.Controller
             return orders;
         }
 
-        public async Task<Order> UpdateOrderAsync(Order order)
+        public async Task<HttpStatusCode> UpdateOrderAsync(Order order)
         {
             HttpResponseMessage response = await PublicResources.client.PutAsJsonAsync(
                 $"api/OrdersAPI/{order.Id}", order);
             response.EnsureSuccessStatusCode();
-            order = await response.Content.ReadAsAsync<Order>();
-            return order;
+            return response.StatusCode;
         }
 
         public async Task<HttpStatusCode> DeleteOrderAsync(int id)

@@ -34,7 +34,6 @@ namespace Moiro_Orders
             UsersController currentUser = new UsersController();
             currentUser.GetUserAsync("gybarev").GetAwaiter();
         }
-        CurrentUser currentUser = new CurrentUser();
         private void Send_Click(object sender, RoutedEventArgs e)
         {                
             // Create a new event
@@ -48,8 +47,14 @@ namespace Moiro_Orders
                 DateEnd = DateTime.Now,
                 Place = "General place"
             };
-            //currentUser.CrateEvent(@event).GetAwaiter();
-            currentUser.GetEvents().GetAwaiter();          
+            IUser user = new CurrentUser();
+            //user.CrateEvent(@event).GetAwaiter(); 
+            async Task GetEvent()
+            {
+                var events = await user.GetEventsList(20, PublicResources.Im.Id);
+                MessageBox.Show(events[0].NameEvent);
+            }
+            GetEvent().GetAwaiter();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -62,8 +67,14 @@ namespace Moiro_Orders
                 Description = "100",
                 Status = "Widgets",
             };
-            //currentUser.CreateOrder(order).GetAwaiter();
-            currentUser .GetOrders(20).GetAwaiter();
+            IUser user = new CurrentUser();
+            //user.CreateOrder(order).GetAwaiter();
+            async Task GetOrder()
+            {
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                MessageBox.Show(orders[0].Problem, "Это проблемма");
+            }
+            GetOrder().GetAwaiter();
         }
 
         private void Chat_Click(object sender, RoutedEventArgs e)
@@ -74,11 +85,15 @@ namespace Moiro_Orders
                 UserId = 1,
                 Message = "Hello World"
             };
-
-            //currentUser.CreatePublicChat(publicChat).GetAwaiter();
-            currentUser.GetPublicChat(20).GetAwaiter();
+            IAdmin admin = new CurrentUser();
+            //admin.CreatePublicChatMessage(publicChat).GetAwaiter();
+            async Task GetMessage()
+            {
+                var messages = await admin.GetPublicChatMessagesList(20, PublicResources.Im.Id);
+                MessageBox.Show(messages[0].Message);
+            }
+            GetMessage().GetAwaiter();
         }
-
     }
 
 
@@ -98,7 +113,7 @@ namespace Moiro_Orders
             BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
         };
 
-        internal static User Im { get; set; } = new User();
+        internal static User Im  = new User();
 
         static PublicResources()
         {
@@ -106,6 +121,8 @@ namespace Moiro_Orders
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
+
+
 
     }
 }

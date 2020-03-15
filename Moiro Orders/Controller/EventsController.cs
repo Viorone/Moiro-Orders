@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Moiro_Orders.Models;
+using Moiro_Orders.Roles;
 using Newtonsoft.Json;
 
 namespace Moiro_Orders.Controller
@@ -36,13 +37,12 @@ namespace Moiro_Orders.Controller
             return events;
         }
 
-        public async Task<Event> UpdateEvetntAsync(Event @event)
+        public async Task<HttpStatusCode> UpdateEvetntAsync(Event @event)
         {
             HttpResponseMessage response = await PublicResources.client.PutAsJsonAsync(
                 $"api/EventsAPI/{@event.Id}", @event);
             response.EnsureSuccessStatusCode();
-            @event = await response.Content.ReadAsAsync<Event>();
-            return @event;
+            return response.StatusCode;
         }
 
         public async Task<HttpStatusCode> DeleteEvetntAsync(int id)
