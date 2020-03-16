@@ -16,7 +16,7 @@ namespace Moiro_Orders.ViewModel
 
         private Order selectedPhone;
 
-        public ObservableCollection<Order> Orders { get; set; }
+        public List<Order> Orders { get; set; }
         public Order SelectedPhone
         {
             get { return selectedPhone; }
@@ -30,14 +30,11 @@ namespace Moiro_Orders.ViewModel
         public  OrderViewModel()
         {
             IUser user = new CurrentUser();
+            List<Order> ord = null;
             async Task GetAllOrders()
             {
-                var orders = await user.GetOrdersList(40, 1);
-
-                foreach (var tmp in orders)
-                {
-                    Orders.Add(tmp);
-                }
+                ord = await user.GetOrdersList(40, 1);
+                Orders = ord;
             }
             GetAllOrders().GetAwaiter();
 

@@ -1,9 +1,10 @@
-﻿<Window x:Class="Moiro_Orders.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Moiro_Orders"
+        xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel" x:Class="Moiro_Orders.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -12,7 +13,7 @@
             <ColumnDefinition Width="683*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0">
-            <Button Name="Send" VerticalAlignment="Top"  
+            <Button x:Name="Send" VerticalAlignment="Top"  
                 HorizontalAlignment="Left" 
                 Margin="5"
                 Click="Send_Click">
@@ -31,27 +32,26 @@
                 <Label Content="Чат"/>
             </Button>
             <Button Content="atsk"
-                    Name="MVVM"
-                    Click="MVVM_Click">
-                
-            </Button>
+                    x:Name="MVVM"
+                    Click="MVVM_Click"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="text1"  FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
-            <TextBlock FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
-            <ListBox Grid.Column="0" ItemsSource="{Binding Order}"
-                 SelectedItem="{Binding SelectedOrder}"
-                     x:Name="listOut">
+            <TextBox x:Name="text1"  FontSize="18" Text="{Binding SynchronizedText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="18" Text="{Binding SynchronizedText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ListBox Grid.Column="0" ItemsSource="{Binding Orders}"
+                     x:Name="listOut" Height="318">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5">
-                            <!-- Change for real metods -->
-                            <TextBlock FontSize="18" Text="{Binding Path=Problem}" />
-                            <TextBlock Text="{Binding Path=Description}" />
-                            <TextBlock Text="{Binding Path=Date}" />
+                            <TextBlock FontSize="18" Text="{Binding Problem}" />
+                            <TextBlock Text="{Binding Description}" />
+                            <TextBlock Text="{Binding Date}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                <ListBox.DataContext>
+                    <ViewModel:OrderViewModel/>
+                </ListBox.DataContext>
             </ListBox>
         </StackPanel>
         <Grid Grid.Row="1">
