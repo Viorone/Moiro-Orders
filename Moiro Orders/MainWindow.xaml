@@ -30,9 +30,14 @@
                     Click="Chat_Click">
                 <Label Content="Чат"/>
             </Button>
+            <Button Content="atsk"
+                    Name="MVVM"
+                    Click="MVVM_Click">
+                
+            </Button>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <TextBox FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
+            <TextBox x:Name="text1"  FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
             <TextBlock FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
         </StackPanel>
         <Grid Grid.Row="1">

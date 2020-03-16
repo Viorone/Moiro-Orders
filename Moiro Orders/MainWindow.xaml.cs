@@ -35,6 +35,8 @@ namespace Moiro_Orders
             //get User
             UsersController currentUser = new UsersController();
             currentUser.GetUserAsync("gybarev").GetAwaiter();
+            
+          
         }
         private void Send_Click(object sender, RoutedEventArgs e)
         {                
@@ -50,6 +52,7 @@ namespace Moiro_Orders
                 Place = "General place"
             };
             IUser user = new CurrentUser();
+
             //user.CrateEvent(@event).GetAwaiter(); 
             async Task GetEvent()
             {
@@ -96,6 +99,22 @@ namespace Moiro_Orders
             }
             GetMessage().GetAwaiter();
         }
+
+        private void MVVM_Click(object sender, RoutedEventArgs e)
+        {
+            IAdmin user = new CurrentUser();
+
+            //user.CrateEvent(@event).GetAwaiter(); 
+            async Task GetEvent()
+            {
+                UsersController currentUser = new UsersController();
+                var userr = await currentUser.GetUserNameAsync("gybarev");
+                text1.Text = userr.FullName;
+                
+            }
+            GetEvent().GetAwaiter();
+           
+        }
     }
 
 
@@ -112,7 +131,7 @@ namespace Moiro_Orders
     {
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
+            BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
         };
 
         internal static User Im  = new User();
