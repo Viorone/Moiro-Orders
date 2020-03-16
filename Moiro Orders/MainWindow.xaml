@@ -24,6 +24,12 @@
                     Click="Button_Click">
                 <Label Content="Отправить 2"/>
             </Button>
+            <Button VerticalAlignment="Top" 
+                    HorizontalAlignment="Left"
+                    Margin="5"
+                    Click="Chat_Click">
+                <Label Content="Чат"/>
+            </Button>
         </StackPanel>
 
         <Grid Grid.Row="1">

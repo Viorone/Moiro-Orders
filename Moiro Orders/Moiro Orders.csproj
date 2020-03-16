@@ -60,6 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Roles\Admin.cs" />
+    <Compile Include="Roles\CurrentUser.cs" />
+    <Compile Include="Roles\IAdmin.cs" />
+    <Compile Include="Roles\IUser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,7 +72,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controller\UserController.cs" />
+    <Compile Include="Controller\EventsController.cs" />
+    <Compile Include="Controller\PublicChatsContrloller.cs" />
+    <Compile Include="Controller\UsersController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -79,7 +85,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PublicChat.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Controller\OrderController.cs" />
+    <Compile Include="Controller\OrdersController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

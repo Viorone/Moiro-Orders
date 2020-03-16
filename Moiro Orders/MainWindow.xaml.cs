@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Moiro_Orders.Roles;
 
 namespace Moiro_Orders
 {
@@ -25,33 +26,94 @@ namespace Moiro_Orders
     /// </summary>
     public partial class MainWindow : Window
     {
-       
+
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            
-            UserController currentUser = new UserController();
+            //get User
+            UsersController currentUser = new UsersController();
             currentUser.GetUserAsync("gybarev").GetAwaiter();
+        }
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {                
+            // Create a new event
+            Event @event = new Event
+            {
+                UserId = 1,
+                NameEvent = "Прикол",
+                Description = "100",
+                Status = "Widgets",
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now,
+                Place = "General place"
+            };
+            IUser user = new CurrentUser();
+            //user.CrateEvent(@event).GetAwaiter(); 
+            async Task GetEvent()
+            {
+                var events = await user.GetEventsList(20, PublicResources.Im.Id);
+                MessageBox.Show(events[0].NameEvent);
+            }
+            GetEvent().GetAwaiter();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            OrderController currentOrder = new OrderController();
-            currentOrder.GetAllOrderAsync().GetAwaiter();
+            // Create a new order
+            Order order = new Order
+            {
+                UserId = 1,
+                Problem = "Gizmo",
+                Description = "100",
+                Status = "Widgets",
+            };
+            IUser user = new CurrentUser();
+            //user.CreateOrder(order).GetAwaiter();
+            async Task GetOrder()
+            {
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                MessageBox.Show(orders[0].Problem, "Это проблемма");
+            }
+            GetOrder().GetAwaiter();
+        }
+
+        private void Chat_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a new publicChat
+            PublicChat publicChat = new PublicChat
+            {
+                UserId = 1,
+                Message = "Hello World"
+            };
+            IAdmin admin = new CurrentUser();
+            //admin.CreatePublicChatMessage(publicChat).GetAwaiter();
+            async Task GetMessage()
+            {
+                var messages = await admin.GetPublicChatMessagesList(20, PublicResources.Im.Id);
+                MessageBox.Show(messages[0].Message);
+            }
+            GetMessage().GetAwaiter();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
     public static class PublicResources
     {
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://10.10.0.34/")
+            BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
         };
 
-        internal static User Im { get; set; } = new User();
+        internal static User Im  = new User();
 
         static PublicResources()
         {
@@ -59,7 +121,9 @@ namespace Moiro_Orders
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        
+
+
+
     }
 }
 
