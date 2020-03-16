@@ -30,8 +30,7 @@ namespace Moiro_Orders
 
         public MainWindow()
         {
-
-            
+         
             if (PublicResources.Im.FullName == null)
             {
                 UsersController currentUser = new UsersController();
@@ -114,12 +113,17 @@ namespace Moiro_Orders
             GetMessage().GetAwaiter();
         }
 
-        private void MVVM_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            IUser user = new CurrentUser();
+            //user.CreateOrder(order).GetAwaiter();
+            async Task GetOrder()
+            {
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                dgToList.ItemsSource = orders;
+            }
+            GetOrder().GetAwaiter();
         }
-
-
     }
 
 
