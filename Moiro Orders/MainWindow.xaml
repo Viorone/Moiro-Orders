@@ -39,6 +39,20 @@
         <StackPanel Grid.Column="1">
             <TextBox x:Name="text1"  FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
             <TextBlock FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+            <ListBox Grid.Column="0" ItemsSource="{Binding Order}"
+                 SelectedItem="{Binding SelectedOrder}"
+                     x:Name="listOut">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <!-- Change for real metods -->
+                            <TextBlock FontSize="18" Text="{Binding Path=Problem}" />
+                            <TextBlock Text="{Binding Path=Description}" />
+                            <TextBlock Text="{Binding Path=Date}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
         <Grid Grid.Row="1">
             <StackPanel x:Name="stackMessage"/>

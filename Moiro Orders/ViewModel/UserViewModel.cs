@@ -29,24 +29,7 @@ namespace Moiro_Orders.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
-    public class OrderViewModel : INotifyPropertyChanged
-    {
-        private string _synchronizedText;
-        public string SynchronizedText
-        {
-            get => _synchronizedText;
-            set
-            {
-                _synchronizedText = value;
-                OnPropertyChanged(nameof(SynchronizedText));
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-    }
+ 
    
 }
 

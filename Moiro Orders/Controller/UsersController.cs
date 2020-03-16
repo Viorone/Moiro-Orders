@@ -39,9 +39,7 @@ namespace Moiro_Orders.Controller
             if (response.IsSuccessStatusCode)
             {
                 user = await response.Content.ReadAsAsync<User>();
-
-                PublicResources.Im = user;
-                MessageBox.Show(PublicResources.Im.Id + " " + PublicResources.Im.FullName, "User");
+                
             }
 
             return user;

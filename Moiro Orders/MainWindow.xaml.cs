@@ -31,12 +31,20 @@ namespace Moiro_Orders
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
+            DataContext = new OrderViewModel();
             //get User
             UsersController currentUser = new UsersController();
-            currentUser.GetUserAsync("gybarev").GetAwaiter();
-            
-          
+            currentUser.GetUserNameAsync("gybarev").GetAwaiter();
+            async Task GetUser()
+            {
+                var userr = await currentUser.GetUserNameAsync("gybarev");
+                Title = userr.FullName +" | " +userr.OrganizationalUnit;
+
+            }
+            GetUser().GetAwaiter();
+
+
+
         }
         private void Send_Click(object sender, RoutedEventArgs e)
         {                
@@ -102,17 +110,14 @@ namespace Moiro_Orders
 
         private void MVVM_Click(object sender, RoutedEventArgs e)
         {
-            IAdmin user = new CurrentUser();
-
-            //user.CrateEvent(@event).GetAwaiter(); 
-            async Task GetEvent()
+            IUser user = new CurrentUser();
+            async Task GetAllOrders()
             {
-                UsersController currentUser = new UsersController();
-                var userr = await currentUser.GetUserNameAsync("gybarev");
-                text1.Text = userr.FullName;
-                
+               var orders = await user.GetOrdersList(40,1);
+              
+
             }
-            GetEvent().GetAwaiter();
+            GetAllOrders().GetAwaiter();
            
         }
     }
