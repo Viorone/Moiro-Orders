@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Moiro_Orders.Roles;
+using Moiro_Orders.ViewModel;
 
 namespace Moiro_Orders
 {
@@ -30,12 +31,23 @@ namespace Moiro_Orders
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new OrderViewModel();
             //get User
             UsersController currentUser = new UsersController();
             currentUser.GetUserAsync("gybarev").GetAwaiter();
+            async Task GetUser()
+            {
+                var userr = await currentUser.GetUserNameAsync("gybarev");
+                Title = userr.FullName + " | " + userr.OrganizationalUnit;
+
+            }
+            GetUser().GetAwaiter();
+
+
+
         }
         private void Send_Click(object sender, RoutedEventArgs e)
-        {                
+        {
             // Create a new event
             Event @event = new Event
             {
@@ -48,6 +60,7 @@ namespace Moiro_Orders
                 Place = "General place"
             };
             IUser user = new CurrentUser();
+
             //user.CrateEvent(@event).GetAwaiter(); 
             async Task GetEvent()
             {
@@ -94,7 +107,13 @@ namespace Moiro_Orders
             }
             GetMessage().GetAwaiter();
         }
+
+        private void MVVM_Click(object sender, RoutedEventArgs e)
+        {
+      
+        }
     }
+
 
 
 

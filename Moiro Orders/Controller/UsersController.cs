@@ -30,6 +30,20 @@ namespace Moiro_Orders.Controller
 
             return response.StatusCode;
         }
+
+        public async Task<User> GetUserNameAsync(string login)
+        {
+            HttpResponseMessage response = await PublicResources.client.GetAsync(
+                $"api/UsersAPI?login={login}");
+            var user = new User();
+            if (response.IsSuccessStatusCode)
+            {
+                user = await response.Content.ReadAsAsync<User>();
+                
+            }
+
+            return user;
+        }
     }
 }
 
