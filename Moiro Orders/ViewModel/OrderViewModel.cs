@@ -8,36 +8,37 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
 namespace Moiro_Orders.ViewModel
 {
     public class OrderViewModel : INotifyPropertyChanged
     {
 
-        private Order selectedPhone;
+        private Order selectedOrder;
 
         public List<Order> Orders { get; set; }
-        public Order SelectedPhone
+        public Order SelectedOrder
         {
-            get { return selectedPhone; }
+            get { return selectedOrder; }
             set
             {
-                selectedPhone = value;
-                OnPropertyChanged("SelectedPhone");
+                selectedOrder = value;
+                OnPropertyChanged("SelectedOrder");
             }
         }
 
         public  OrderViewModel()
         {
-            IUser user = new CurrentUser();
-            List<Order> ord = null;
-            async Task GetAllOrders()
-            {
-                ord = await user.GetOrdersList(40, 1);
-                Orders = ord;
-            }
-            GetAllOrders().GetAwaiter();
 
+            IUser user = new CurrentUser();
+            async Task GetOrder()
+            {
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                Orders = orders;
+            }
+            GetOrder().GetAwaiter();
         }
     
 
