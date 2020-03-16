@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Moiro_Orders.Roles;
+using Moiro_Orders.ViewModel;
 
 namespace Moiro_Orders
 {
@@ -30,6 +31,7 @@ namespace Moiro_Orders
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new UserViewModel();
             //get User
             UsersController currentUser = new UsersController();
             currentUser.GetUserAsync("gybarev").GetAwaiter();

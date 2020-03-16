@@ -31,7 +31,10 @@
                 <Label Content="Чат"/>
             </Button>
         </StackPanel>
-
+        <StackPanel Grid.Column="1">
+            <TextBox FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
+            <TextBlock FontSize="18" Text="{Binding Path=SynchronizedText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        </StackPanel>
         <Grid Grid.Row="1">
             <StackPanel x:Name="stackMessage"/>
         </Grid>
