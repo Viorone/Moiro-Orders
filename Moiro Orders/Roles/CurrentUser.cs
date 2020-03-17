@@ -52,7 +52,7 @@ namespace Moiro_Orders.Roles
 
         public async Task<List<Order>> GetOrderOfDate(int id, DateTime date)
         {
-            var orders = await ordersController.GetAllOrdersAsync(id, date);
+            var orders = await ordersController.GetOrdersOfDateAsync(id, date);
             return orders;
         }
 
