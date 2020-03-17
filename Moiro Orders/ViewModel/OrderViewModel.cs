@@ -53,6 +53,7 @@ namespace Moiro_Orders.ViewModel
             var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
             Orders = orders;
         }
+
         #endregion
         #region MVVM related        
         private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5
