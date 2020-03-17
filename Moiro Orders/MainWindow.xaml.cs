@@ -48,8 +48,6 @@ namespace Moiro_Orders
                 InitializeComponent();
                 //DataContext = new OrderViewModel();
             }
-
-
         }
 
 
