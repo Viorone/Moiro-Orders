@@ -41,7 +41,7 @@ namespace Moiro_Orders.ViewModel
                 return _longAddCommand;
             }
         }
-
+         
         private async Task LongAdd(object o)
         {
             IUser user = new CurrentUser();
