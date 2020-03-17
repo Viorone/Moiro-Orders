@@ -25,13 +25,24 @@ namespace Moiro_Orders.Controller
             return response.StatusCode;
         }
       
+        public async Task<List<Order>> GetOrdersOfDateAsync(int id, DateTime date)
+        {
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI/{id}?date={date}");
+            List<Order> orders = null;
+            if (response.IsSuccessStatusCode)
+            {
+                orders = await response.Content.ReadAsAsync<List<Order>>();
+            }
+            return orders;
+        }
+
         public async Task<List<Order>> GetAllOrdersAsync(int count, int id)
         {
             HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={id}&count={count}");
             List<Order> orders = null;
             if (response.IsSuccessStatusCode)
             {
-                orders = await response.Content.ReadAsAsync<List<Order>>();                         
+                orders = await response.Content.ReadAsAsync<List<Order>>();
             }
             return orders;
         }
