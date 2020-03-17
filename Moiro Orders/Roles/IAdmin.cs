@@ -14,6 +14,7 @@ namespace Moiro_Orders.Roles
         Task<HttpStatusCode> EditEvent(Event @event); //Change Event Status
 
         Task<List<Order>> GetOrdersList(int count, int id); //Get Orders list by current user
+        Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date); //Get Orders list by current date
         Task<HttpStatusCode> EditOrder(Order order); //Change Order Status
 
         Task<List<PublicChat>> GetPublicChatMessagesList(int count, int id);

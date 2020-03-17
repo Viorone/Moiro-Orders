@@ -48,10 +48,20 @@ namespace Moiro_Orders.ViewModel
 
         private async Task GetAllOrdres(object o)
         {
-            // переписать на реальное получение всех записей заявок для конкретного пользователя
-            IUser user = new CurrentUser(); // ??? вопросительный вызов
-            var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-            Orders = new ObservableCollection<Order>(orders);
+            DateTime date = new DateTime(2020, 3, 15);
+
+            if(PublicResources.Im.Admin == true)
+            {
+                IAdmin admin = new CurrentUser();
+                var orders = await admin.GetOrdersListOfDate(1, date);
+                Orders = new ObservableCollection<Order>(orders);
+            }
+            else
+            {
+                IUser user = new CurrentUser();
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                Orders = new ObservableCollection<Order>(orders);            
+            }                   
         }
 
         #endregion
