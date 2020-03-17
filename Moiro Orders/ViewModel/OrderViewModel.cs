@@ -11,69 +11,71 @@ using System.Threading.Tasks;
 
 using System.Windows;
 using System.Windows.Data;
-
+using System.Windows.Input;
+using static Moiro_Orders.MainWindow;
 
 namespace Moiro_Orders.ViewModel
 {
     public class OrderViewModel : INotifyPropertyChanged
     {
 
-
-        private Order selectedOrder;
-
-        public List<Order> Orders { get; set; }
-        public Order SelectedOrder
+        public ObservableCollection<Order> _orders = new ObservableCollection<Order>();
+        public ObservableCollection<Order> Orders
         {
-            get { return selectedOrder; }
-            set
-            {
-                selectedOrder = value;
-                OnPropertyChanged("SelectedOrder");
-
-        private Order selectedPhone;
-
-        public List<Order> Orders { get; set; }
-        public Order SelectedPhone
-        {
-            get { return selectedPhone; }
-            set
-            {
-                selectedPhone = value;
-                OnPropertyChanged("SelectedPhone");
-
+            get { return _orders; }
+            set {
+                _orders= value;
+                RaisePropertyChanged();
             }
         }
 
-        public  OrderViewModel()
+        private AsyncDelegateCommand _longAddCommand;
+        public ICommand BTNclick
         {
+            get
+            {
+                if (_longAddCommand == null)
+                {
+                    _longAddCommand = new AsyncDelegateCommand(LongAdd);
+                }
+                return _longAddCommand;
+            }
+        }
 
-
+        private async Task LongAdd(object o)
+        {
             IUser user = new CurrentUser();
+            //user.CreateOrder(order).GetAwaiter();
             async Task GetOrder()
             {
                 var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-                Orders = orders;
-            }
+                foreach (var tmp in orders)
+                {
+                    Orders.Add(tmp);
+                }
+
+            } 
             GetOrder().GetAwaiter();
+        }
 
-            IUser user = new CurrentUser();
-            List<Order> ord = null;
-            async Task GetAllOrders()
-            {
-                ord = await user.GetOrdersList(40, 1);
-                Orders = ord;
-            }
-            GetAllOrders().GetAwaiter();
 
+
+        public  OrderViewModel()
+        {
+           
 
         }
-    
+
+
+        #region MVVM related        
+        private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
+        #endregion
     }
+
 }
+
