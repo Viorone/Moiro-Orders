@@ -45,8 +45,8 @@ namespace Moiro_Orders.ViewModel
                 return _commandGetAllOrders;
             }
         }
-         
-        private async Task LongAdd(object o)
+
+        private async Task GetAllOrdres(object o)
         {
             // переписать на реальное получение всех записей заявок для конкретного пользователя
             IUser user = new CurrentUser(); // ??? вопросительный вызов
