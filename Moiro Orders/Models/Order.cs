@@ -17,7 +17,5 @@ namespace Moiro_Orders.Models
         public string Status { get; set; }
         public int UserId { get; set; }
 
-
- 
     }
 }
