@@ -19,8 +19,8 @@ namespace Moiro_Orders.ViewModel
     public class OrderViewModel : INotifyPropertyChanged
     {
 
-        public List<Order> _orders = new List<Order>();
-        public List<Order> Orders
+        public ObservableCollection<Order> _orders = new ObservableCollection<Order>();
+        public ObservableCollection<Order> Orders
         {
             get { return _orders; }
             set
@@ -51,7 +51,7 @@ namespace Moiro_Orders.ViewModel
             // переписать на реальное получение всех записей заявок для конкретного пользователя
             IUser user = new CurrentUser(); // ??? вопросительный вызов
             var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-            Orders = orders;
+            Orders = new ObservableCollection<Order>(orders);
         }
 
         #endregion
