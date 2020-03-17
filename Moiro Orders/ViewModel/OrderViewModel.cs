@@ -19,54 +19,41 @@ namespace Moiro_Orders.ViewModel
     public class OrderViewModel : INotifyPropertyChanged
     {
 
-        public ObservableCollection<Order> _orders = new ObservableCollection<Order>();
-        public ObservableCollection<Order> Orders
+        public List<Order> _orders = new List<Order>();
+        public List<Order> Orders
         {
             get { return _orders; }
-            set {
+            set
+            {
                 _orders= value;
                 RaisePropertyChanged();
             }
         }
+        public OrderViewModel()
+        { }
 
-        private AsyncDelegateCommand _longAddCommand;
-        public ICommand BTNclick
+        #region ICommand and external set data
+        private AsyncDelegateCommand _commandGetAllOrders;
+        public ICommand CommandGetAllOrders
         {
             get
             {
-                if (_longAddCommand == null)
+                if (_commandGetAllOrders == null)
                 {
-                    _longAddCommand = new AsyncDelegateCommand(LongAdd);
+                    _commandGetAllOrders = new AsyncDelegateCommand(GetAllOrdres);
                 }
-                return _longAddCommand;
+                return _commandGetAllOrders;
             }
         }
 
-        private async Task LongAdd(object o)
+        private async Task GetAllOrdres(object o)
         {
-            IUser user = new CurrentUser();
-            //user.CreateOrder(order).GetAwaiter();
-            async Task GetOrder()
-            {
-                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-                foreach (var tmp in orders)
-                {
-                    Orders.Add(tmp);
-                }
-
-            } 
-            GetOrder().GetAwaiter();
+            // переписать на реальное получение всех записей заявок для конкретного пользователя
+            IUser user = new CurrentUser(); // ??? вопросительный вызов
+            var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+            Orders = orders;
         }
-
-
-
-        public  OrderViewModel()
-        {
-           
-
-        }
-
-
+        #endregion
         #region MVVM related        
         private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5
         {

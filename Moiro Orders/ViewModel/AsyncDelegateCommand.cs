@@ -10,6 +10,11 @@ namespace Moiro_Orders.ViewModel
         /// <summary>
         /// AsyncDelegateCommand отсюда http://blog.mycupof.net/2012/08/23/mvvm-asyncdelegatecommand-what-asyncawait-can-do-for-uidevelopment/
         /// </summary>
+       
+
+        //============================================================== 
+        //----------- Для асинхронного выполнения комманд --------------
+        //==============================================================
         public class AsyncDelegateCommand : ICommand
         {
             protected readonly Predicate<object> _canExecute;
