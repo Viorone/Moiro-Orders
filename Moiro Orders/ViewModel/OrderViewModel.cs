@@ -45,17 +45,15 @@ namespace Moiro_Orders.ViewModel
         private async Task LongAdd(object o)
         {
             IUser user = new CurrentUser();
-            //user.CreateOrder(order).GetAwaiter();
-            async Task GetOrder()
-            {
+
+
                 var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
                 foreach (var tmp in orders)
                 {
                     Orders.Add(tmp);
                 }
 
-            } 
-            GetOrder().GetAwaiter();
+ 
         }
 
 

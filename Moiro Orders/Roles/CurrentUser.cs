@@ -50,6 +50,12 @@ namespace Moiro_Orders.Roles
             return status;
         }
 
+        public async Task<List<Order>> GetOrderOfDate(int id, DateTime date)
+        {
+            var orders = await ordersController.GetAllOrdersAsync(id, date);
+            return orders;
+        }
+
         public async Task<List<Order>> GetOrdersList(int count, int id)
         {
             var orders = await ordersController.GetAllOrdersAsync(count, id);
