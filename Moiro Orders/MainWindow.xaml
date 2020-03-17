@@ -34,12 +34,36 @@
                     Click="Chat_Click">
                 <Label Content="Чат"/>
             </Button>
+            <Button Content="atsk"
+                    x:Name="MVVM"
+                    Click="MVVM_Click"/>
         </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBox x:Name="text1"  FontSize="18" Text="{Binding SynchronizedText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="18" Text="{Binding SynchronizedText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ListBox Grid.Column="0" ItemsSource="{Binding Orders}"
+                     x:Name="listOut" Height="318">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <TextBlock FontSize="18" Text="{Binding Problem}" />
+                            <TextBlock Text="{Binding Description}" />
+                            <TextBlock Text="{Binding Date}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.DataContext>
+                    <ViewModel:OrderViewModel/>
+                </ListBox.DataContext>
+            </ListBox>
+        </StackPanel>
+
         <StackPanel Grid.Column="1">
             <DataGrid x:Name="dgToList" FontSize="16" Margin="10">
                 <DataGrid.Columns></DataGrid.Columns>
             </DataGrid>
         </StackPanel>
+
 
         <Grid Grid.Row="1">
             <StackPanel x:Name="stackMessage"/>

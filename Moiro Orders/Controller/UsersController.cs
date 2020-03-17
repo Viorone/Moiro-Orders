@@ -40,6 +40,10 @@ namespace Moiro_Orders.Controller
                 user = await response.Content.ReadAsAsync<User>();
                 PublicResources.Im = user;
             }
+                
+            
+
+
             return user;
         }
     }

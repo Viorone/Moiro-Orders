@@ -30,7 +30,7 @@ namespace Moiro_Orders
 
         public MainWindow()
         {
-         
+        
             if (PublicResources.Im.FullName == null)
             {
                 UsersController currentUser = new UsersController();
@@ -48,6 +48,23 @@ namespace Moiro_Orders
                 InitializeComponent();
                 DataContext = new OrderViewModel();
             }
+
+            InitializeComponent();
+            DataContext = new OrderViewModel();
+            //get User
+            UsersController currentUser = new UsersController();
+            currentUser.GetUserAsync("gybarev").GetAwaiter();
+            async Task GetUser()
+            {
+                var userr = await currentUser.GetUserNameAsync("gybarev");
+                Title = userr.FullName + " | " + userr.OrganizationalUnit;
+
+            }
+            GetUser().GetAwaiter();
+
+
+
+
         }
 
 
@@ -113,6 +130,7 @@ namespace Moiro_Orders
             GetMessage().GetAwaiter();
         }
 
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IUser user = new CurrentUser();
@@ -123,6 +141,11 @@ namespace Moiro_Orders
                 dgToList.ItemsSource = orders;
             }
             GetOrder().GetAwaiter();
+
+        private void MVVM_Click(object sender, RoutedEventArgs e)
+        {
+      
+
         }
     }
 
@@ -141,7 +164,7 @@ namespace Moiro_Orders
     {
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
+            BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
         };
 
         internal static User Im = new User();
