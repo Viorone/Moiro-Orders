@@ -9,10 +9,26 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Windows;
+using System.Windows.Data;
+
+
 namespace Moiro_Orders.ViewModel
 {
     public class OrderViewModel : INotifyPropertyChanged
     {
+
+
+        private Order selectedOrder;
+
+        public List<Order> Orders { get; set; }
+        public Order SelectedOrder
+        {
+            get { return selectedOrder; }
+            set
+            {
+                selectedOrder = value;
+                OnPropertyChanged("SelectedOrder");
 
         private Order selectedPhone;
 
@@ -24,11 +40,22 @@ namespace Moiro_Orders.ViewModel
             {
                 selectedPhone = value;
                 OnPropertyChanged("SelectedPhone");
+
             }
         }
 
         public  OrderViewModel()
         {
+
+
+            IUser user = new CurrentUser();
+            async Task GetOrder()
+            {
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                Orders = orders;
+            }
+            GetOrder().GetAwaiter();
+
             IUser user = new CurrentUser();
             List<Order> ord = null;
             async Task GetAllOrders()
@@ -37,6 +64,7 @@ namespace Moiro_Orders.ViewModel
                 Orders = ord;
             }
             GetAllOrders().GetAwaiter();
+
 
         }
     

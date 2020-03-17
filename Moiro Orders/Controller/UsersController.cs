@@ -24,8 +24,7 @@ namespace Moiro_Orders.Controller
             {
                 var user = await response.Content.ReadAsAsync<User>();
 
-                PublicResources.Im = user;
-                MessageBox.Show(PublicResources.Im.Id + " " + PublicResources.Im.FullName, "User");
+                PublicResources.Im = user;               
             }
 
             return response.StatusCode;
@@ -39,8 +38,11 @@ namespace Moiro_Orders.Controller
             if (response.IsSuccessStatusCode)
             {
                 user = await response.Content.ReadAsAsync<User>();
-                
+                PublicResources.Im = user;
             }
+                
+            
+
 
             return user;
         }

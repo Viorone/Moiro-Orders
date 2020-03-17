@@ -6,27 +6,30 @@
         xmlns:local="clr-namespace:Moiro_Orders"
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel" x:Class="Moiro_Orders.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="109*"/>
+            <ColumnDefinition Width="139*"/>
             <ColumnDefinition Width="683*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0">
             <Button x:Name="Send" VerticalAlignment="Top"  
                 HorizontalAlignment="Left" 
+                    Width="100"
                 Margin="5"
                 Click="Send_Click">
-                <Label Content="Отправить 1"/>
+                <Label Content="События"/>
             </Button>
             <Button VerticalAlignment="Top" 
                     HorizontalAlignment="Left"
+                    Width="100"
                     Margin="5"
                     Click="Button_Click">
-                <Label Content="Отправить 2"/>
+                <Label Content="Заявки"/>
             </Button>
             <Button VerticalAlignment="Top" 
                     HorizontalAlignment="Left"
+                    Width="100"
                     Margin="5"
                     Click="Chat_Click">
                 <Label Content="Чат"/>
@@ -54,6 +57,14 @@
                 </ListBox.DataContext>
             </ListBox>
         </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <DataGrid x:Name="dgToList" FontSize="16" Margin="10">
+                <DataGrid.Columns></DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+
         <Grid Grid.Row="1">
             <StackPanel x:Name="stackMessage"/>
         </Grid>

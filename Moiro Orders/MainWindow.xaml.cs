@@ -30,6 +30,25 @@ namespace Moiro_Orders
 
         public MainWindow()
         {
+        
+            if (PublicResources.Im.FullName == null)
+            {
+                UsersController currentUser = new UsersController();
+                async Task GetUser()
+                {
+                    await currentUser.GetUserNameAsync("gybarev");
+                    Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
+                    InitializeComponent();
+                    DataContext = new OrderViewModel();
+                }
+                GetUser().GetAwaiter();
+            }
+            else
+            {
+                InitializeComponent();
+                DataContext = new OrderViewModel();
+            }
+
             InitializeComponent();
             DataContext = new OrderViewModel();
             //get User
@@ -45,7 +64,10 @@ namespace Moiro_Orders
 
 
 
+
         }
+
+
         private void Send_Click(object sender, RoutedEventArgs e)
         {
             // Create a new event
@@ -65,7 +87,7 @@ namespace Moiro_Orders
             async Task GetEvent()
             {
                 var events = await user.GetEventsList(20, PublicResources.Im.Id);
-                MessageBox.Show(events[0].NameEvent);
+                dgToList.ItemsSource = events;
             }
             GetEvent().GetAwaiter();
         }
@@ -85,7 +107,7 @@ namespace Moiro_Orders
             async Task GetOrder()
             {
                 var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-                MessageBox.Show(orders[0].Problem, "Это проблемма");
+                dgToList.ItemsSource = orders;
             }
             GetOrder().GetAwaiter();
         }
@@ -103,14 +125,27 @@ namespace Moiro_Orders
             async Task GetMessage()
             {
                 var messages = await admin.GetPublicChatMessagesList(20, PublicResources.Im.Id);
-                MessageBox.Show(messages[0].Message);
+                dgToList.ItemsSource = messages;
             }
             GetMessage().GetAwaiter();
         }
 
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            IUser user = new CurrentUser();
+            //user.CreateOrder(order).GetAwaiter();
+            async Task GetOrder()
+            {
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                dgToList.ItemsSource = orders;
+            }
+            GetOrder().GetAwaiter();
+
         private void MVVM_Click(object sender, RoutedEventArgs e)
         {
       
+
         }
     }
 
@@ -132,7 +167,7 @@ namespace Moiro_Orders
             BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
         };
 
-        internal static User Im  = new User();
+        internal static User Im = new User();
 
         static PublicResources()
         {
