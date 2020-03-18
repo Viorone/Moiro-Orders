@@ -11,12 +11,12 @@ namespace Moiro_Orders.Roles
     interface IUser
     {
         Task<List<Event>> GetEventsList(int count, int id);
-        Task<List<Order>> GetOrderOfDate(int id, DateTime date);
         Task<HttpStatusCode> CreateEvent(Event @event);
         Task<HttpStatusCode> EditEvent(Event @event);                      //поставить таймер на возможность редактирования (возможно на час)
         Task<HttpStatusCode> DeleteEvent(int id);                          //поставить таймер на возможность удаления (возможно на час)
 
         Task<List<Order>> GetOrdersList(int count, int id);
+        Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date);  //Get Orders list by current date
         Task<HttpStatusCode> CreateOrder(Order order);
         Task<HttpStatusCode> EditOrder(Order order);                      //поставить таймер на возможность редактирования (возможно на час)
         Task<HttpStatusCode> DeleteOrder(int id);                          //поставить таймер на возможность удаления (возможно на час)
