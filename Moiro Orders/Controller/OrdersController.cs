@@ -36,6 +36,18 @@ namespace Moiro_Orders.Controller
             }
             return orders;
         }
+        // изменить контроллер на серваке
+        public async Task<List<Order>> GetAllOrdersTodayAsync( DateTime date)
+        {
+            string d = date.ToString();
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?date={date}");
+            List<Order> orders = null;
+            if (response.IsSuccessStatusCode)
+            {
+                orders = await response.Content.ReadAsAsync<List<Order>>();
+            }
+            return orders;
+        }
 
         public async Task<List<Order>> GetAllOrdersAsync(int count, int id)
         {

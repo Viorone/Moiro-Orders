@@ -13,7 +13,7 @@ namespace Moiro_Orders.Roles
     class CurrentUser : IUser, IAdmin
     {
         public CurrentUser() { }
-
+         //потом доработть
         EventsController eventsController = new EventsController();
         OrdersController ordersController = new OrdersController();
         PublicChatsController publicChatsController = new PublicChatsController();
@@ -53,6 +53,12 @@ namespace Moiro_Orders.Roles
         public async Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date)
         {
             var orders = await ordersController.GetOrdersListOfDateAsync(userId, date);
+            return orders;
+        }
+
+        public async Task<List<Order>> GetAllOrdersToday(DateTime date)
+        {
+            var orders = await ordersController.GetAllOrdersTodayAsync(date);
             return orders;
         }
 

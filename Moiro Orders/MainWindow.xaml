@@ -12,18 +12,35 @@
     </Window.Resources>
     <Grid DataContext="{StaticResource ViewModelOrder }">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="105*"/>
+            <ColumnDefinition Width="682*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="auto" MinHeight="50"/>
+            <RowDefinition Height="auto" MinHeight="50"/>
+            <RowDefinition Height="auto" MinHeight="50"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Content="Button" Height="23" Grid.Column="1" Grid.Row="1" Margin="5" Command="{Binding CommandGetAllOrders}" />
-        <DataGrid ItemsSource="{Binding Orders}">
-            
-        </DataGrid>
-       
+        <Button 
+            Content="Button" 
+          
+            Command="{Binding CommandGetOrdersOfDate}" Grid.Row="2" Grid.Column="1" />
+        <Button 
+            Content="Все заявки" 
+            Grid.Row="1" 
+      
+            Command="{Binding CommandGetAllOrders}" Grid.Column="1" />
+        <Button 
+            x:Name="addOrder"
+            Click="AddOrder_Click" Grid.Column="1" >
+            <Button.Content>
+                <TextBlock Text="Добавить заявку на сегодня"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+            </Button.Content>
+        </Button>
+        <DataGrid ItemsSource="{Binding Orders}" Margin="10" Grid.Column="2" Grid.RowSpan="4"/>
+
     </Grid>
 </Window>

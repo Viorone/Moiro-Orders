@@ -59,12 +59,10 @@ namespace Moiro_Orders.ViewModel
         }
         private async Task GetAllOrdres(object o)
         {
-            DateTime date = new DateTime(2020, 3, 15);
-
-            if(PublicResources.Im.Admin == true)
+            if(PublicResources.Im.Admin)
             {
                 IAdmin admin = new CurrentUser();
-                var orders = await admin.GetOrdersListOfDate(1, date);
+                var orders = await admin.GetAllOrdersToday(DateTime.Today);
                 Orders = new ObservableCollection<Order>(orders);
             }
             else
@@ -77,8 +75,14 @@ namespace Moiro_Orders.ViewModel
         private async Task GetOrdersOfDate(object o)
         {
             IUser user = new CurrentUser(); 
-            var orders = await user.GetOrderOfDate( PublicResources.Im.Id, new DateTime(2020,3,12));
-            Orders = orders;
+            var orders = await user.GetOrdersListOfDate( PublicResources.Im.Id, new DateTime(2020,3,12));
+            Orders = new ObservableCollection<Order>(orders);
+        }
+        private async Task GetOrdersOfDate(DateTime date)
+        {
+            IUser user = new CurrentUser();
+            var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, new DateTime(2020, 3, 12));
+            Orders = new ObservableCollection<Order>(orders);
         }
         #endregion
         #region MVVM related        
