@@ -34,6 +34,7 @@ namespace Moiro_Orders.ViewModel
 
         #region ICommand and external set data
         private AsyncDelegateCommand _commandGetAllOrders;
+        private AsyncDelegateCommand _commandGetAllOrders1;
         public ICommand CommandGetAllOrders
         {
             get
@@ -45,7 +46,17 @@ namespace Moiro_Orders.ViewModel
                 return _commandGetAllOrders;
             }
         }
-
+        public ICommand CommandGetOrdersOfDate
+        {
+            get
+            {
+                if (_commandGetAllOrders1 == null)
+                {
+                    _commandGetAllOrders1 = new AsyncDelegateCommand(GetOrdersOfDate);
+                }
+                return _commandGetAllOrders1;
+            }
+        }
         private async Task GetAllOrdres(object o)
         {
             // переписать на реальное получение всех записей заявок для конкретного пользователя
@@ -53,7 +64,12 @@ namespace Moiro_Orders.ViewModel
             var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
             Orders = orders;
         }
-
+        private async Task GetOrdersOfDate(object o)
+        {
+            IUser user = new CurrentUser(); 
+            var orders = await user.GetOrderOfDate( PublicResources.Im.Id, new DateTime(2020,3,12));
+            Orders = orders;
+        }
         #endregion
         #region MVVM related        
         private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5
