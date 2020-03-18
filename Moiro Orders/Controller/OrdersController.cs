@@ -25,9 +25,10 @@ namespace Moiro_Orders.Controller
             return response.StatusCode;
         }
       
-        public async Task<List<Order>> GetOrdersOfDateAsync(int id, DateTime date)
+        public async Task<List<Order>> GetOrdersListOfDateAsync(int userId, DateTime date)
         {
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI/{id}?date={date}");
+            string d = date.ToString();
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={userId}&date={d}");
             List<Order> orders = null;
             if (response.IsSuccessStatusCode)
             {

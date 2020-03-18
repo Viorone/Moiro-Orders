@@ -20,19 +20,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
-        <Button Content="Получить всех" 
-                Height="23" 
-                Grid.Column="1" 
-                Grid.Row="1" 
-                Margin="5" 
-                Command="{Binding CommandGetAllOrders }" />
-        <Button Content="Получить дату" 
-                Height="23" 
-                Grid.Column="1" 
-                Grid.Row="0" 
-                Margin="5" 
-                Command="{Binding CommandGetOrdersOfDate }" />
-        <DataGrid ItemsSource="{Binding Orders}" >
+        <Button Content="Button" Height="23" Grid.Column="1" Grid.Row="1" Margin="5" Command="{Binding CommandGetAllOrders}" />
+        <DataGrid ItemsSource="{Binding Orders}">
             
         </DataGrid>
        

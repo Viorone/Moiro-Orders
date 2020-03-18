@@ -19,8 +19,8 @@ namespace Moiro_Orders.ViewModel
     public class OrderViewModel : INotifyPropertyChanged
     {
 
-        public List<Order> _orders = new List<Order>();
-        public List<Order> Orders
+        public ObservableCollection<Order> _orders = new ObservableCollection<Order>();
+        public ObservableCollection<Order> Orders
         {
             get { return _orders; }
             set
@@ -59,10 +59,20 @@ namespace Moiro_Orders.ViewModel
         }
         private async Task GetAllOrdres(object o)
         {
-            // переписать на реальное получение всех записей заявок для конкретного пользователя
-            IUser user = new CurrentUser(); // ??? вопросительный вызов
-            var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-            Orders = orders;
+            DateTime date = new DateTime(2020, 3, 15);
+
+            if(PublicResources.Im.Admin == true)
+            {
+                IAdmin admin = new CurrentUser();
+                var orders = await admin.GetOrdersListOfDate(1, date);
+                Orders = new ObservableCollection<Order>(orders);
+            }
+            else
+            {
+                IUser user = new CurrentUser();
+                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
+                Orders = new ObservableCollection<Order>(orders);            
+            }                   
         }
         private async Task GetOrdersOfDate(object o)
         {

@@ -39,108 +39,16 @@ namespace Moiro_Orders
                     await currentUser.GetUserNameAsync("gybarev");
                     Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
                     InitializeComponent();
-                   // DataContext = new OrderViewModel();
+                   DataContext = new OrderViewModel();
                 }
                 GetUser().GetAwaiter();
             }
             else
             {
                 InitializeComponent();
-                //DataContext = new OrderViewModel();
+                DataContext = new OrderViewModel();
             }
-
-
         }
-
-
-        private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            // Create a new event
-            Event @event = new Event
-            {
-                UserId = 1,
-                NameEvent = "Прикол",
-                Description = "100",
-                Status = "Widgets",
-                DateStart = DateTime.Now,
-                DateEnd = DateTime.Now,
-                Place = "General place"
-            };
-            IUser user = new CurrentUser();
-
-            //user.CrateEvent(@event).GetAwaiter(); 
-            async Task GetEvent()
-            {
-                var events = await user.GetEventsList(20, PublicResources.Im.Id);
-                //dgToList.ItemsSource = events;
-            }
-            GetEvent().GetAwaiter();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Create a new order
-            Order order = new Order
-            {
-                UserId = 1,
-                Problem = "Gizmo",
-                Description = "100",
-                Status = "Widgets",
-            };
-            IUser user = new CurrentUser();
-            //user.CreateOrder(order).GetAwaiter();
-            async Task GetOrder()
-            {
-                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-               // dgToList.ItemsSource = orders;
-            }
-            GetOrder().GetAwaiter();
-        }
-
-        private void Chat_Click(object sender, RoutedEventArgs e)
-        {
-            // Create a new publicChat
-            PublicChat publicChat = new PublicChat
-            {
-                UserId = 1,
-                Message = "Hello World"
-            };
-            IAdmin admin = new CurrentUser();
-            //admin.CreatePublicChatMessage(publicChat).GetAwaiter();
-            async Task GetMessage()
-            {
-                var messages = await admin.GetPublicChatMessagesList(20, PublicResources.Im.Id);
-                //dgToList.ItemsSource = messages;
-            }
-            GetMessage().GetAwaiter();
-        }
-
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            IUser user = new CurrentUser();
-            //user.CreateOrder(order).GetAwaiter();
-            async Task GetOrder()
-            {
-                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-               // dgToList.ItemsSource = orders;
-            }
-            GetOrder().GetAwaiter();
-        }
-
-        //private void MVVM_Click(object sender, RoutedEventArgs e)
-        //{
-        //    IUser user = new CurrentUser();
-        //    async Task GetOrder()
-        //    {
-        //        var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-        //        OrderViewModel tmp = new OrderViewModel
-        //        {
-        //            Orders = orders
-        //        };
-        //    }
-        //    GetOrder().GetAwaiter();
-        //}
     }
 
 
@@ -166,9 +74,6 @@ namespace Moiro_Orders
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-
-
     }
 }
 
