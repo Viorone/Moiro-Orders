@@ -78,12 +78,6 @@ namespace Moiro_Orders.ViewModel
             var orders = await user.GetOrdersListOfDate( PublicResources.Im.Id, new DateTime(2020,3,12));
             Orders = new ObservableCollection<Order>(orders);
         }
-        private async Task GetOrdersOfDate(DateTime date)
-        {
-            IUser user = new CurrentUser();
-            var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, new DateTime(2020, 3, 12));
-            Orders = new ObservableCollection<Order>(orders);
-        }
         #endregion
         #region MVVM related        
         private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5

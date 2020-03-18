@@ -116,6 +116,15 @@ namespace Moiro_Orders
            
 
         }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            //допилить и разобраться
+
+                //frame.NavigationService.Navigate(new Uri("OrderView.xaml", UriKind.Relative));
+            frame.NavigationService.Navigate(new Uri("XamlView.UserView.xaml", UriKind.Relative));
+            
+        }
     }
 
 

@@ -10,37 +10,56 @@
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <ViewModel:UserViewModel x:Key="UserModel"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource ViewModelOrder }">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="105*"/>
-            <ColumnDefinition Width="682*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" MinHeight="50"/>
-            <RowDefinition Height="auto" MinHeight="50"/>
-            <RowDefinition Height="auto" MinHeight="50"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Button 
-            Content="Button" 
-          
-            Command="{Binding CommandGetOrdersOfDate}" Grid.Row="2" Grid.Column="1" />
-        <Button 
-            Content="Все заявки" 
-            Grid.Row="1" 
-      
-            Command="{Binding CommandGetAllOrders}" Grid.Column="1" />
-        <Button 
-            x:Name="addOrder"
-            Click="AddOrder_Click" Grid.Column="1" >
-            <Button.Content>
-                <TextBlock Text="Добавить заявку на сегодня"
-                           TextWrapping="Wrap"
-                           TextAlignment="Center"/>
-            </Button.Content>
-        </Button>
-        <DataGrid ItemsSource="{Binding Orders}" Margin="10" Grid.Column="2" Grid.RowSpan="4"/>
+    <Grid>
+        <Grid DataContext="{StaticResource ViewModelOrder }">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="105*"/>
+                <ColumnDefinition Width="682*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" MinHeight="50"/>
+                <RowDefinition Height="auto" MinHeight="50"/>
+                <RowDefinition Height="auto" MinHeight="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
+            <Button x:Name="Menu" 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Content="Меню"
+                    Click="Menu_Click">
+            </Button>
+            <Button Content="Button" 
+                    Command="{Binding CommandGetOrdersOfDate}" 
+                    Grid.Row="2" 
+                    Grid.Column="1" />
+            <Button Content="Все заявки" 
+                    Grid.Row="1" 
+                    Command="{Binding CommandGetAllOrders}" 
+                    Grid.Column="1" />
+            <Button x:Name="addOrder"
+                    Click="AddOrder_Click" 
+                    Grid.Column="1" 
+                    Margin="0,0,0,219" 
+                    Grid.Row="3">
+                <Button.Content>
+                    <TextBlock Text="Добавить заявку на сегодня"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"/>
+                </Button.Content>
+            </Button>
+            <DataGrid ItemsSource="{Binding Orders}" 
+                      Margin="10,10,10,219" 
+                      Grid.Column="2" 
+                      Grid.RowSpan="4"/>
+            <Grid
+                Grid.Column="2" Margin="0,55,0,0" Grid.Row="3">
+                <Frame x:Name="frame"/>
+            </Grid>
+           
+
+        </Grid>
+       
     </Grid>
 </Window>
