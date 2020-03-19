@@ -22,6 +22,7 @@ using Moiro_Orders.ViewModel;
 using System.Net;
 using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
+using Moiro_Orders.XamlView;
 
 namespace Moiro_Orders
 {
@@ -74,8 +75,10 @@ namespace Moiro_Orders
             DirectoryEntry searchRoot;
 
             searchRoot = new DirectoryEntry("LDAP://" + "moiro.bel", null, null, AuthenticationTypes.Secure);
-            DirectorySearcher search = new DirectorySearcher(searchRoot);
-            search.Filter = "(&(objectClass=user)(objectCategory=person))";
+            DirectorySearcher search = new DirectorySearcher(searchRoot)
+            {
+                Filter = "(&(objectClass=user)(objectCategory=person))"
+            };
             search.PropertiesToLoad.Add("distinguishedname");
             SearchResult result, result2;
             SearchResultCollection resultCol = search.FindAll();
@@ -121,8 +124,10 @@ namespace Moiro_Orders
         {
             //допилить и разобраться
 
-                //frame.NavigationService.Navigate(new Uri("OrderView.xaml", UriKind.Relative));
-            frame.NavigationService.Navigate(new Uri("XamlView.UserView.xaml", UriKind.Relative));
+
+           // frameOrder.Navigate(typeofOrderView), "переход из MainPage");
+           
+            frameOrder.NavigationService.Navigate(new Uri("XamlView.UserView.xaml", UriKind.Relative));
             
         }
     }

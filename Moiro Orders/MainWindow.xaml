@@ -13,53 +13,50 @@
     <Grid>
         <Grid DataContext="{StaticResource ViewModelOrder }">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="105*"/>
-                <ColumnDefinition Width="682*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" MinHeight="50"/>
-                <RowDefinition Height="auto" MinHeight="50"/>
-                <RowDefinition Height="auto" MinHeight="50"/>
-                <RowDefinition/>
+
             </Grid.RowDefinitions>
 
-            <Button x:Name="Menu" 
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Content="Меню"
-                    Click="Menu_Click">
-            </Button>
-            <Button Content="Button" 
-                    Command="{Binding CommandGetOrdersOfDate}" 
-                    Grid.Row="2" 
-                    Grid.Column="1" />
-            <Button Content="Все заявки" 
-                    Grid.Row="1" 
-                    Command="{Binding CommandGetAllOrders}" 
-                    Grid.Column="1" />
-            <Button x:Name="addOrder"
-                    Click="AddOrder_Click" 
-                    Grid.Column="1" 
-                    Margin="0,0,0,219" 
-                    Grid.Row="3">
-                <Button.Content>
-                    <TextBlock Text="Добавить заявку на сегодня"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"/>
-                </Button.Content>
-            </Button>
-            <DataGrid ItemsSource="{Binding Orders}" 
-                      Margin="10,10,10,219" 
-                      Grid.Column="2" 
-                      Grid.RowSpan="4"/>
             <Grid
-                Grid.Column="2" Margin="0,55,0,0" Grid.Row="3">
-                <Frame x:Name="frame"/>
+                Grid.ColumnSpan="2">
+                <Frame x:Name="frameOrder"/>
             </Grid>
-           
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Background="Transparent"  Margin="5"
+                    BorderThickness="0"
+                    Click="Menu_Click" Grid.Row="0">
+                    <Grid>
+                        <Image Source="Resources/menu.png"/>
+                    </Grid>
+                </Button>
+                <Button Background="Transparent"  
+                        Margin="5"
+                        BorderThickness="0"
+                        Grid.Row="1">
+                    <Grid>
+                        <Image Source="Resources/orders.png"/>
+                    </Grid>
+                </Button>
+                <Button Background="Transparent"
+                        BorderThickness="0"
+                        Margin="5"
+                        Grid.Row="2">
+                    <Grid>
+                        <Image Source="Resources/events.png"/>
+                    </Grid>
+                </Button>
+                
+            </Grid>
 
         </Grid>
-       
+
     </Grid>
 </Window>
