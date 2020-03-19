@@ -14,7 +14,7 @@ namespace Moiro_Orders.Controller
 {
     class UsersController
     {
-        public UsersController(){}
+        public UsersController() { }
 
         public async Task<HttpStatusCode> GetUserAsync(string login)
         {
@@ -26,7 +26,6 @@ namespace Moiro_Orders.Controller
 
                 PublicResources.Im = user;               
             }
-
             return response.StatusCode;
         }
 
@@ -40,11 +39,19 @@ namespace Moiro_Orders.Controller
                 user = await response.Content.ReadAsAsync<User>();
                 PublicResources.Im = user;
             }
-                
-            
-
-
             return user;
+        }
+
+        public async Task<List<User>> GetAllUserNameAsync()
+        {
+            HttpResponseMessage response = await PublicResources.client.GetAsync(
+                $"api/UsersAPI");
+            List<User> users = null;
+            if (response.IsSuccessStatusCode)
+            {
+                users = await response.Content.ReadAsAsync<List<User>>();
+            }
+            return users;
         }
     }
 }
