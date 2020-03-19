@@ -43,14 +43,14 @@ namespace Moiro_Orders
                     await currentUser.GetUserNameAsync("gybarev");
                     Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
                     InitializeComponent();
-                    DataContext = new OrderViewModel();
+                   // DataContext = new OrderViewModel();
                 }
                 GetUser().GetAwaiter();
             }
             else
             {
                 InitializeComponent();
-                DataContext = new OrderViewModel();
+                //DataContext = new OrderViewModel();
             }
         }
 
@@ -122,13 +122,25 @@ namespace Moiro_Orders
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            //допилить и разобраться
-
-
-           // frameOrder.Navigate(typeofOrderView), "переход из MainPage");
-           
-            frameOrder.NavigationService.Navigate(new Uri("XamlView.UserView.xaml", UriKind.Relative));
             
+           
+         
+            
+        }
+
+
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            frameOrder.NavigationService.Navigate(new Uri("XamlView/OrderView.xaml", UriKind.Relative));
+
+            //frameOrder.NavigationService.Navigate(new Uri("XamlView.UserView.xaml", UriKind.Relative));
+        }
+
+        
+
+        private void Users_Click(object sender, RoutedEventArgs e)
+        {
+            frameOrder.NavigationService.Navigate(new Uri("XamlView/UserView.xaml", UriKind.Relative));
         }
     }
 

@@ -29,6 +29,7 @@ namespace Moiro_Orders.ViewModel
                 RaisePropertyChanged();
             }
         }
+      
         public OrderViewModel()
         { }
 

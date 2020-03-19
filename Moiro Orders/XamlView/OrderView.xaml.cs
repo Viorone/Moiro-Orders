@@ -24,5 +24,15 @@ namespace Moiro_Orders.XamlView
         {
             InitializeComponent();
         }
+
+        private void AddAllOrders_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Отобразить элемент календаря
+        }
     }
 }

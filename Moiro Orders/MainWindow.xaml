@@ -21,11 +21,12 @@
             </Grid.RowDefinitions>
 
             <Grid
-                Grid.ColumnSpan="2">
+                Grid.Column="2">
                 <Frame x:Name="frameOrder"/>
             </Grid>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
@@ -39,8 +40,10 @@
                 </Button>
                 <Button Background="Transparent"  
                         Margin="5"
+                        x:Name="Orders"
                         BorderThickness="0"
-                        Grid.Row="1">
+                        Grid.Row="1"
+                        Click="Orders_Click">
                     <Grid>
                         <Image Source="Resources/orders.png"/>
                     </Grid>
@@ -53,9 +56,18 @@
                         <Image Source="Resources/events.png"/>
                     </Grid>
                 </Button>
-                
-            </Grid>
+                <Button Background="Transparent"
+                        BorderThickness="0"
+                        Margin="5"
+                        Grid.Row="3"
+                        x:Name="Users"
+                        Click="Users_Click">
+                    <Grid>
+                        <Image Source="Resources/sharp.png"/>
+                    </Grid>
+                </Button>
 
+            </Grid>
         </Grid>
 
     </Grid>

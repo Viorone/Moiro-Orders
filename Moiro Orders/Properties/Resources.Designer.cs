@@ -61,15 +61,6 @@ namespace Moiro_Orders.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
-        /// </summary>
-        public static string burgerIcon {
-            get {
-                return ResourceManager.GetString("burgerIcon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap events {
@@ -95,6 +86,16 @@ namespace Moiro_Orders.Properties {
         public static System.Drawing.Bitmap orders {
             get {
                 object obj = ResourceManager.GetObject("orders", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap sharp {
+            get {
+                object obj = ResourceManager.GetObject("sharp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
