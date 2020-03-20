@@ -15,7 +15,7 @@ namespace Moiro_Orders.Models
         public string FullName { get; set; }
         public string OrganizationalUnit { get; set; }
         public int Room { get; set; }
-        public DateTime LastLogin { get; set; }
+        public DateTime LastLogin { get; set; } = DateTime.Now;
         public bool Admin { get; set; }
 
         

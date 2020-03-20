@@ -44,7 +44,7 @@
                         BorderThickness="0"
                         Grid.Row="1"
 
-                        Click="AddOrder_Click">
+                        Click="Orders_Click">
 
                     <Grid>
                         <Image Source="Resources/orders.png"/>

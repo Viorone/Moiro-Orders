@@ -9,6 +9,14 @@
       Title="User">
 
     <Grid Background="LightBlue">
-        <Button Background="AliceBlue" Content="Гиганстская кнопка" Margin="76,68,87,88"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="194*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="31*"/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="logList">
+            
+        </ListBox>
+        <Button Background="AliceBlue" Content="Гиганстская кнопка" Margin="0,0,10,16" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="124"/>
     </Grid>
 </Page>
