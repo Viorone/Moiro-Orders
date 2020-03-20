@@ -18,5 +18,7 @@ namespace Moiro_Orders.Models
         public DateTime LastLogin { get; set; }
         public bool Admin { get; set; }
 
+        
+
     }
 }

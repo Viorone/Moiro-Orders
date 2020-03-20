@@ -74,24 +74,28 @@ namespace Moiro_Orders
 
             
 
-            async Task ChangeUsers()
+            async Task UpdateUsersDb()
             {
                 IAdmin admin = new CurrentUser();
 
-                List<User> users = new List<User>();
                 var tmp1 = admin.GetNewADUsersList();
                 var tmp2 = await admin.GetAllUserName();
-
-
-                var result = tmp1.Join(tmp2, ok => ok, ik => ik,(one, two) => new { one, two });
+                
+                var result = tmp1.Join(tmp2, ok => ok.Login, ik => ik.Login,(one, two) => new { one, two }).ToList();
                     tmp1.RemoveAll(x => result.Any(r => x == r.one));
                     tmp2.RemoveAll(x => result.Any(r => x == r.two));
 
-      
+                List<string> responses = new List<string>();
+                foreach (var var1 in tmp1)
+                {
+                    var response = await admin.UpdateUsersDb(var1);
+                    responses.Add(response.ToString());
+                }
 
+               
             }
 
-            ChangeUsers().GetAwaiter();
+            UpdateUsersDb().GetAwaiter();
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)

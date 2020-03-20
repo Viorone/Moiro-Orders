@@ -117,6 +117,13 @@ namespace Moiro_Orders.Roles
             UsersController usersController = new UsersController();
             var users = await usersController.GetAllUserNameAsync();
             return users;
-        }  
+        }
+
+        public async Task<HttpStatusCode> UpdateUsersDb(User user)
+        {
+            UsersController usersController = new UsersController();
+            var status = await usersController.UpdateUsersDbAsync(user);
+            return status;
+        }
     }
 }

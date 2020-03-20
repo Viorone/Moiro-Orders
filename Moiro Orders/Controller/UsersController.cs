@@ -53,6 +53,16 @@ namespace Moiro_Orders.Controller
             }
             return users;
         }
+
+        public async Task<HttpStatusCode> UpdateUsersDbAsync(User user)
+        {
+            HttpResponseMessage response = await PublicResources.client.PostAsJsonAsync(
+                "api/UsersAPI", user);
+            response.EnsureSuccessStatusCode();
+            return response.StatusCode;
+        }
+
+
     }
 }
 
