@@ -22,5 +22,9 @@ namespace Moiro_Orders.Roles
         Task<HttpStatusCode> CreatePublicChatMessage(PublicChat publicChat);
         Task<HttpStatusCode> EditPublicChatMessage(PublicChat publicChat);
         Task<HttpStatusCode> DeletePublicChatMessage(int id);
+
+        List<User> GetNewADUsersList();
+        Task<List<User>> GetAllUserName();
+        Task<HttpStatusCode> UpdateUsersDb(User user);
     }
 }

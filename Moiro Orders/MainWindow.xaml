@@ -43,7 +43,9 @@
                         x:Name="Orders"
                         BorderThickness="0"
                         Grid.Row="1"
-                        Click="Orders_Click">
+
+                        Click="AddOrder_Click">
+
                     <Grid>
                         <Image Source="Resources/orders.png"/>
                     </Grid>
