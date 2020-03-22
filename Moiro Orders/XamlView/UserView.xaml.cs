@@ -47,9 +47,7 @@ namespace Moiro_Orders.XamlView
                     var response = await admin.UpdateUsersDb(var1);
                     responses.Add(response.ToString());
                     logList.Items.Add(response.ToString());
-                }
-
-               
+                }               
             }
             UpdateUsersDb().GetAwaiter();
         }

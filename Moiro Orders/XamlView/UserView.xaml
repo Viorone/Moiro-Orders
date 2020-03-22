@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="User">
 
-    <Grid Background="LightBlue">
+    <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="194*"/>
             <RowDefinition Height="0*"/>
@@ -17,6 +17,6 @@
         <ListBox x:Name="logList">
             
         </ListBox>
-        <Button Background="AliceBlue" Content="Гиганстская кнопка" Margin="0,0,10,16" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="124"/>
+        <Button Background="AliceBlue" Foreground="Black" Content="Гиганстская кнопка" Margin="0,0,10,16" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="124"/>
     </Grid>
 </Page>

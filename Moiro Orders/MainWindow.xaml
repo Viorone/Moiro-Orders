@@ -2,75 +2,77 @@
         x:Class="Moiro_Orders.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Moiro_Orders"
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"  
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1080" Visibility="Visible" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <ViewModel:UserViewModel x:Key="UserModel"/>
     </Window.Resources>
-    <Grid>
-        <Grid DataContext="{StaticResource ViewModelOrder }">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
 
-            </Grid.RowDefinitions>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+    </Window.Triggers>
 
-            <Grid
-                Grid.Column="2">
-                <Frame x:Name="frameOrder"/>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
-                <Button Background="Transparent"  Margin="5"
-                    BorderThickness="0"
-                    Click="Menu_Click" Grid.Row="0">
-                    <Grid>
-                        <Image Source="Resources/menu.png"/>
-                    </Grid>
-                </Button>
-                <Button Background="Transparent"  
-                        Margin="5"
-                        x:Name="Orders"
-                        BorderThickness="0"
-                        Grid.Row="1"
-
-                        Click="Orders_Click">
-
-                    <Grid>
-                        <Image Source="Resources/orders.png"/>
-                    </Grid>
-                </Button>
-                <Button Background="Transparent"
-                        BorderThickness="0"
-                        Margin="5"
-                        Grid.Row="2">
-                    <Grid>
-                        <Image Source="Resources/events.png"/>
-                    </Grid>
-                </Button>
-                <Button Background="Transparent"
-                        BorderThickness="0"
-                        Margin="5"
-                        Grid.Row="3"
-                        x:Name="Users"
-                        Click="Users_Click">
-                    <Grid>
-                        <Image Source="Resources/sharp.png"/>
-                    </Grid>
-                </Button>
-
-            </Grid>
+    <Grid DataContext="{StaticResource ViewModelOrder }">
+        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="Indigo" Panel.ZIndex="99" Grid.Row="1">
+            <StackPanel>
+                <Grid Height="150" Background="White">
+                    <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click">
+                        <materialDesign:PackIcon Foreground="Black" Kind="ArrowLeft"  Width="25" Height="25"/>
+                    </Button>
+                    <Button x:Name="OpenMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
+                        <materialDesign:PackIcon Foreground="Black" Kind="Menu" Width="25" Height="25"/>
+                    </Button>
+                </Grid>
+                
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                    <ListViewItem x:Name="Orders" Height="60" MouseDoubleClick="Orders_MouseDoubleClick">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="Build" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Orders" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60" >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="EventNote" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Events" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="Users" Height="60" MouseDoubleClick="Users_MouseDoubleClick">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="Face" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="AdminPanel" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    
+                </ListView>
+            </StackPanel>
         </Grid>
 
+        <Grid Background="LightGray" Width="auto" Margin="60 0 0 0" Panel.ZIndex="1">
+            <Frame x:Name="frameOrder"/>
+        </Grid>
     </Grid>
 </Window>
