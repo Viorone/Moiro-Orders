@@ -1,26 +1,20 @@
-﻿using Moiro_Orders.Models;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
-using static Moiro_Orders.MainWindow;
 
 namespace Moiro_Orders.ViewModel
 {
     public class OrderViewModel : INotifyPropertyChanged
     {
+        public OrderViewModel() { }
 
         public ObservableCollection<Order> _orders = new ObservableCollection<Order>();
-        public DateTime date;
         public ObservableCollection<Order> Orders
         {
             get { return _orders; }
@@ -31,12 +25,9 @@ namespace Moiro_Orders.ViewModel
             }
         }
 
-        public OrderViewModel()
-        { }
-
         #region ICommand and external set data
         private AsyncDelegateCommand _commandGetAllOrders;
-        private AsyncDelegateCommand _commandGetAllOrders1;
+
         public ICommand CommandGetAllOrders
         {
             get
@@ -48,21 +39,22 @@ namespace Moiro_Orders.ViewModel
                 return _commandGetAllOrders;
             }
         }
-        public ICommand CommandGetOrdersOfDate
+
+
+        private RelayCommand doubleCommand;
+        public RelayCommand DoubleCommand
         {
-            set {
-                date = Convert.ToDateTime( value);
-            }
             get
             {
-                if (_commandGetAllOrders1 == null)
-                {
-                    _commandGetAllOrders1 = new AsyncDelegateCommand(GetOrdersOfDate);
-                }
-                return _commandGetAllOrders1;
+
+                return doubleCommand;
             }
         }
-        private async Task GetAllOrdres(object o)
+
+
+
+
+        private async Task GetAllOrdres(object a)
         {
             if(PublicResources.Im.Admin)
             {
@@ -77,24 +69,25 @@ namespace Moiro_Orders.ViewModel
                 Orders = new ObservableCollection<Order>(orders);            
             }                   
         }
-        private async Task GetOrdersOfDate(object o)
-        {
-            IUser user = new CurrentUser(); 
-            var orders = await user.GetOrdersListOfDate( PublicResources.Im.Id, DateTime.Now);
-            Orders = new ObservableCollection<Order>(orders);
-        }
-        public ICommand ShowMessageBox
-        {
-            set
-            {
-                
-            }
-            get
-            {
-                MessageBox.Show("wegkl;wejgf");
-                return value;
-            }
-        }
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
         #region MVVM related        
         private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5

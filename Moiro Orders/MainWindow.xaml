@@ -39,16 +39,16 @@
         <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="Indigo" Panel.ZIndex="99" Grid.Row="1">
             <StackPanel>
                 <Grid Height="150" Background="Indigo" >
-                    <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
+                    <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="Indigo" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
                         <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft"  Width="25" Height="25"/>
                     </Button>
-                    <Button x:Name="OpenMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
+                    <Button x:Name="OpenMenuButton" Width="60" Height="60" Background="Indigo" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
                         <materialDesign:PackIcon Foreground="White" Kind="Menu" Width="25" Height="25"/>
                     </Button>
                 </Grid>
                 
                 <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-                    <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseDoubleClick">
+                    <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Assignment" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Заявки" VerticalAlignment="Center" Margin="20 10"/>
@@ -60,7 +60,7 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Мероприятия" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseDoubleClick">
+                    <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Face" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
@@ -73,9 +73,8 @@
 
         <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
             <StackPanel x:Name="mainView">
-                
+
             </StackPanel>
-            <!--<Frame x:Name="frameOrder"/>-->
         </Grid>
     </Grid>
 </Window>
