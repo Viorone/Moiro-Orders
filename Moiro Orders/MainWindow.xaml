@@ -13,13 +13,13 @@
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="200"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="MenuClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="60"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
@@ -39,7 +39,7 @@
         <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="Indigo" Panel.ZIndex="99" Grid.Row="1">
             <StackPanel>
                 <Grid Height="150" Background="White">
-                    <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click">
+                    <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
                         <materialDesign:PackIcon Foreground="Black" Kind="ArrowLeft"  Width="25" Height="25"/>
                     </Button>
                     <Button x:Name="OpenMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
@@ -48,22 +48,22 @@
                 </Grid>
                 
                 <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-                    <ListViewItem x:Name="Orders" Height="60" MouseDoubleClick="Orders_MouseDoubleClick">
+                    <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseDoubleClick">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Build" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
-                            <TextBlock Foreground="LightGray" FontSize="18" Text="Orders" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Заявки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="EventNote" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
-                            <TextBlock Foreground="LightGray" FontSize="18" Text="Events" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Мероприятия" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Users" Height="60" MouseDoubleClick="Users_MouseDoubleClick">
+                    <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseDoubleClick">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Face" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
-                            <TextBlock Foreground="LightGray" FontSize="18" Text="AdminPanel" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
                     

@@ -34,23 +34,20 @@ namespace Moiro_Orders
 
         public MainWindow()
         {
-
             if (PublicResources.Im.FullName == null)
             {
                 UsersController currentUser = new UsersController();
                 async Task GetUser()
                 {
-                    await currentUser.GetUserNameAsync("gybarev");
+                    await currentUser.GetUserNameAsync(Environment.UserName);
                     Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
                     InitializeComponent();
-                   // DataContext = new OrderViewModel();
                 }
                 GetUser().GetAwaiter();
             }
             else
             {
                 InitializeComponent();
-                //DataContext = new OrderViewModel();
             }
         }
 
@@ -70,13 +67,8 @@ namespace Moiro_Orders
             //    var status =  await user.CreateOrder(tmp);
             //    MessageBox.Show(status.ToString());
             //}
-            //CreateOrder().GetAwaiter();
-
-            
-
-           
+            //CreateOrder().GetAwaiter();        
         }
-
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -98,6 +90,12 @@ namespace Moiro_Orders
         private void Users_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             frameOrder.NavigationService.Navigate(new Uri("XamlView/UserView.xaml", UriKind.Relative));
+        }
+
+        private void CloseMenuButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            
+           
         }
     }
 

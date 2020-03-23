@@ -7,15 +7,16 @@
       xmlns:local="clr-namespace:Moiro_Orders.XamlView"
       xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="1020" HorizontalAlignment="Right"
+ 
       Title="OrderView">
     <Page.Resources>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
     </Page.Resources>
     <Grid Margin="5" 
-           DataContext="{StaticResource ViewModelOrder}">
+           DataContext="{StaticResource ViewModelOrder}"
+          Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="60*"/>
             <RowDefinition Height="45*"/>
             <RowDefinition Height="45*"/>
             <RowDefinition Height="45*"/>
@@ -23,13 +24,14 @@
             <RowDefinition Height="210*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*"/>
-            <ColumnDefinition Width="230*"/>
+            <ColumnDefinition Width="155"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ListBox Grid.Column="1" 
                  Grid.Row="1" 
-                 Grid.RowSpan="5"
-                ItemsSource="{Binding Orders}">
+                 Grid.RowSpan="2"
+                ItemsSource="{Binding Orders}"
+                 x:Name="listOrders">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
@@ -40,19 +42,28 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button  Grid.Column="1" Grid.Row="0" 
-                Content="Ткущая дата и надо свзять с календарём"
+        <DatePicker Grid.Column="1" x:Name="datePick" Grid.Row="0" Width="auto"
+                    FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" SelectedDateChanged="DatePicker_SelectedDatesChanged" >
+            
+            
+        </DatePicker>
+
+        <!--
+         <Button  Grid.Column="1" Grid.Row="0" Content="Ткущая дата и надо свзять с календарём"
                  Command="{Binding CommandGetOrdersOfDate}"
-                 Click="Button_Click"/>
-        <Button Grid.Row="1"
+                 Click="Button_Click" Height="Auto"/>
+            -->
+            <Button Grid.Row="1"
                 Content="Добавить заявку" Foreground="Black"
                 BorderThickness="0"
                 Background="Transparent"
                 x:Name="addAllOrders"
-                Click="AddAllOrders_Click"/>
+                Click="AddAllOrders_Click" Height="Auto"/>
         <Button Grid.Row="2"
                 BorderThickness="0"
                 Content="Отменить заявку" Foreground="Black"
-                Background="Transparent"/>
+                Background="Transparent" Height="Auto"/>
+        
     </Grid>
 </Page>
+  
