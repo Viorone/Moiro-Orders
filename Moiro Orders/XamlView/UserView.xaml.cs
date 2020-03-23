@@ -20,7 +20,7 @@ namespace Moiro_Orders.XamlView
     /// <summary>
     /// Логика взаимодействия для User.xaml
     /// </summary>
-    public partial class UserView : Page
+    public partial class UserView : UserControl
     {
         public UserView()
         {

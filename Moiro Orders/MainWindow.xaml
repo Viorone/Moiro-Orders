@@ -38,19 +38,19 @@
     <Grid DataContext="{StaticResource ViewModelOrder }">
         <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="Indigo" Panel.ZIndex="99" Grid.Row="1">
             <StackPanel>
-                <Grid Height="150" Background="White">
+                <Grid Height="150" Background="Indigo" >
                     <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
-                        <materialDesign:PackIcon Foreground="Black" Kind="ArrowLeft"  Width="25" Height="25"/>
+                        <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft"  Width="25" Height="25"/>
                     </Button>
                     <Button x:Name="OpenMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
-                        <materialDesign:PackIcon Foreground="Black" Kind="Menu" Width="25" Height="25"/>
+                        <materialDesign:PackIcon Foreground="White" Kind="Menu" Width="25" Height="25"/>
                     </Button>
                 </Grid>
                 
                 <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                     <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseDoubleClick">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Foreground="LightGray" Kind="Build" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="Assignment" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Заявки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
@@ -71,8 +71,11 @@
             </StackPanel>
         </Grid>
 
-        <Grid Background="LightGray" Width="auto" Margin="60 0 0 0" Panel.ZIndex="1">
-            <Frame x:Name="frameOrder"/>
+        <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
+            <StackPanel x:Name="mainView">
+                
+            </StackPanel>
+            <!--<Frame x:Name="frameOrder"/>-->
         </Grid>
     </Grid>
 </Window>

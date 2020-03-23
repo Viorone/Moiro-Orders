@@ -1,4 +1,4 @@
-﻿<Page x:Class="Moiro_Orders.XamlView.OrderView"
+﻿<UserControl x:Class="Moiro_Orders.XamlView.OrderView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,10 +8,10 @@
       xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"
       mc:Ignorable="d" 
  
-      Title="OrderView">
-    <Page.Resources>
+     >
+    <UserControl.Resources>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
-    </Page.Resources>
+    </UserControl.Resources>
     <Grid Margin="5" 
            DataContext="{StaticResource ViewModelOrder}"
           Background="AliceBlue">
@@ -42,28 +42,23 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <DatePicker Grid.Column="1" x:Name="datePick" Grid.Row="0" Width="auto"
-                    FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" SelectedDateChanged="DatePicker_SelectedDatesChanged" >
-            
-            
-        </DatePicker>
+        <StackPanel Grid.Column="1" Orientation="Horizontal"  Grid.Row="0" >
 
+            <TextBlock Text="Выберите дату:" Height="50" Margin="0,30,30,0" FontSize="18" FontFamily="Roboto"  FontWeight="Bold" />
+            <DatePicker  x:Name="datePick" Width="auto" Height="40" FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" SelectedDate="{Binding ShowMessageBox}" HorizontalAlignment="Left" Background="Indigo">
+               
+            </DatePicker>
+
+            <Button  Content="CLICK!!!!" Command="{Binding CommandGetOrdersOfDate}"></Button>
+        </StackPanel>
         <!--
          <Button  Grid.Column="1" Grid.Row="0" Content="Ткущая дата и надо свзять с календарём"
                  Command="{Binding CommandGetOrdersOfDate}"
                  Click="Button_Click" Height="Auto"/>
             -->
-            <Button Grid.Row="1"
-                Content="Добавить заявку" Foreground="Black"
-                BorderThickness="0"
-                Background="Transparent"
-                x:Name="addAllOrders"
-                Click="AddAllOrders_Click" Height="Auto"/>
-        <Button Grid.Row="2"
-                BorderThickness="0"
-                Content="Отменить заявку" Foreground="Black"
-                Background="Transparent" Height="Auto"/>
+        <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="AddAllOrders_Click" Height="Auto" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+        <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="Auto"/>
         
     </Grid>
-</Page>
+</UserControl>
   

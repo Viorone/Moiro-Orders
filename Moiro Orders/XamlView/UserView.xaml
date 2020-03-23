@@ -1,12 +1,9 @@
-﻿<Page x:Class="Moiro_Orders.XamlView.UserView"
+﻿<UserControl x:Class="Moiro_Orders.XamlView.UserView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-     
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="User">
+      mc:Ignorable="d" >
 
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
@@ -17,6 +14,6 @@
         <ListBox x:Name="logList">
             
         </ListBox>
-        <Button Background="AliceBlue" Foreground="Black" Content="Гиганстская кнопка" Margin="0,0,10,16" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="124"/>
+        <Button Background="AliceBlue" Foreground="Black" Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
     </Grid>
-</Page>
+</UserControl>

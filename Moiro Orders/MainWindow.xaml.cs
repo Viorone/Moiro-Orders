@@ -84,18 +84,29 @@ namespace Moiro_Orders
 
         private void Orders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            frameOrder.NavigationService.Navigate(new Uri("XamlView/OrderView.xaml", UriKind.Relative));
+            SwitchScreen(new OrderView());
+            //frameOrder.NavigationService.Navigate(new Uri("XamlView/OrderView.xaml", UriKind.Relative));
         }
 
         private void Users_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            frameOrder.NavigationService.Navigate(new Uri("XamlView/UserView.xaml", UriKind.Relative));
+            SwitchScreen(new UserView());
+            //frameOrder.NavigationService.Navigate(new Uri("XamlView/UserView.xaml", UriKind.Relative));
         }
 
         private void CloseMenuButton_MouseEnter(object sender, MouseEventArgs e)
         {
             
            
+        }
+        internal void SwitchScreen(object sender)
+        {
+            var clicl = (UserControl)sender;
+            if (clicl!=null)
+            {
+                mainView.Children.Clear();
+                mainView.Children.Add(clicl);
+            }
         }
     }
 

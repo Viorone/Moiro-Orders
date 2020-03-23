@@ -21,11 +21,12 @@ namespace Moiro_Orders.XamlView
     /// <summary>
     /// Логика взаимодействия для OrderView.xaml
     /// </summary>
-    public partial class OrderView : Page
+    public partial class OrderView : UserControl
     {
         public OrderView()
         {
             InitializeComponent();
+          //  datePick.SelectedDate = DateTime.Now;
         }
 
         public ObservableCollection<Order> Orders { get; private set; }
@@ -49,28 +50,37 @@ namespace Moiro_Orders.XamlView
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Отобразить элемент календаря
+           
+           
         }
 
         private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime? selectedDate = datePick.SelectedDate;
-
-            var selectDate = selectedDate.Value.Date;
-            async Task GetOrdersOfDate()
+            if (selectedDate != null)
             {
-                IUser user = new CurrentUser();
-                var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
-                Orders = new ObservableCollection<Order>(orders);
-                foreach (var tmp in Orders)
+                var selectDate = selectedDate.Value.Date;
+                async Task GetOrdersOfDate()
                 {
-                    listOrders.Items.Add(tmp);
-                    MessageBox.Show(tmp.Status);
+                    IUser user = new CurrentUser();
+                    var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
+                    ObservableCollection<Order> orders1 = new ObservableCollection<Order>(orders);
+                    Orders = orders1;
+                    //MessageBox.Show(orders[0].Description);
+                    //foreach (var tmp in orders1)
+                    //{
+                      
+                    //    MessageBox.Show(tmp.Status);
+                    //}
                 }
+                GetOrdersOfDate().GetAwaiter();
             }
-             GetOrdersOfDate().GetAwaiter();
 
         }
-        
+
+        private void KeyBinding_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("dfbgdfnh");
+        }
     }
 }

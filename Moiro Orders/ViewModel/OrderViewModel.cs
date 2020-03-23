@@ -20,16 +20,17 @@ namespace Moiro_Orders.ViewModel
     {
 
         public ObservableCollection<Order> _orders = new ObservableCollection<Order>();
+        public DateTime date;
         public ObservableCollection<Order> Orders
         {
             get { return _orders; }
             set
             {
-                _orders= value;
+                _orders = value;
                 RaisePropertyChanged();
             }
         }
-      
+
         public OrderViewModel()
         { }
 
@@ -49,6 +50,9 @@ namespace Moiro_Orders.ViewModel
         }
         public ICommand CommandGetOrdersOfDate
         {
+            set {
+                date = Convert.ToDateTime( value);
+            }
             get
             {
                 if (_commandGetAllOrders1 == null)
@@ -76,8 +80,20 @@ namespace Moiro_Orders.ViewModel
         private async Task GetOrdersOfDate(object o)
         {
             IUser user = new CurrentUser(); 
-            var orders = await user.GetOrdersListOfDate( PublicResources.Im.Id, new DateTime(2020,3,12));
+            var orders = await user.GetOrdersListOfDate( PublicResources.Im.Id, DateTime.Now);
             Orders = new ObservableCollection<Order>(orders);
+        }
+        public ICommand ShowMessageBox
+        {
+            set
+            {
+                
+            }
+            get
+            {
+                MessageBox.Show("wegkl;wejgf");
+                return value;
+            }
         }
         #endregion
         #region MVVM related        
