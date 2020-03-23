@@ -77,29 +77,36 @@ namespace Moiro_Orders
            
         }
 
-        private void Menu_Click(object sender, RoutedEventArgs e)
+
+        private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            
-           
-         
-            
+            OpenMenuButton.Visibility = Visibility.Collapsed;
+            CloseMenuButton.Visibility = Visibility.Visible;
         }
 
+        private void CloseMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenMenuButton.Visibility = Visibility.Visible;
+            CloseMenuButton.Visibility = Visibility.Collapsed;
+        }
 
-        private void Orders_Click(object sender, RoutedEventArgs e)
+        private void Orders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             frameOrder.NavigationService.Navigate(new Uri("XamlView/OrderView.xaml", UriKind.Relative));
-
-            //frameOrder.NavigationService.Navigate(new Uri("XamlView.UserView.xaml", UriKind.Relative));
         }
 
-        
-
-        private void Users_Click(object sender, RoutedEventArgs e)
+        private void Users_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             frameOrder.NavigationService.Navigate(new Uri("XamlView/UserView.xaml", UriKind.Relative));
         }
     }
+
+
+
+
+
+
+
 
 
 
