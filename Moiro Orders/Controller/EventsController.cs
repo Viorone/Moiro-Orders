@@ -24,8 +24,31 @@ namespace Moiro_Orders.Controller
             response.EnsureSuccessStatusCode();
             return response.StatusCode;
         }
-       
-       public async Task<List<Event>> GetAllEventsAsync(int count, int id)
+
+        public async Task<List<Event>> GetEventsListOfDateAsync(int userId, DateTime date)
+        {
+            string d = date.ToString();
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/EventsAPI?userId={userId}&date={d}");
+            List<Event> events = null;
+            if (response.IsSuccessStatusCode)
+            {
+                events = await response.Content.ReadAsAsync<List<Event>>();
+            }
+            return events;
+        }
+        public async Task<List<Event>> GetAllEventsTodayAsync(DateTime date)
+        {
+            string d = date.ToString();
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/EventsAPI?date={date}");
+            List<Event> events = null;
+            if (response.IsSuccessStatusCode)
+            {
+                events = await response.Content.ReadAsAsync<List<Event>>();
+            }
+            return events;
+        }
+
+        public async Task<List<Event>> GetAllEventsAsync(int count, int id)
         {
             HttpResponseMessage response = await PublicResources.client.GetAsync(
                 $"api/EventsAPI?userId={id}&count={count}");

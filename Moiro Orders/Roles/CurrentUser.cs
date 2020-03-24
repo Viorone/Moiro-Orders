@@ -31,6 +31,18 @@ namespace Moiro_Orders.Roles
             return events;
         }
 
+        public async Task<List<Event>> GetEventsListOfDate(int userId, DateTime date)
+        {
+            var events = await eventsController.GetEventsListOfDateAsync(userId, date);
+            return events;
+        }
+
+        public async Task<List<Event>> GetAllEventsToday(DateTime date)
+        {
+            var events = await eventsController.GetAllEventsTodayAsync(date);
+            return events;
+        }
+
         public async Task<HttpStatusCode> EditEvent(Event @event)
         {
             var status = await eventsController.UpdateEvetntAsync(@event);
@@ -105,6 +117,7 @@ namespace Moiro_Orders.Roles
             return status;
         }
 
+        //Users
         public List<User> GetNewADUsersList()
         {
             ActiveDyrectoryController activeDyrectoryController = new ActiveDyrectoryController();

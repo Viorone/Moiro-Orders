@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Moiro_Orders.XamlView.EventView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Moiro_Orders.XamlView"
+             mc:Ignorable="d" >
+    <Grid 
+          
+          Background="AliceBlue" >
+        <Grid>
+
+            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
+                <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
+                <DatePicker  x:Name="datePick" Width="250" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="datePick_SelectedDateChanged">
+                    <DatePicker.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="MinHeight" Value="35"  />
+                            <Setter Property="MinWidth" Value="35" />
+                           
+                        </Style>
+                       
+                    </DatePicker.Resources>
+                </DatePicker>
+            </StackPanel>
+
+
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" ItemsSource="{Binding Orders}" 
+                     x:Name="listEvents"  Margin="10,100">
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                   
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                 Value="True">
+                                            <Setter Property="BorderBrush" Value="Indigo" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                          
+                       
+                            <Grid Margin="5"  Background="Transparent" >
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="10*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80*"/>
+                                    <ColumnDefinition Width="20*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock FontSize="22" Text="{Binding Path=Problem}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+
+                                <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
+                                <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
+                                <TextBlock Text="{Binding Path=UserId}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
+                                <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+            <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="addAllEvents_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+            <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
+           
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

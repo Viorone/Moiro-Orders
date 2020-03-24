@@ -12,6 +12,8 @@ namespace Moiro_Orders.Roles
     {
         Task<List<Event>> GetEventsList(int count, int id);  //Get Events list by current user
         Task<HttpStatusCode> EditEvent(Event @event); //Change Event Status
+        Task<List<Event>> GetAllEventsToday(DateTime date);
+        Task<List<Event>> GetEventsListOfDate(int userId, DateTime date); //Get Orders list by current date
 
         Task<List<Order>> GetOrdersList(int count, int id); //Get Orders list by current user
         Task<List<Order>> GetAllOrdersToday(DateTime date);

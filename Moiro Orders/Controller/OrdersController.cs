@@ -36,7 +36,6 @@ namespace Moiro_Orders.Controller
             }
             return orders;
         }
-        // изменить контроллер на серваке
         public async Task<List<Order>> GetAllOrdersTodayAsync( DateTime date)
         {
             string d = date.ToString();

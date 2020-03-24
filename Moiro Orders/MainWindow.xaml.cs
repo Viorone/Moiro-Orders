@@ -76,6 +76,18 @@ namespace Moiro_Orders
             SwitchScreen(new UserView());
         }
 
+        private void Events_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (PublicResources.Im.Admin)
+            {
+                SwitchScreen(new EventView());
+            }
+            else
+            {
+                MessageBox.Show("У Вас совсем нет прав! Грустно, но такова жизнь...");
+            }
+        }
+
         internal void SwitchScreen(object sender)
         {
             var clicl = (UserControl)sender;
@@ -86,6 +98,8 @@ namespace Moiro_Orders
              
             }
         }
+
+       
     }
 
 
