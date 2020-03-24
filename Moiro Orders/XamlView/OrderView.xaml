@@ -15,7 +15,7 @@
         <Storyboard x:Key="OrderDetailsOpen" >
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrdersList" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="1" />
@@ -25,7 +25,7 @@
         <Storyboard x:Key="OrderDetailsClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY"  Storyboard.TargetName="OrderDetails">
                 <EasingDoubleKeyFrame  KeyTime="0" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrdersList" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
@@ -48,8 +48,8 @@
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue" >
             <Grid>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
-                    <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
-                    <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
+                    <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
+                    <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="MinHeight" Value="35"  />
@@ -63,9 +63,11 @@
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" ItemsSource="{Binding Orders}" 
-                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,70">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,100">
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        
                             <Border>
                                 <Border.Style>
                                     <Style TargetType="Border">
@@ -75,7 +77,7 @@
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
-                                                <Setter Property="BorderBrush" Value="Indigo" />
+                                                <Setter Property="BorderBrush" Value="#FF3F51B5" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -94,9 +96,9 @@
                                         <ColumnDefinition Width="20*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="22" Text="{Binding Path=Problem}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                    <TextBlock FontSize="22" Text="{Binding Path=Problem}" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
-                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
+                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="14" />
                                     <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
                                     <TextBlock Text="{Binding Path=UserId}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
                                     <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
@@ -107,8 +109,8 @@
                 </ListBox>
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addOrder" Click="AddOrder_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
-                <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
+                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addOrder" Click="AddOrder_Click" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+                <Button Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
 
                 <Button Content="2x" Height="40" Margin="5">
                     <i:Interaction.Triggers>
@@ -126,12 +128,13 @@
            
                 <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="10" Margin="10">
                     <Grid>
-                    <StackPanel >
-                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
-                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
-                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
-                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
-                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
+                    <StackPanel Margin="10" >
+                        <TextBlock Text="Заявка будет подана от :" FontSize="20" FontFamily="Segoe UI Light" Margin="0,20,0,0"/>
+                        <TextBox Text="" FontSize="18" FontFamily="Segoe UI Light" />
+                        <TextBlock Text="Укажите проблему :" FontSize="20" FontFamily="Segoe UI Light" Margin="0,20,0,0"/>
+                        <TextBox Text="" FontSize="18" FontFamily="Segoe UI Light"/>
+                        <TextBlock Text="Здесь можете указать дополнительное описание проблемы :"  Margin="0,20,0,0" FontSize="20" FontFamily="Segoe UI Light"/>
+                        <TextBox TextWrapping="Wrap" Text="" FontSize="18" FontFamily="Segoe UI Light" />
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="backToOrderList"  Height="40" Click="BackToOrderList_Click" Margin="10"/>

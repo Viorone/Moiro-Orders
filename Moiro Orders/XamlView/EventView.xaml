@@ -40,7 +40,7 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
-                                            <Setter Property="BorderBrush" Value="Indigo" />
+                                            <Setter Property="BorderBrush" Value="#FF3F51B5" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -75,8 +75,8 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
-            <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="addAllEvents_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
-            <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
+            <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="addAllEvents_Click" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+            <Button Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
            
             
         </StackPanel>

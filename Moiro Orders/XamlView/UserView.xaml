@@ -14,6 +14,6 @@
         <ListBox x:Name="logList">
             
         </ListBox>
-        <Button Background="AliceBlue" Foreground="Black" Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
+        <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
     </Grid>
 </UserControl>

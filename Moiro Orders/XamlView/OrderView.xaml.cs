@@ -36,8 +36,6 @@ namespace Moiro_Orders.XamlView
         }
 
 
-
-
         private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)    //Рабочий метод (Не удалять!)
         {
             DateTime? selectedDate = datePick.SelectedDate;
@@ -66,14 +64,7 @@ namespace Moiro_Orders.XamlView
                     var orders = await admin.GetAllOrdersToday(selectDate);
                     listOrders.ItemsSource = orders;
                 }
-
             }
-
-        }
-
-        private void ListOrders_Selected(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void ListOrders_Selected(object sender, SelectionChangedEventArgs e)
@@ -82,23 +73,15 @@ namespace Moiro_Orders.XamlView
             //MessageBox.Show(model.Description);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+      
         private void AddOrder_Click(object sender, RoutedEventArgs e)
         {
-         
-            
-        
+         //просто нужный клик
         }
 
         private void BackToOrderList_Click(object sender, RoutedEventArgs e)
         {
-          
-           
-           
+            //просто нужный клик
         }
     }
 }

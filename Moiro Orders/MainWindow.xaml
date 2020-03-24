@@ -36,13 +36,13 @@
     </Window.Triggers>
 
     <Grid DataContext="{StaticResource ViewModelOrder }">
-        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="Indigo" Panel.ZIndex="99" Grid.Row="1">
+        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF3F51B5" Panel.ZIndex="99" Grid.Row="1">
             <StackPanel>
-                <Grid Height="150" Background="Indigo" >
-                    <Button x:Name="CloseMenuButton" Width="60" Height="60" Background="Indigo" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
+                <Grid Height="150" Background="#FF3F51B5" >
+                    <Button x:Name="CloseMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
                         <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft"  Width="25" Height="25"/>
                     </Button>
-                    <Button x:Name="OpenMenuButton" Width="60" Height="60" Background="Indigo" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
+                    <Button x:Name="OpenMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenMenuButton_Click">
                         <materialDesign:PackIcon Foreground="White" Kind="Menu" Width="25" Height="25"/>
                     </Button>
                 </Grid>

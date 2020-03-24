@@ -73,19 +73,22 @@ namespace Moiro_Orders
 
         private void Users_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SwitchScreen(new UserView());
-        }
-
-        private void Events_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
             if (PublicResources.Im.Admin)
             {
-                SwitchScreen(new EventView());
+                SwitchScreen(new UserView());
             }
             else
             {
                 MessageBox.Show("У Вас совсем нет прав! Грустно, но такова жизнь...");
             }
+           
+        }
+
+        private void Events_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+           
+                SwitchScreen(new EventView());
+           
         }
 
         internal void SwitchScreen(object sender)
