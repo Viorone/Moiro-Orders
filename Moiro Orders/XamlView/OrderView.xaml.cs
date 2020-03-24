@@ -18,10 +18,6 @@ namespace Moiro_Orders.XamlView
             datePick.SelectedDate = DateTime.Now;
         }
 
-
-
-
-
         private void AddAllOrders_Click(object sender, RoutedEventArgs e)   //Рабочий метод
         {
             async Task SetOrdersOfDate()
@@ -48,13 +44,29 @@ namespace Moiro_Orders.XamlView
             if (selectedDate != null)
             {
                 var selectDate = selectedDate.Value.Date;
-                async Task GetOrdersOfDate()
+                if (PublicResources.Im.Admin)
+                {
+                    GetOrdersOfDateAdmin().GetAwaiter();
+                }
+                else
+                {
+                    GetOrdersOfDateUser().GetAwaiter();
+                }
+
+                async Task GetOrdersOfDateUser()
                 {
                     IUser user = new CurrentUser();
                     var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
                     listOrders.ItemsSource = orders;
                 }
-                GetOrdersOfDate().GetAwaiter();
+
+                async Task GetOrdersOfDateAdmin()
+                {
+                    IAdmin admin = new CurrentUser();
+                    var orders = await admin.GetAllOrdersToday(selectDate);
+                    listOrders.ItemsSource = orders;
+                }
+
             }
 
         }

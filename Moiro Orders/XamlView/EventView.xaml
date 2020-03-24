@@ -12,7 +12,7 @@
 
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
                 <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
-                <DatePicker  x:Name="datePick" Width="250" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo">
+                <DatePicker  x:Name="datePick" Width="250" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="datePick_SelectedDateChanged">
                     <DatePicker.Resources>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="MinHeight" Value="35"  />
@@ -27,7 +27,7 @@
 
             <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" ItemsSource="{Binding Orders}" 
-                     x:Name="listOrders"  Margin="10,100">
+                     x:Name="listEvents"  Margin="10,100">
                 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -75,7 +75,7 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
-            <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="addAllOrders_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+            <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="addAllEvents_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
             <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
            
             
