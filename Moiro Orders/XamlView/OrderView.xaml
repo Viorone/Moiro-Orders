@@ -13,16 +13,23 @@
     <UserControl.Resources>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <Storyboard x:Key="OrderDetailsOpen" >
-
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrdersList" >
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.3"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="OrderDetailsClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY"  Storyboard.TargetName="OrderDetails">
                 <EasingDoubleKeyFrame  KeyTime="0" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrdersList" >
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
@@ -38,7 +45,7 @@
 
 
     <Grid>
-        <Grid x:Name="OrdersList"  DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue" >
+        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue" >
             <Grid>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
                     <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
@@ -112,32 +119,33 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <Grid x:Name="OrderDetails" VerticalAlignment="Stretch">
-            <Grid.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5"/>
-            </Grid.Background>
-            <Grid.RenderTransform>
-                <ScaleTransform ScaleY="1"/>
-            </Grid.RenderTransform>
-            <Grid Margin="0,0,0,50" Background="Transparent" >
-                <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="30" Margin="10">
+        <StackPanel x:Name="OrderDetails" VerticalAlignment="Stretch">
+            <StackPanel.RenderTransform>
+                <ScaleTransform ScaleY="0"/>
+            </StackPanel.RenderTransform>
+           
+                <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="10" Margin="10">
                     <Grid>
-                     <Grid >
-                    <TextBlock Text="rfrfz xnj byajhvfwbz" />
+                    <StackPanel >
+                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
+                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
+                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
+                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
+                        <TextBlock Text="rfrfz xnj byajhvfwbz" />
+
+                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Button Content="Назад" x:Name="backToOrderList"  Height="40" Click="BackToOrderList_Click" Margin="10"/>
+                            <Button Content="Таксама даадданне" Margin="10"  Height="40"/>
+
+                        </StackPanel>
+                    </StackPanel>
 
                 </Grid>
-
-                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Button Content="Назад" x:Name="backToOrderList"  Height="40" Click="BackToOrderList_Click" Margin="10"/>
-                    <Button Content="Таксама даадданне" Margin="10"  Height="40"/>
-                    
-                </StackPanel>
-                    </Grid>
                 </Border>
                
-            </Grid>
+          
 
-        </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>
   

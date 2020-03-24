@@ -71,7 +71,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
+        <Grid Background="Black" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
             <Grid x:Name="mainView">
                
             </Grid>
