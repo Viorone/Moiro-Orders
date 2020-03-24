@@ -11,6 +11,7 @@ namespace Moiro_Orders.Roles
     interface IUser
     {
         Task<List<Event>> GetEventsList(int count, int id);
+        Task<List<Event>> GetEventsListOfDate(int userId, DateTime date);
         Task<HttpStatusCode> CreateEvent(Event @event);
         Task<HttpStatusCode> EditEvent(Event @event);                      //поставить таймер на возможность редактирования (возможно на час)
         Task<HttpStatusCode> DeleteEvent(int id);                          //поставить таймер на возможность удаления (возможно на час)
