@@ -40,6 +40,7 @@ namespace Moiro_Orders
                 async Task GetUser()
                 {
                     await currentUser.GetUserNameAsync(Environment.UserName);
+                    //await currentUser.GetUserNameAsync("gybarev");
                     Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
                     InitializeComponent();
                 }
@@ -51,24 +52,9 @@ namespace Moiro_Orders
             }
         }
 
-        private void AddOrder_Click(object sender, RoutedEventArgs e)
-        {
-            //Order tmp = new Order
-            //{
-            //    UserId = 1,
-            //    Date = DateTime.Now,
-            //    Description = "Хьюстон у нас проблемы",
-            //    Problem = "Жопа",
-            //    Status = "могло бы быить и лучше"
-            //};
-            //IUser user = new CurrentUser();
-            //async Task CreateOrder()
-            //{
-            //    var status =  await user.CreateOrder(tmp);
-            //    MessageBox.Show(status.ToString());
-            //}
-            //CreateOrder().GetAwaiter();        
-        }
+
+
+
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -82,27 +68,20 @@ namespace Moiro_Orders
             CloseMenuButton.Visibility = Visibility.Collapsed;
         }
 
-        private void Orders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Orders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SwitchScreen(new OrderView());
-            //frameOrder.NavigationService.Navigate(new Uri("XamlView/OrderView.xaml", UriKind.Relative));
         }
 
-        private void Users_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Users_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SwitchScreen(new UserView());
-            //frameOrder.NavigationService.Navigate(new Uri("XamlView/UserView.xaml", UriKind.Relative));
         }
 
-        private void CloseMenuButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            
-           
-        }
         internal void SwitchScreen(object sender)
         {
             var clicl = (UserControl)sender;
-            if (clicl!=null)
+            if (clicl != null)
             {
                 mainView.Children.Clear();
                 mainView.Children.Add(clicl);

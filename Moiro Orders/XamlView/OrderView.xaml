@@ -6,7 +6,8 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:Moiro_Orders.XamlView"
       xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"
-      mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
  
      >
     <UserControl.Resources>
@@ -31,7 +32,7 @@
                  Grid.Row="1" 
                  Grid.RowSpan="2"
                 ItemsSource="{Binding Orders}"
-                 x:Name="listOrders">
+                 x:Name="listOrders" HorizontalAlignment="Center">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
@@ -42,23 +43,28 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Column="1" Orientation="Horizontal"  Grid.Row="0" >
-
-            <TextBlock Text="Выберите дату:" Height="50" Margin="0,30,30,0" FontSize="18" FontFamily="Roboto"  FontWeight="Bold" />
-            <DatePicker  x:Name="datePick" Width="auto" Height="40" FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" SelectedDate="{Binding ShowMessageBox}" HorizontalAlignment="Left" Background="Indigo">
-               
+        <StackPanel Grid.Column="1" Orientation="Horizontal"  Grid.Row="0" HorizontalAlignment="Center">
+            <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
+            <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
+                <DatePicker.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="MinHeight" Value="35"  />
+                        <Setter Property="MinWidth" Value="35" />
+                    </Style>
+                </DatePicker.Resources>
             </DatePicker>
-
-            <Button  Content="CLICK!!!!" Command="{Binding CommandGetOrdersOfDate}"></Button>
         </StackPanel>
-        <!--
-         <Button  Grid.Column="1" Grid.Row="0" Content="Ткущая дата и надо свзять с календарём"
-                 Command="{Binding CommandGetOrdersOfDate}"
-                 Click="Button_Click" Height="Auto"/>
-            -->
-        <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="AddAllOrders_Click" Height="Auto" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
-        <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="Auto"/>
-        
+
+        <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="AddAllOrders_Click" Height="30" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+        <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="30"/>
+        <Button Content="2x">
+            <i:Interaction.Triggers>
+                <i:EventTrigger >
+                    <i:InvokeCommandAction 
+                Command="{Binding DoubleCommand}" CommandParameter="{Binding Orders}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
     </Grid>
 </UserControl>
   
