@@ -54,8 +54,6 @@ namespace Moiro_Orders
 
 
 
-
-
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
         {
             OpenMenuButton.Visibility = Visibility.Collapsed;

@@ -12,89 +12,132 @@
      >
     <UserControl.Resources>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
+        <Storyboard x:Key="OrderDetailsOpen" >
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OrderDetailsClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY"  Storyboard.TargetName="OrderDetails">
+                <EasingDoubleKeyFrame  KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
 
-    <Grid 
-           DataContext="{StaticResource ViewModelOrder}"
-          Background="AliceBlue" >
-        <Grid>
-
-            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
-                <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
-                <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
-                    <DatePicker.Resources>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="MinHeight" Value="35"  />
-                            <Setter Property="MinWidth" Value="35" />
-                           
-                        </Style>
-                       
-                    </DatePicker.Resources>
-                </DatePicker>
-            </StackPanel>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="addOrder">
+            <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="backToOrderList">
+            <BeginStoryboard Storyboard="{StaticResource OrderDetailsClose}" />
+        </EventTrigger>
+    </UserControl.Triggers>
 
 
-            <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
+    <Grid>
+        <Grid x:Name="OrdersList"  DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue" >
+            <Grid>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
+                    <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
+                    <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
+                        <DatePicker.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="MinHeight" Value="35"  />
+                                <Setter Property="MinWidth" Value="35" />
+
+                            </Style>
+
+                        </DatePicker.Resources>
+                    </DatePicker>
+                </StackPanel>
+
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" ItemsSource="{Binding Orders}" 
                      x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,70">
-                
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border>
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="2" />
-                                    <Setter Property="BorderBrush" Value="Transparent" />
-                                   
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="Transparent" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
-                                            <Setter Property="BorderBrush" Value="Indigo" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                          
-                       
-                            <Grid Margin="5"  Background="Transparent" >
+                                                <Setter Property="BorderBrush" Value="Indigo" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <!-- Шаблон для добавления элементов -->
+                                <Grid Margin="5"  Background="Transparent" >
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="10*"/>
-                                    <RowDefinition Height="10*"/>
-                                    <RowDefinition Height="10*"/>
-                                    <RowDefinition Height="10*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80*"/>
-                                    <ColumnDefinition Width="20*"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80*"/>
+                                        <ColumnDefinition Width="20*"/>
+                                    </Grid.ColumnDefinitions>
 
+                                    <TextBlock FontSize="22" Text="{Binding Path=Problem}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
-                                <TextBlock FontSize="22" Text="{Binding Path=Problem}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
+                                    <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
+                                    <TextBlock Text="{Binding Path=UserId}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
+                                    <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addOrder" Click="AddOrder_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+                <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
 
-                                <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
-                                <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                <TextBlock Text="{Binding Path=UserId}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
-                                <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                <Button Content="2x" Height="40" Margin="5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger >
+                            <i:InvokeCommandAction Command="{Binding DoubleCommand}" CommandName="DoubleCommand" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="OrderDetails" VerticalAlignment="Stretch">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Grid.Background>
+            <Grid.RenderTransform>
+                <ScaleTransform ScaleY="1"/>
+            </Grid.RenderTransform>
+            <Grid Margin="0,0,0,50" Background="Transparent" >
+                <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="30" Margin="10">
+                    <Grid>
+                     <Grid >
+                    <TextBlock Text="rfrfz xnj byajhvfwbz" />
+
+                </Grid>
+
+                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button Content="Назад" x:Name="backToOrderList"  Height="40" Click="BackToOrderList_Click" Margin="10"/>
+                    <Button Content="Таксама даадданне" Margin="10"  Height="40"/>
+                    
+                </StackPanel>
+                    </Grid>
+                </Border>
+               
+            </Grid>
 
         </Grid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
-            <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="AddAllOrders_Click" Height="40" Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}"/>
-            <Button Grid.Row="2" Content="Отменить заявку"  Margin="5" Background="Indigo" Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
-           
-            <Button Content="2x" Height="40" Margin="5">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger >
-                        <i:InvokeCommandAction Command="{Binding DoubleCommand}" CommandName="DoubleCommand" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </StackPanel>
     </Grid>
 </UserControl>
   

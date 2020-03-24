@@ -74,5 +74,19 @@ namespace Moiro_Orders.XamlView
         {
 
         }
+
+        private void AddOrder_Click(object sender, RoutedEventArgs e)
+        {
+         
+            
+        
+        }
+
+        private void BackToOrderList_Click(object sender, RoutedEventArgs e)
+        {
+          
+           
+           
+        }
     }
 }
