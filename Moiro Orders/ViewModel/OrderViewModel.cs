@@ -40,13 +40,11 @@ namespace Moiro_Orders.ViewModel
             }
         }
 
-
         private RelayCommand doubleCommand;
         public RelayCommand DoubleCommand
         {
             get
             {
-
                 return doubleCommand;
             }
         }

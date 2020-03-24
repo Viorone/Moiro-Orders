@@ -29,10 +29,10 @@ namespace Moiro_Orders.XamlView
                 IUser user = new CurrentUser();
                 var status = await user.CreateOrder( new Order {
                     Date = DateTime.Now,
-                    Description = "ghjcwf",
+                    Description = "Бысл сломан компьютер последством внешнего вмешательства сверхестественных сил",
                     UserId = PublicResources.Im.Id,
-                    Problem= "ldgjsdkhvgksd",
-                    Status = "Work"
+                    Problem= "Компьютер поднял бунд и устроил революцию",
+                    Status = "Работаем"
                 });
                 MessageBox.Show(status.ToString());
             }
@@ -59,6 +59,20 @@ namespace Moiro_Orders.XamlView
 
         }
 
+        private void ListOrders_Selected(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void ListOrders_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            var model = (Order)e.AddedItems[0];
+            //MessageBox.Show(model.Description);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

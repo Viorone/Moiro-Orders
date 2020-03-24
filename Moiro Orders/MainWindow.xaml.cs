@@ -85,6 +85,7 @@ namespace Moiro_Orders
             {
                 mainView.Children.Clear();
                 mainView.Children.Add(clicl);
+             
             }
         }
     }

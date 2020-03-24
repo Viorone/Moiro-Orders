@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Moiro_Orders"
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"  
-        Title="MainWindow" Height="600" Width="1080" Visibility="Visible" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="1080" Visibility="Visible" WindowStartupLocation="CenterScreen" Background="White" Icon="Resources/moiro.ico" >
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -46,7 +46,7 @@
                         <materialDesign:PackIcon Foreground="White" Kind="Menu" Width="25" Height="25"/>
                     </Button>
                 </Grid>
-                
+
                 <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                     <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
@@ -66,15 +66,15 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    
+
                 </ListView>
             </StackPanel>
         </Grid>
 
         <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
-            <StackPanel x:Name="mainView">
-
-            </StackPanel>
+            <Grid x:Name="mainView">
+               
+            </Grid>
         </Grid>
     </Grid>
 </Window>
