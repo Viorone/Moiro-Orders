@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Moiro_Orders.Models
 {
-    class Event
+    public class Event
     {
         public int Id { get; set; }
         public string NameEvent { get; set; }
@@ -17,6 +17,6 @@ namespace Moiro_Orders.Models
         public DateTime Date { get; set; } = DateTime.Now;
         public string Status { get; set; }
         public int UserId { get; set; }
-
+        public string UserName { get; set; }
     }
 }

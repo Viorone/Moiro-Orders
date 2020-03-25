@@ -39,7 +39,7 @@ namespace Moiro_Orders.Controller
         public async Task<List<Order>> GetAllOrdersTodayAsync( DateTime date)
         {
             string d = date.ToString();
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?date={date}");
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?date={d}");
             List<Order> orders = null;
             if (response.IsSuccessStatusCode)
             {

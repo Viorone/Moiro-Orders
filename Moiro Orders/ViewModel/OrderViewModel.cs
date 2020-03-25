@@ -40,53 +40,35 @@ namespace Moiro_Orders.ViewModel
             }
         }
 
-        private RelayCommand doubleCommand;
-        public RelayCommand DoubleCommand
-        {
-            get
-            {
-                return doubleCommand;
-            }
-        }
+        //private RelayCommand doubleCommand;
+        //public RelayCommand DoubleCommand
+        //{
+        //    get
+        //    {
+        //        return doubleCommand;
+        //    }
+        //}
 
 
 
 
         private async Task GetAllOrdres(object a)
         {
-            if(PublicResources.Im.Admin)
-            {
-                IAdmin admin = new CurrentUser();
-                var orders = await admin.GetAllOrdersToday(DateTime.Today);
-                Orders = new ObservableCollection<Order>(orders);
-            }
-            else
-            {
-                IUser user = new CurrentUser();
-                var orders = await user.GetOrdersList(20, PublicResources.Im.Id);
-                Orders = new ObservableCollection<Order>(orders);            
-            }                   
+
+
+            IUser user = new CurrentUser();
+            Order order = new Order();
+            var status = await user.CreateOrder(order);
+         
+                 
         }
 
-   
 
 
 
 
+ #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-        #endregion
         #region MVVM related        
         private void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5
         {
