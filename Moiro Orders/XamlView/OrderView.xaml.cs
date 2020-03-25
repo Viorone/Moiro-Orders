@@ -83,7 +83,5 @@ namespace Moiro_Orders.XamlView
             }
             SetOrdersOfDate().GetAwaiter();
         }
-
-
     }
 }

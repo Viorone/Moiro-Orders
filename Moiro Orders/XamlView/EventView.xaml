@@ -65,7 +65,7 @@
 
                                 <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
                                 <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                <TextBlock Text="{Binding Path=UserId}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
+                                <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
                                 <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
                             </Grid>
                         </Border>
