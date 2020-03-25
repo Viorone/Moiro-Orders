@@ -60,12 +60,19 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Мероприятия" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
+                    <ListViewItem x:Name="Settings" Height="60" MouseLeftButtonUp="UsersSettings_MouseLeftButtonUp">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="Settings" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Настройки" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
                     <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Face" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
+                   
 
                 </ListView>
             </StackPanel>

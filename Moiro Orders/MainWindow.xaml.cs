@@ -81,14 +81,16 @@ namespace Moiro_Orders
             {
                 MessageBox.Show("У Вас совсем нет прав! Грустно, но такова жизнь...");
             }
-           
+
         }
 
         private void Events_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-           
-                SwitchScreen(new EventView());
-           
+            SwitchScreen(new EventView());
+        }
+        private void UsersSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SwitchScreen(new EventView());
         }
 
         internal void SwitchScreen(object sender)
@@ -98,11 +100,10 @@ namespace Moiro_Orders
             {
                 mainView.Children.Clear();
                 mainView.Children.Add(clicl);
-             
+
             }
         }
 
-       
     }
 
 
