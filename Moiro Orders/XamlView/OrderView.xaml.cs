@@ -18,24 +18,6 @@ namespace Moiro_Orders.XamlView
             datePick.SelectedDate = DateTime.Now;
         }
 
-        private void AddAllOrders_Click(object sender, RoutedEventArgs e)   //Рабочий метод
-        {
-            async Task SetOrdersOfDate()
-            {
-                IUser user = new CurrentUser();
-                var status = await user.CreateOrder( new Order {
-                    Date = DateTime.Now,
-                    Description = "Бысл сломан компьютер последством внешнего вмешательства сверхестественных сил",
-                    UserId = PublicResources.Im.Id,
-                    Problem= "Компьютер поднял бунд и устроил революцию",
-                    Status = "Работаем"
-                });
-                MessageBox.Show(status.ToString());
-            }
-            SetOrdersOfDate().GetAwaiter();
-        }
-
-
         private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)    //Рабочий метод (Не удалять!)
         {
             DateTime? selectedDate = datePick.SelectedDate;
@@ -83,5 +65,25 @@ namespace Moiro_Orders.XamlView
         {
             //просто нужный клик
         }
+
+
+        private void CrateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            async Task SetOrdersOfDate()
+            {
+                IUser user = new CurrentUser();
+                var status = await user.CreateOrder(new Order
+                {
+                    Date = DateTime.Now,
+                    Description = description.Text,
+                    UserId = PublicResources.Im.Id,
+                    Problem = problem.Text
+                });
+                MessageBox.Show(status.ToString());
+            }
+            SetOrdersOfDate().GetAwaiter();
+        }
+
+
     }
 }
