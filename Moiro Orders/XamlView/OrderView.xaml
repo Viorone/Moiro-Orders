@@ -11,6 +11,12 @@
  
      >
     <UserControl.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="25" Text="*" DockPanel.Dock="Right" />
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <Storyboard x:Key="OrderDetailsOpen" >
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
@@ -62,7 +68,7 @@
                 </StackPanel>
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" ItemsSource="{Binding Orders}" 
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
                      x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,100">
                 
                 <ListBox.ItemTemplate>
@@ -100,7 +106,7 @@
 
                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="14" />
                                     <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=UserId}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
+                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
                                     <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
                                 </Grid>
                             </Border>
@@ -129,20 +135,16 @@
                 <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="10" Margin="10">
                     <Grid>
                     <StackPanel Margin="10" >
-                        <TextBlock Text="Заявка будет подана от :" FontSize="20" FontFamily="Segoe UI Light" Margin="0,20,0,0"/>
-                        <TextBox Text="" FontSize="18" FontFamily="Segoe UI Light" />
-                        <TextBlock Text="Укажите проблему :" FontSize="20" FontFamily="Segoe UI Light" Margin="0,20,0,0"/>
-                        <TextBox Text="" FontSize="18" FontFamily="Segoe UI Light"/>
-                        <TextBlock Text="Здесь можете указать дополнительное описание проблемы :"  Margin="0,20,0,0" FontSize="20" FontFamily="Segoe UI Light"/>
-                        <TextBox TextWrapping="Wrap" Text="" FontSize="18" FontFamily="Segoe UI Light" />
+
+                        <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" />
+                        <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" />
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="backToOrderList"  Height="40" Click="BackToOrderList_Click" Margin="10"/>
-                            <Button Content="Таксама даадданне" Margin="10"  Height="40"/>
+                            <Button Content="Таксама даадданне" x:Name="CrateOrder" Margin="10"  Height="40" Click="CrateOrder_Click" />
 
                         </StackPanel>
                     </StackPanel>
-
                 </Grid>
                 </Border>
                
