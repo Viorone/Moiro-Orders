@@ -7,17 +7,20 @@
       xmlns:local="clr-namespace:Moiro_Orders.XamlView"
       xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d" 
- 
-     >
+             mc:Ignorable="d">
     <UserControl.Resources>
+        
         <ControlTemplate x:Key="validationTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="25" Text="*" DockPanel.Dock="Right" />
                 <AdornedElementPlaceholder/>
             </DockPanel>
         </ControlTemplate>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
+        
         <Storyboard x:Key="OrderDetailsOpen" >
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
@@ -42,6 +45,9 @@
 
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="addOrder">
+            <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="changeOrder">
             <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}" />
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="backToOrderList">
@@ -69,7 +75,7 @@
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
-                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,100">
+                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,65">
                 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -99,24 +105,26 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80*"/>
-                                        <ColumnDefinition Width="20*"/>
+                                        <ColumnDefinition Width="200"/>
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock FontSize="22" Text="{Binding Path=Problem}" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
-                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="14" />
-                                    <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
-                                    <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1"  FontSize="14" HorizontalAlignment="Right" />
+                                    <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}"  Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" />
+                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Path=Room}" Grid.Row="2" Grid.Column="2"  FontSize="14"  HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addOrder" Click="AddOrder_Click" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5"  >
+                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addOrder" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
                 <Button Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
+                <Button Grid.Row="2" Content="Изменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" x:Name="changeOrder" Click="ChangeOrder_Click"/>
 
                 <Button Content="2x" Height="40" Margin="5">
                     <i:Interaction.Triggers>
@@ -131,25 +139,22 @@
             <StackPanel.RenderTransform>
                 <ScaleTransform ScaleY="0"/>
             </StackPanel.RenderTransform>
-           
-                <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="10" Margin="10">
-                    <Grid>
+
+            <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="10" Margin="10">
+                <Grid>
                     <StackPanel Margin="10" >
 
                         <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" />
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" />
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="backToOrderList"  Height="40" Click="BackToOrderList_Click" Margin="10"/>
-                            <Button Content="Таксама даадданне" x:Name="CrateOrder" Margin="10"  Height="40" Click="CrateOrder_Click" />
-
+                            <Button Content="Назад" x:Name="backToOrderList"  Height="40"  Margin="10"/>
+                            <Button Content="Добавить заявку" x:Name="CrateOrder" Margin="10"  Height="40" Click="CrateOrder_Click" />
+                            <Button Content="Сохранить изменения" x:Name="UpdateOrder" Margin="10"  Height="40" Click="UpdateOrder_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
-                </Border>
-               
-          
-
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

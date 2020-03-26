@@ -12,6 +12,7 @@ namespace Moiro_Orders.XamlView
     /// </summary>
     public partial class OrderView : UserControl
     {
+        public Order selectedOrder;
         public OrderView()
         {
             InitializeComponent();
@@ -51,37 +52,59 @@ namespace Moiro_Orders.XamlView
 
         private void ListOrders_Selected(object sender, SelectionChangedEventArgs e)
         {
-            var model = (Order)e.AddedItems[0];
+            selectedOrder = (Order)e.AddedItems[0];
             //MessageBox.Show(model.Description);
         }
 
-      
-        private void AddOrder_Click(object sender, RoutedEventArgs e)
-        {
-         //просто нужный клик
-        }
-
-        private void BackToOrderList_Click(object sender, RoutedEventArgs e)
-        {
-            //просто нужный клик
-        }
-
-
         private void CrateOrder_Click(object sender, RoutedEventArgs e)
         {
-            async Task SetOrdersOfDate()
-            {
-                IUser user = new CurrentUser();
-                var status = await user.CreateOrder(new Order
-                {
-                    Date = DateTime.Now,
-                    Description = description.Text,
-                    UserId = PublicResources.Im.Id,
-                    Problem = problem.Text
-                });
-                MessageBox.Show(status.ToString());
-            }
+           
             SetOrdersOfDate().GetAwaiter();
         }
+
+        private void ChangeOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedOrder == null)
+            {
+                MessageBox.Show("Выберите заявку!");
+            }
+            else
+            {
+                problem.Text = selectedOrder.Problem;
+                description.Text = selectedOrder.Description;
+            }
+        }
+
+        private void UpdateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            // проверка на заполнение
+            selectedOrder.Problem = problem.Text;
+            selectedOrder.Description = description.Text;
+            UpdateOrderAsync().GetAwaiter();
+        }
+
+        #region ASYNC metods
+        
+        async Task UpdateOrderAsync()
+        {
+            IUser user = new CurrentUser();
+            var status = await user.EditOrder(selectedOrder);
+            MessageBox.Show(status.ToString());
+        }
+
+        async Task SetOrdersOfDate()
+        {
+            IUser user = new CurrentUser();
+            var status = await user.CreateOrder(new Order
+            {
+                Date = DateTime.Now,
+                Description = description.Text,
+                UserId = PublicResources.Im.Id,
+                Problem = problem.Text
+            });
+            MessageBox.Show(status.ToString());
+        }
+
+        #endregion
     }
 }

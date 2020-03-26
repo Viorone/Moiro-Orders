@@ -27,5 +27,7 @@ namespace Moiro_Orders.Roles
         Task<HttpStatusCode> EditPublicChatMessage(PublicChat publicChat); //поставить таймер на возможность редактирования (возможно на 10 минут)
         Task<HttpStatusCode> DeletePublicChatMessage(int id);              //поставить таймер на возможность удаления (возможно на 10 минут)
 
+        Task<HttpStatusCode> UpdateUser(User user);
+
     }
 }

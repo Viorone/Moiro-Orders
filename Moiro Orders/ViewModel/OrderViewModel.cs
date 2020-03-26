@@ -1,7 +1,5 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using Moiro_Orders.Models;
+﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

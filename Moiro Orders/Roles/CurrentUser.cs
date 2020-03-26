@@ -158,6 +158,12 @@ namespace Moiro_Orders.Roles
             var status = await usersController.UpdateUsersDbAsync(user);
             return status;
         }
+        public async Task<HttpStatusCode> UpdateUser(User user)
+        {
+            UsersController usersController = new UsersController();
+            var status = await usersController.UpdateUserAsync(user);
+            return status;
+        }
         #endregion
 
     }

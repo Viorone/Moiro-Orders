@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Moiro_Orders"
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"  
-        Title="MainWindow" Height="600" Width="1080" Visibility="Visible" WindowStartupLocation="CenterScreen" Background="White" Icon="Resources/moiro.ico" >
+        Title="Вы не авторизированы" Height="600" Width="1080" Visibility="Visible" WindowStartupLocation="CenterScreen" Background="White" Icon="Resources/moiro.ico" >
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -36,7 +36,10 @@
     </Window.Triggers>
 
     <Grid DataContext="{StaticResource ViewModelOrder }">
-        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF3F51B5" Panel.ZIndex="99" Grid.Row="1">
+        <Grid x:Name="loadingGrid" Background="Black" Opacity="0.7" Panel.ZIndex="99" Visibility="Visible" >
+            <TextBlock Text="Загрузка....." Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="44" FontFamily="Seguo" />
+        </Grid>
+        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF3F51B5" Panel.ZIndex="98" Grid.Row="1">
             <StackPanel>
                 <Grid Height="150" Background="#FF3F51B5" >
                     <Button x:Name="CloseMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
@@ -66,22 +69,23 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Настройки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseLeftButtonUp">
+                    <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseLeftButtonUp" Visibility="Hidden">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Face" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                   
+
 
                 </ListView>
             </StackPanel>
         </Grid>
-
-        <Grid Background="Black" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
+        <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
             <Grid x:Name="mainView">
                
             </Grid>
         </Grid>
+       
+        
     </Grid>
 </Window>

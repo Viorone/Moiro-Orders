@@ -23,7 +23,6 @@ namespace Moiro_Orders.Controller
             if (response.IsSuccessStatusCode)
             {
                 var user = await response.Content.ReadAsAsync<User>();
-
                 PublicResources.Im = user;               
             }
             return response.StatusCode;
@@ -56,8 +55,17 @@ namespace Moiro_Orders.Controller
 
         public async Task<HttpStatusCode> UpdateUsersDbAsync(User user)
         {
+
             HttpResponseMessage response = await PublicResources.client.PostAsJsonAsync(
                 "api/UsersAPI", user);
+            response.EnsureSuccessStatusCode();
+            return response.StatusCode;
+        }
+        public async Task<HttpStatusCode> UpdateUserAsync(User user)
+        {
+           
+            HttpResponseMessage response = await PublicResources.client.PutAsJsonAsync(
+                $"api/UsersAPI/{user.Id}", user);
             response.EnsureSuccessStatusCode();
             return response.StatusCode;
         }

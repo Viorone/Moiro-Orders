@@ -28,27 +28,35 @@ namespace Moiro_Orders.XamlView
             datePick.SelectedDate = DateTime.Now;
         }
 
-        private void addAllEvents_Click(object sender, RoutedEventArgs e)
+        private void AddAllEvents_Click(object sender, RoutedEventArgs e)
         {
-            async Task SetEventsOfDate()
+            if (PublicResources.Im.Room != 0)
             {
-                IUser user = new CurrentUser();
-                var status = await user.CreateEvent(new Event {
-                    Date = DateTime.Now,
-                    Description = "Бысл сломан компьютер последством внешнего вмешательства сверхестественных сил",
-                    UserId = PublicResources.Im.Id,
-                    DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now,
-                    NameEvent = "Карамба!!!",
-                    Place = "Уютный домик",
-                    Status = "Работаем"                 
-                });
-                MessageBox.Show(status.ToString());
+                async Task SetEventsOfDate()
+                {
+                    IUser user = new CurrentUser();
+                    var status = await user.CreateEvent(new Event
+                    {
+                        Date = DateTime.Now,
+                        Description = "Бысл сломан компьютер последством внешнего вмешательства сверхестественных сил",
+                        UserId = PublicResources.Im.Id,
+                        DateStart = DateTime.Now,
+                        DateEnd = DateTime.Now,
+                        NameEvent = "Карамба!!!",
+                        Place = "Уютный домик",
+                        Status = "Работаем"
+                    });
+                    MessageBox.Show(status.ToString());
+                }
+                SetEventsOfDate().GetAwaiter();
             }
-            SetEventsOfDate().GetAwaiter();
+            else
+            {
+                MessageBox.Show("Для того, что бы оставить заявку необходимо в настройках", "Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
         }
 
-        private void datePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void DatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime? selectedDate = datePick.SelectedDate;
             if (selectedDate != null)

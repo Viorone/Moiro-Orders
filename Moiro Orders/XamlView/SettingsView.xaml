@@ -3,12 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Moiro_Orders.XamlView"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel>
-            <Label Content="Вошли как пользователь"/>
+             xmlns:moiro_orders="clr-namespace:Moiro_Orders"
+             mc:Ignorable="d">
+    <Grid >
+        <StackPanel Margin="20">
+            
+            <Label Content="Вошли под пользователем : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBox  x:Name="UserName"  materialDesign:HintAssist.HelperText ="Укажите ФИО" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True" MouseDoubleClick="UserName_MouseDoubleClick"/>
+            
+            <Label Content="Ваш логин : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBox x:Name="UserLogin" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True"/>
+            
+            <Label  Content="Ваш кабинет : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBox x:Name="UserRoom" materialDesign:HintAssist.HelperText ="Щёлкните два раза для изменения"  FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,15" IsReadOnly="True" MouseDoubleClick="UserRoom_MouseDoubleClick"/>
+            
+            <Label Content="Подразделение в котором состоите : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBox x:Name="UserOrganizationalUnit" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True"/>
+            
+            <Label Content="Время последнего входа в программу : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBox x:Name="UserLastLogin" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True"/>
+        
         </StackPanel>
+        <Label x:Name="StatusChange" Margin="20,40" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI" Foreground="Green"/>
+        <Button HorizontalAlignment="Right" x:Name="applySettings" VerticalAlignment="Bottom" Margin="40" Content="Применить" Click="ApplySettings_Click" />
     </Grid>
 </UserControl>

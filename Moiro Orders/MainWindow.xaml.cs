@@ -36,14 +36,6 @@ namespace Moiro_Orders
         {
             if (PublicResources.Im.FullName == null)
             {
-                UsersController currentUser = new UsersController();
-                async Task GetUser()
-                {
-                    await currentUser.GetUserNameAsync(Environment.UserName);
-                    //await currentUser.GetUserNameAsync("gybarev");
-                    Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
-                    InitializeComponent();
-                }
                 GetUser().GetAwaiter();
             }
             else
@@ -51,7 +43,6 @@ namespace Moiro_Orders
                 InitializeComponent();
             }
         }
-
 
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
@@ -90,7 +81,7 @@ namespace Moiro_Orders
         }
         private void UsersSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SwitchScreen(new EventView());
+            SwitchScreen(new SettingsView());
         }
 
         internal void SwitchScreen(object sender)
@@ -100,9 +91,19 @@ namespace Moiro_Orders
             {
                 mainView.Children.Clear();
                 mainView.Children.Add(clicl);
-
             }
         }
+        #region ASYNC metods
+        async Task GetUser()
+        {
+            UsersController currentUser = new UsersController();
+            await currentUser.GetUserAsync(Environment.UserName);
+            Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
+            Users.Visibility = Visibility.Visible;
+            loadingGrid.Visibility = Visibility.Hidden;
+            InitializeComponent();
+        }
+        #endregion
 
     }
 
@@ -123,6 +124,7 @@ namespace Moiro_Orders
 
     public static class PublicResources
     {
+
         public static HttpClient client = new HttpClient()
         {
             BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
@@ -137,5 +139,6 @@ namespace Moiro_Orders
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }
+    
 }
 
