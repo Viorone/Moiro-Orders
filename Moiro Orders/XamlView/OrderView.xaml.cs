@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace Moiro_Orders.XamlView
 {
@@ -12,6 +13,8 @@ namespace Moiro_Orders.XamlView
     /// </summary>
     public partial class OrderView : UserControl
     {
+        private bool isProblem = true;
+
         public Order selectedOrder;
         public OrderView()
         {
@@ -19,7 +22,7 @@ namespace Moiro_Orders.XamlView
             datePick.SelectedDate = DateTime.Now;
         }
 
-        private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)    //Рабочий метод (Не удалять!)
+        private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime? selectedDate = datePick.SelectedDate;
             if (selectedDate != null)
@@ -27,25 +30,11 @@ namespace Moiro_Orders.XamlView
                 var selectDate = selectedDate.Value.Date;
                 if (PublicResources.Im.Admin)
                 {
-                    GetOrdersOfDateAdmin().GetAwaiter();
+                    GetOrdersOfDateAdmin(selectDate).GetAwaiter();
                 }
                 else
                 {
-                    GetOrdersOfDateUser().GetAwaiter();
-                }
-
-                async Task GetOrdersOfDateUser()
-                {
-                    IUser user = new CurrentUser();
-                    var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
-                    listOrders.ItemsSource = orders;
-                }
-
-                async Task GetOrdersOfDateAdmin()
-                {
-                    IAdmin admin = new CurrentUser();
-                    var orders = await admin.GetAllOrdersToday(selectDate);
-                    listOrders.ItemsSource = orders;
+                    GetOrdersOfDateUser(selectDate).GetAwaiter();
                 }
             }
         }
@@ -53,46 +42,92 @@ namespace Moiro_Orders.XamlView
         private void ListOrders_Selected(object sender, SelectionChangedEventArgs e)
         {
             selectedOrder = (Order)e.AddedItems[0];
-            //MessageBox.Show(model.Description);
+            changeOrder.Visibility = Visibility.Visible;
+            DeleteOrder.Visibility = Visibility.Visible;
+            addOrder.Visibility = Visibility.Hidden;
+            Cancel.Visibility = Visibility.Visible;
         }
 
-        private void CrateOrder_Click(object sender, RoutedEventArgs e)
+        private void addOrder_Click(object sender, RoutedEventArgs e) //Кнопка добавить заявку
         {
-           
-            SetOrdersOfDate().GetAwaiter();
+            addOrder.Visibility = Visibility.Hidden;
+            isProblem = false;
         }
 
         private void ChangeOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedOrder == null)
+            problem.Text = selectedOrder.Problem;
+            description.Text = selectedOrder.Description;
+            changeOrder.Visibility = Visibility.Hidden;
+            DeleteOrder.Visibility = Visibility.Hidden;
+            addOrder.Visibility = Visibility.Hidden;
+            Cancel.Visibility = Visibility.Hidden;
+        }
+
+        private void SaveOrder_Click(object sender, RoutedEventArgs e)
+        {
+            selectedOrder.Problem = problem.Text;
+            selectedOrder.Description = description.Text;
+
+            if (isProblem == true)
             {
-                MessageBox.Show("Выберите заявку!");
+                UpdateOrderAsync().GetAwaiter();
             }
             else
             {
-                problem.Text = selectedOrder.Problem;
-                description.Text = selectedOrder.Description;
+                CreateNewOrder().GetAwaiter();
             }
         }
 
-        private void UpdateOrder_Click(object sender, RoutedEventArgs e)
+        private void DeleteOrder_Click(object sender, RoutedEventArgs e)
         {
-            // проверка на заполнение
-            selectedOrder.Problem = problem.Text;
-            selectedOrder.Description = description.Text;
-            UpdateOrderAsync().GetAwaiter();
+            CancelOrder().GetAwaiter();
         }
 
+        private void backToOrderList_Click(object sender, RoutedEventArgs e)
+        {
+            addOrder.Visibility = Visibility.Visible;
+            Cancel.Visibility = Visibility.Hidden;
+            problem.Text = null;
+            description.Text = null;
+            GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
+            addOrder.Visibility = Visibility.Visible;
+            changeOrder.Visibility = Visibility.Hidden;
+            DeleteOrder.Visibility = Visibility.Hidden;
+            Cancel.Visibility = Visibility.Hidden;
+        }
+
+
+
+
+
+
         #region ASYNC metods
-        
+
+        //User Metods
+        async Task GetOrdersOfDateUser(DateTime selectDate)
+        {
+            IUser user = new CurrentUser();
+            var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
+            listOrders.ItemsSource = orders;
+        }
+
         async Task UpdateOrderAsync()
         {
             IUser user = new CurrentUser();
             var status = await user.EditOrder(selectedOrder);
+            problem.Text = null;
+            description.Text = null;
+            GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
             MessageBox.Show(status.ToString());
         }
 
-        async Task SetOrdersOfDate()
+        async Task CreateNewOrder()
         {
             IUser user = new CurrentUser();
             var status = await user.CreateOrder(new Order
@@ -102,9 +137,38 @@ namespace Moiro_Orders.XamlView
                 UserId = PublicResources.Im.Id,
                 Problem = problem.Text
             });
+            GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+
             MessageBox.Show(status.ToString());
         }
 
+        async Task CancelOrder()
+        {
+            IUser user = new CurrentUser();
+            var status = await user.DeleteOrder(selectedOrder.Id);
+            GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+            changeOrder.Visibility = Visibility.Hidden;
+            DeleteOrder.Visibility = Visibility.Hidden;
+            addOrder.Visibility = Visibility.Visible;
+            Cancel.Visibility = Visibility.Hidden;
+            MessageBox.Show(status.ToString());
+        }
+
+        //Admin Metods
+        async Task GetOrdersOfDateAdmin(DateTime selectDate)
+        {
+            IAdmin admin = new CurrentUser();
+            var orders = await admin.GetAllOrdersToday(selectDate);
+            listOrders.ItemsSource = orders;
+        }
+
+
+
+
+
+
         #endregion
+
+
     }
 }

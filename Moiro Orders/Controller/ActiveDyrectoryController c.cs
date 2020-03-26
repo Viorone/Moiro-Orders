@@ -1,17 +1,13 @@
 ﻿using Moiro_Orders.Models;
-using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Moiro_Orders
 {
     class ActiveDyrectoryController
     {
         public ActiveDyrectoryController() { }
-        
+
         List<User> allUsers = new List<User>();
         DirectoryEntry searchRoot;
 
@@ -56,11 +52,9 @@ namespace Moiro_Orders
                             OrganizationalUnit = group
                         });
                     }
-                    // ОНО работает!!!!!!
                 }
             }
             return allUsers;
         }
-
     }
 }

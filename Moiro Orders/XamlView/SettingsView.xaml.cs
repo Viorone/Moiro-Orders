@@ -109,7 +109,6 @@ namespace Moiro_Orders.XamlView
                 StatusChange.Foreground = Brushes.Green;
                 StatusChange.Content = "Данные успешно обновлены!";
                 PublicResources.Im = currentUser;
-                //await TimerLabel();
             }
             else
             {
@@ -117,12 +116,8 @@ namespace Moiro_Orders.XamlView
                 StatusChange.Content = "HTTP status code " + status;
             }
         }
-        //переписать на нормальный таймер
-        async Task TimerLabel()
-        {
-            Thread.Sleep(3000);
-            StatusChange.Content = "";
-        }
+
+
         #endregion
 
     }
