@@ -13,7 +13,6 @@ namespace Moiro_Orders.Roles
     class CurrentUser : IUser, IAdmin
     {
         public CurrentUser() { }
-    
 
         #region Events
         //EVENTS

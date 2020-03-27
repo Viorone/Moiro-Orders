@@ -50,14 +50,17 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="changeOrder">
             <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}" />
         </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="SaveOrder">
+            <BeginStoryboard Storyboard="{StaticResource OrderDetailsClose}" />
+        </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="backToOrderList">
             <BeginStoryboard Storyboard="{StaticResource OrderDetailsClose}" />
         </EventTrigger>
     </UserControl.Triggers>
 
 
-    <Grid>
-        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue" >
+    <Grid >
+        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue"  >
             <Grid>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
                     <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
@@ -75,7 +78,7 @@
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
-                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,65">
+                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,65" >
                 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -122,11 +125,12 @@
                 </ListBox>
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5"  >
-                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addOrder" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
-                <Button Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
-                <Button Grid.Row="2" Content="Изменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" x:Name="changeOrder" Click="ChangeOrder_Click"/>
+                <Button x:Name="addOrder" Grid.Row="1" Content="Добавить заявку" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="addOrder_Click"/>
+                <Button x:Name="Cancel" Grid.Row="1" Content="Oтмена" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Visibility="Hidden" Click="Cancel_Click"/>
+                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Удалить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
+                <Button x:Name="changeOrder" Grid.Row="2" Content="Изменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="ChangeOrder_Click"/>
 
-                <Button Content="2x" Height="40" Margin="5">
+                <Button Content="2x" Height="40" Margin="5" Visibility="Hidden">
                     <i:Interaction.Triggers>
                         <i:EventTrigger >
                             <i:InvokeCommandAction Command="{Binding DoubleCommand}" CommandName="DoubleCommand" />
@@ -148,9 +152,8 @@
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" />
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="backToOrderList"  Height="40"  Margin="10"/>
-                            <Button Content="Добавить заявку" x:Name="CrateOrder" Margin="10"  Height="40" Click="CrateOrder_Click" />
-                            <Button Content="Сохранить изменения" x:Name="UpdateOrder" Margin="10"  Height="40" Click="UpdateOrder_Click" />
+                            <Button Content="Назад" x:Name="backToOrderList"  Height="40"  Margin="10" Click="backToOrderList_Click"/>
+                            <Button Content="Сохранить" x:Name="SaveOrder" Margin="10"  Height="40" Click="SaveOrder_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>

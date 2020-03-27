@@ -97,7 +97,8 @@ namespace Moiro_Orders
         async Task GetUser()
         {
             UsersController currentUser = new UsersController();
-            await currentUser.GetUserAsync(Environment.UserName);
+            //await currentUser.GetUserAsync(Environment.UserName);
+            await currentUser.GetUserAsync("gybarev");
             Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Users.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
@@ -127,7 +128,7 @@ namespace Moiro_Orders
 
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
+            BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
         };
 
         internal static User Im = new User();
