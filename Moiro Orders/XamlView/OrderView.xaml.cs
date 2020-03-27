@@ -14,13 +14,20 @@ namespace Moiro_Orders.XamlView
     public partial class OrderView : UserControl
     {
         private bool isProblem = true;
-
         public Order selectedOrder;
+
+
         public OrderView()
         {
             InitializeComponent();
             datePick.SelectedDate = DateTime.Now;
+            if (PublicResources.Im.Admin)
+            {
+                
+                addOrder.Visibility = Visibility.Hidden;
+            }
         }
+
 
         private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -41,14 +48,22 @@ namespace Moiro_Orders.XamlView
 
         private void ListOrders_Selected(object sender, SelectionChangedEventArgs e)
         {
-            selectedOrder = (Order)e.AddedItems[0];
-            changeOrder.Visibility = Visibility.Visible;
-            DeleteOrder.Visibility = Visibility.Visible;
-            addOrder.Visibility = Visibility.Hidden;
-            Cancel.Visibility = Visibility.Visible;
+            if (PublicResources.Im.Admin)
+            {
+                selectedOrder = (Order)e.AddedItems[0];
+                AcceptOrder.Visibility = Visibility.Visible;
+                Cancel.Visibility = Visibility.Visible;
+            }
+            else
+            {               
+                changeOrder.Visibility = Visibility.Visible;
+                DeleteOrder.Visibility = Visibility.Visible;
+                addOrder.Visibility = Visibility.Hidden;
+                Cancel.Visibility = Visibility.Visible;
+            }          
         }
 
-        private void addOrder_Click(object sender, RoutedEventArgs e) //Кнопка добавить заявку
+        private void AddOrder_Click(object sender, RoutedEventArgs e) //Кнопка добавить заявку
         {
             addOrder.Visibility = Visibility.Hidden;
             isProblem = false;
@@ -81,28 +96,52 @@ namespace Moiro_Orders.XamlView
 
         private void DeleteOrder_Click(object sender, RoutedEventArgs e)
         {
-            CancelOrder().GetAwaiter();
+            DeleteSelectedOrder().GetAwaiter();
         }
 
-        private void backToOrderList_Click(object sender, RoutedEventArgs e)
+        private void BackToOrderList_Click(object sender, RoutedEventArgs e)
         {
             addOrder.Visibility = Visibility.Visible;
             Cancel.Visibility = Visibility.Hidden;
             problem.Text = null;
             description.Text = null;
-            GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+            if (selectedOrder != null)
+            {
+                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
-            addOrder.Visibility = Visibility.Visible;
-            changeOrder.Visibility = Visibility.Hidden;
-            DeleteOrder.Visibility = Visibility.Hidden;
-            Cancel.Visibility = Visibility.Hidden;
+            if (PublicResources.Im.Admin)
+            {
+                GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
+                AcceptOrder.Visibility = Visibility.Hidden;
+                Cancel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
+                addOrder.Visibility = Visibility.Visible;
+                changeOrder.Visibility = Visibility.Hidden;
+                DeleteOrder.Visibility = Visibility.Hidden;
+                Cancel.Visibility = Visibility.Hidden;
+            }        
         }
 
+        private void AcceptOrder_Click(object sender, RoutedEventArgs e)
+        {
+            ProblemView.Text = selectedOrder.Problem;
+            DescriptionView.Text = selectedOrder.Description;
+            UserView.Text = selectedOrder.UserName;
+            DateView.Text = selectedOrder.Date.ToString();
+            LoginView.Text = selectedOrder.UserId.ToString();
+            RoomView.Text = selectedOrder.Room.ToString();
 
+            // Метод ниже не работает, не присваивается значение)))
+            StatusView.Text = selectedOrder.Status +"rl;gnklsdfnv";
+            ChangeOrderStatusAdmin().GetAwaiter();  
+        }
 
 
 
@@ -123,6 +162,7 @@ namespace Moiro_Orders.XamlView
             var status = await user.EditOrder(selectedOrder);
             problem.Text = null;
             description.Text = null;
+            addOrder.Visibility = Visibility.Visible;
             GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
             MessageBox.Show(status.ToString());
         }
@@ -135,14 +175,18 @@ namespace Moiro_Orders.XamlView
                 Date = DateTime.Now,
                 Description = description.Text,
                 UserId = PublicResources.Im.Id,
-                Problem = problem.Text
+                Problem = problem.Text,
+                Status = "В Обработке"
             });
-            GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+            problem.Text = null;
+            description.Text = null;
+            addOrder.Visibility = Visibility.Visible;
+            GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
 
             MessageBox.Show(status.ToString());
         }
 
-        async Task CancelOrder()
+        async Task DeleteSelectedOrder()
         {
             IUser user = new CurrentUser();
             var status = await user.DeleteOrder(selectedOrder.Id);
@@ -162,6 +206,16 @@ namespace Moiro_Orders.XamlView
             listOrders.ItemsSource = orders;
         }
 
+        async Task ChangeOrderStatusAdmin() 
+        {
+            //IAdmin admin = new CurrentUser();
+            //var status = await admin.EditOrder(selectedOrder);
+            //problem.Text = null;
+            //description.Text = null;
+            //addOrder.Visibility = Visibility.Visible;
+            //GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();            
+            //MessageBox.Show(status.ToString());
+        }
 
 
 
@@ -169,6 +223,14 @@ namespace Moiro_Orders.XamlView
 
         #endregion
 
+        private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
