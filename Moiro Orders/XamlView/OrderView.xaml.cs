@@ -55,7 +55,9 @@ namespace Moiro_Orders.XamlView
                 Cancel.Visibility = Visibility.Visible;
             }
             else
-            {               
+            {
+                isProblem = true;
+                selectedOrder = (Order)e.AddedItems[0];
                 changeOrder.Visibility = Visibility.Visible;
                 DeleteOrder.Visibility = Visibility.Visible;
                 addOrder.Visibility = Visibility.Hidden;
@@ -66,11 +68,14 @@ namespace Moiro_Orders.XamlView
         private void AddOrder_Click(object sender, RoutedEventArgs e) //Кнопка добавить заявку
         {
             addOrder.Visibility = Visibility.Hidden;
+            listOrders.Visibility = Visibility.Hidden;
             isProblem = false;
         }
 
         private void ChangeOrder_Click(object sender, RoutedEventArgs e)
         {
+            isProblem = true;
+            listOrders.Visibility = Visibility.Hidden;
             problem.Text = selectedOrder.Problem;
             description.Text = selectedOrder.Description;
             changeOrder.Visibility = Visibility.Hidden;
@@ -81,9 +86,7 @@ namespace Moiro_Orders.XamlView
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
-            selectedOrder.Problem = problem.Text;
-            selectedOrder.Description = description.Text;
-
+            
             if (isProblem == true)
             {
                 UpdateOrderAsync().GetAwaiter();
@@ -107,7 +110,8 @@ namespace Moiro_Orders.XamlView
             description.Text = null;
             if (selectedOrder != null)
             {
-                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+                GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
+                datePick.SelectedDate = DateTime.Now;
             }
         }
 
@@ -121,7 +125,8 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
+                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+                datePick.SelectedDate = selectedOrder.Date;
                 addOrder.Visibility = Visibility.Visible;
                 changeOrder.Visibility = Visibility.Hidden;
                 DeleteOrder.Visibility = Visibility.Hidden;
@@ -138,8 +143,8 @@ namespace Moiro_Orders.XamlView
             LoginView.Text = selectedOrder.UserId.ToString();
             RoomView.Text = selectedOrder.Room.ToString();
 
-            // Метод ниже не работает, не присваивается значение)))
-            StatusView.Text = selectedOrder.Status +"rl;gnklsdfnv";
+            // Метод ниже не работает, не присваевается значение)))
+            //StatusView.Text = selectedOrder.Status +"rl;gnklsdfnv";
             ChangeOrderStatusAdmin().GetAwaiter();  
         }
 
@@ -151,6 +156,7 @@ namespace Moiro_Orders.XamlView
         //User Metods
         async Task GetOrdersOfDateUser(DateTime selectDate)
         {
+            listOrders.Visibility = Visibility.Visible;
             IUser user = new CurrentUser();
             var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
             listOrders.ItemsSource = orders;
@@ -158,6 +164,9 @@ namespace Moiro_Orders.XamlView
 
         async Task UpdateOrderAsync()
         {
+            selectedOrder.Problem = problem.Text;
+            selectedOrder.Description = description.Text;
+
             IUser user = new CurrentUser();
             var status = await user.EditOrder(selectedOrder);
             problem.Text = null;
@@ -176,13 +185,13 @@ namespace Moiro_Orders.XamlView
                 Description = description.Text,
                 UserId = PublicResources.Im.Id,
                 Problem = problem.Text,
-                Status = "В Обработке"
+                StatusId = 1
             });
             problem.Text = null;
             description.Text = null;
             addOrder.Visibility = Visibility.Visible;
             GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
-
+            datePick.SelectedDate = DateTime.Now;
             MessageBox.Show(status.ToString());
         }
 

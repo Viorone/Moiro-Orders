@@ -151,7 +151,7 @@
                                     <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}"  Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" />
                                     <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
                                     <TextBlock Text="{Binding Path=Room}" Grid.Row="2" Grid.Column="2"  FontSize="14"  HorizontalAlignment="Right" />
-                                    <TextBlock Text="{Binding Path=Status}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Path=StatusId}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
