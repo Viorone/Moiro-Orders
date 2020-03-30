@@ -140,7 +140,7 @@ namespace Moiro_Orders.XamlView
             DescriptionView.Text = selectedOrder.Description;
             UserView.Text = selectedOrder.UserName;
             DateView.Text = selectedOrder.Date.ToString();
-            LoginView.Text = selectedOrder.UserId.ToString();
+            LoginView.Text = selectedOrder.UserLogin;
             RoomView.Text = selectedOrder.Room.ToString();
 
             // Метод ниже не работает, не присваевается значение)))
@@ -185,7 +185,7 @@ namespace Moiro_Orders.XamlView
                 Description = description.Text,
                 UserId = PublicResources.Im.Id,
                 Problem = problem.Text,
-                StatusId = 2
+                StatusId = 1
             });
             problem.Text = null;
             description.Text = null;
