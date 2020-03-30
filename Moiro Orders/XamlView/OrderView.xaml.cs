@@ -219,7 +219,6 @@ namespace Moiro_Orders.XamlView
         //Admin Metods
         async Task GetOrdersOfDateAdmin(DateTime selectDate)
         {
-            Order order = new Order();
             IAdmin admin = new CurrentUser();
             var orders = await admin.GetAllOrdersToday(selectDate);
             listOrders.ItemsSource = orders;
@@ -228,10 +227,8 @@ namespace Moiro_Orders.XamlView
         async Task GetStatusesList()
         {
             IAdmin admin = new CurrentUser();
-            var statuses = await admin.GetStatuses();
-            
-            StatusList.DisplayMemberPath = "Name";
-            
+            var statuses = await admin.GetStatuses();           
+            StatusList.DisplayMemberPath = "Name";            
             StatusList.ItemsSource = statuses;
             StatusList.SelectedItem = StatusList.Items[0];
         }
@@ -239,8 +236,7 @@ namespace Moiro_Orders.XamlView
         async Task ChangeOrderStatusAdmin()
         {
             IAdmin admin = new CurrentUser();
-            selectedOrder.StatusId = StatusList.SelectedIndex;
-            MessageBox.Show(selectedOrder.StatusId.ToString());
+            selectedOrder.StatusId = StatusList.SelectedIndex + 1;
             var status = await admin.EditOrder(selectedOrder);
             GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
             MessageBox.Show(status.ToString());

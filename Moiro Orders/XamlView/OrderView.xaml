@@ -90,6 +90,9 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BackToOrderAdmin">
             <BeginStoryboard Storyboard="{StaticResource OrderStatusClose}" />
         </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="SaveOrderAdmin">
+            <BeginStoryboard Storyboard="{StaticResource OrderStatusClose}" />
+        </EventTrigger>
     </UserControl.Triggers>
 
 
