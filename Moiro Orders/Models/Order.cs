@@ -10,8 +10,6 @@ namespace Moiro_Orders.Models
 {
     public class Order
     {
-        private string statusName;
-
         public int Id { get; set; }
         public string Problem { get; set; }
         public string Description { get; set; }
