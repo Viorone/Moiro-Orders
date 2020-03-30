@@ -224,11 +224,10 @@
                                 <TextBlock x:Name="RoomView"             Style="{StaticResource SubFont}"/>
                             </StackPanel>
                         </Grid>
-                        <ComboBox materialDesign:HintAssist.Hint="Укажите статус" 
+                        <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" 
                                   Style="{StaticResource MainFont}"  
-                                  Margin="0 25 0 10" x:Name="StatusView">
-                            <ComboBoxItem Content="Принято к исполнению"/>
-                            <ComboBoxItem Content="Выполнено"/>
+                                  Margin="0 25 0 10">
+                            
                         </ComboBox>
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="BackToOrderAdmin"  Height="40"  Margin="10" Click="BackToOrderAdmin_Click"/>

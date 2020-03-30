@@ -163,7 +163,17 @@ namespace Moiro_Orders.Roles
             var status = await usersController.UpdateUserAsync(user);
             return status;
         }
+
         #endregion
 
+        #region Status
+        //Status
+        public async Task<List<Status>> GetStatuses()
+        {
+            StatusController statusController = new StatusController();
+            var statuses = await statusController.GetStatusesListAsync();
+            return statuses;
+        }
+        #endregion
     }
 }

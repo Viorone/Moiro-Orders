@@ -136,18 +136,27 @@ namespace Moiro_Orders.XamlView
 
         private void AcceptOrder_Click(object sender, RoutedEventArgs e)
         {
+            Cancel.Visibility = Visibility.Hidden;
+            AcceptOrder.Visibility = Visibility.Hidden;
             ProblemView.Text = selectedOrder.Problem;
             DescriptionView.Text = selectedOrder.Description;
             UserView.Text = selectedOrder.UserName;
             DateView.Text = selectedOrder.Date.ToString();
             LoginView.Text = selectedOrder.UserLogin;
             RoomView.Text = selectedOrder.Room.ToString();
-
-            // Метод ниже не работает, не присваевается значение)))
-            //StatusView.Text = selectedOrder.Status +"rl;gnklsdfnv";
-            //ChangeOrderStatusAdmin().GetAwaiter();  
+            GetStatusesList().GetAwaiter(); 
         }
 
+        private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeOrderStatusAdmin().GetAwaiter();
+        }
+
+        private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            Cancel.Visibility = Visibility.Visible;
+            AcceptOrder.Visibility = Visibility.Visible;
+        }
 
 
 
@@ -216,30 +225,30 @@ namespace Moiro_Orders.XamlView
             listOrders.ItemsSource = orders;
         }
 
-        //async Task ChangeOrderStatusAdmin() 
-        //{
-        //    IAdmin admin = new CurrentUser();
-        //    var status = await admin.EditOrder(selectedOrder);
-        //    problem.Text = null;
-        //    description.Text = null;
-        //    addOrder.Visibility = Visibility.Visible;
-        //    GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
-        //    MessageBox.Show(status.ToString());
-        //}
+        async Task GetStatusesList()
+        {
+            IAdmin admin = new CurrentUser();
+            var statuses = await admin.GetStatuses();
+            
+            StatusList.DisplayMemberPath = "Name";
+            
+            StatusList.ItemsSource = statuses;
+            StatusList.SelectedItem = StatusList.Items[0];
+        }
 
+        async Task ChangeOrderStatusAdmin()
+        {
+            IAdmin admin = new CurrentUser();
+            selectedOrder.StatusId = StatusList.SelectedIndex;
+            MessageBox.Show(selectedOrder.StatusId.ToString());
+            var status = await admin.EditOrder(selectedOrder);
+            GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
+            MessageBox.Show(status.ToString());
+        }
 
 
 
         #endregion
 
-        private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
