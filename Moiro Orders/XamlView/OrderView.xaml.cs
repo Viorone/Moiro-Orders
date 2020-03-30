@@ -145,7 +145,7 @@ namespace Moiro_Orders.XamlView
 
             // Метод ниже не работает, не присваевается значение)))
             //StatusView.Text = selectedOrder.Status +"rl;gnklsdfnv";
-            ChangeOrderStatusAdmin().GetAwaiter();  
+            //ChangeOrderStatusAdmin().GetAwaiter();  
         }
 
 
@@ -185,7 +185,7 @@ namespace Moiro_Orders.XamlView
                 Description = description.Text,
                 UserId = PublicResources.Im.Id,
                 Problem = problem.Text,
-                StatusId = 1
+                StatusId = 2
             });
             problem.Text = null;
             description.Text = null;
@@ -210,22 +210,22 @@ namespace Moiro_Orders.XamlView
         //Admin Metods
         async Task GetOrdersOfDateAdmin(DateTime selectDate)
         {
+            Order order = new Order();
             IAdmin admin = new CurrentUser();
             var orders = await admin.GetAllOrdersToday(selectDate);
             listOrders.ItemsSource = orders;
         }
 
-        async Task ChangeOrderStatusAdmin() 
-        {
-            //IAdmin admin = new CurrentUser();
-            //var status = await admin.EditOrder(selectedOrder);
-            //problem.Text = null;
-            //description.Text = null;
-            //addOrder.Visibility = Visibility.Visible;
-            //GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();            
-            //MessageBox.Show(status.ToString());
-        }
-
+        //async Task ChangeOrderStatusAdmin() 
+        //{
+        //    IAdmin admin = new CurrentUser();
+        //    var status = await admin.EditOrder(selectedOrder);
+        //    problem.Text = null;
+        //    description.Text = null;
+        //    addOrder.Visibility = Visibility.Visible;
+        //    GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
+        //    MessageBox.Show(status.ToString());
+        //}
 
 
 
