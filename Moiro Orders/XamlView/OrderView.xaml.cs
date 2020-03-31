@@ -11,19 +11,22 @@ namespace Moiro_Orders.XamlView
     /// <summary>
     /// Логика взаимодействия для OrderView.xaml
     /// </summary>
-    public partial class OrderView : UserControl
+    public partial class OrderView : UserControl, IDisposable
     {
         private bool isProblem = true;
         public Order selectedOrder;
+        private bool update = true;
 
 
         public OrderView()
         {
             InitializeComponent();
+            Task.Run(() => AutoUpdateOrdersList());
+
+
             datePick.SelectedDate = DateTime.Now;
             if (PublicResources.Im.Admin)
-            {
-                
+            {                
                 addOrder.Visibility = Visibility.Hidden;
             }
         }
@@ -36,7 +39,7 @@ namespace Moiro_Orders.XamlView
             {
                 var selectDate = selectedDate.Value.Date;
                 if (PublicResources.Im.Admin)
-                {
+                {                   
                     GetOrdersOfDateAdmin(selectDate).GetAwaiter();
                 }
                 else
@@ -50,12 +53,24 @@ namespace Moiro_Orders.XamlView
         {
             if (PublicResources.Im.Admin)
             {
+                update = false;
+                if (e.AddedItems.Count == 0)
+                {
+                    update = true;
+                    return;
+                }
                 selectedOrder = (Order)e.AddedItems[0];
                 AcceptOrder.Visibility = Visibility.Visible;
                 Cancel.Visibility = Visibility.Visible;
+                
             }
             else
             {
+                update = false;
+                if (e.AddedItems.Count == 0)
+                {
+                    return;
+                }
                 isProblem = true;
                 selectedOrder = (Order)e.AddedItems[0];
                 changeOrder.Visibility = Visibility.Visible;
@@ -119,13 +134,16 @@ namespace Moiro_Orders.XamlView
         {
             if (PublicResources.Im.Admin)
             {
-                GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
+                //GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
                 AcceptOrder.Visibility = Visibility.Hidden;
                 Cancel.Visibility = Visibility.Hidden;
+                update = true;
+                Task.Run(() => AutoUpdateOrdersList());
             }
             else
             {
                 GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+                //Task.Run(() => AutoUpdateOrdersList());
                 datePick.SelectedDate = selectedOrder.Date;
                 addOrder.Visibility = Visibility.Visible;
                 changeOrder.Visibility = Visibility.Hidden;
@@ -243,6 +261,28 @@ namespace Moiro_Orders.XamlView
         }
 
 
+
+
+        async void AutoUpdateOrdersList()
+        {
+            while (update)
+            {
+
+                IAdmin admin = new CurrentUser();
+                var orders = await admin.GetAllOrdersToday(DateTime.Now);
+                Action action = () => listOrders.ItemsSource = orders;
+                await listOrders.Dispatcher.BeginInvoke(action);
+                MessageBox.Show("ddfd");
+                System.Threading.Thread.Sleep(2000); //УУУ РАБОТАЕТ!!!
+
+
+            }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
