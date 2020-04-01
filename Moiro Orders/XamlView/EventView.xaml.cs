@@ -44,7 +44,7 @@ namespace Moiro_Orders.XamlView
                         DateEnd = DateTime.Now,
                         NameEvent = "Карамба!!!",
                         Place = "Уютный домик",
-                        Status = "Работаем"
+                        StatusId = 1
                     });
                     MessageBox.Show(status.ToString());
                 }
