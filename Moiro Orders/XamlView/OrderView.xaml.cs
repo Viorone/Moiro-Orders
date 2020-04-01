@@ -361,13 +361,12 @@ namespace Moiro_Orders.XamlView
                     var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, DateTime.Now.Date);
                     Action action = () => listOrders.ItemsSource = orders;
                     await listOrders.Dispatcher.BeginInvoke(action);
-                    //MessageBox.Show(orders[0].Date.ToString());
+                    //MessageBox.Show("QWER");
                     await Task.Delay(10000, cancellationToken);
                 }
             }
             catch (OperationCanceledException) { }
         }
-
 
         //Admin Metods
         async Task GetOrdersOfDateAdmin(DateTime selectDate)
@@ -414,7 +413,7 @@ namespace Moiro_Orders.XamlView
                     var orders = await admin.GetAllOrdersToday(DateTime.Now);
                     Action action = () => listOrders.ItemsSource = orders;
                     await listOrders.Dispatcher.BeginInvoke(action);
-                    //MessageBox.Show("ff");
+                    //MessageBox.Show("REWQ");
                     await Task.Delay(5000, cancellationToken);
                 }
             }

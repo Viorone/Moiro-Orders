@@ -145,14 +145,14 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80*"/>
-                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock FontSize="22" Text="{Binding Path=Problem}" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1"  FontSize="14" HorizontalAlignment="Right" />
                                     <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}"  Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
                                     <TextBlock Text="{Binding Path=Room}" Grid.Row="2" Grid.Column="2"  FontSize="14"  HorizontalAlignment="Right" />
                                     <TextBlock Text="{Binding Path=StatusName}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
                                 </Grid>
