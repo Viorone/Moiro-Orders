@@ -2,26 +2,12 @@
 using Moiro_Orders.Models;
 using Moiro_Orders.Controller;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Moiro_Orders.Roles;
-using Moiro_Orders.ViewModel;
-using System.Net;
-using System.DirectoryServices;
-using System.DirectoryServices.ActiveDirectory;
 using Moiro_Orders.XamlView;
 
 namespace Moiro_Orders
@@ -31,7 +17,7 @@ namespace Moiro_Orders
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        bool click = true;
         public MainWindow()
         {
             if (PublicResources.Im.FullName == null)
@@ -43,6 +29,7 @@ namespace Moiro_Orders
                 InitializeComponent();
             }
         }
+
 
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
@@ -59,7 +46,12 @@ namespace Moiro_Orders
 
         private void Orders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SwitchScreen(new OrderView());
+            if (click)
+            {
+                click = false;
+                Task.Run(() => MainClickSaver());
+                SwitchScreen(new OrderView());
+            }         
         }
 
         private void Users_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -97,15 +89,35 @@ namespace Moiro_Orders
         async Task GetUser()
         {
             UsersController currentUser = new UsersController();
-            //await currentUser.GetUserAsync(Environment.UserName);
-            await currentUser.GetUserAsync("gybarev");
+            await currentUser.GetUserAsync(Environment.UserName);
+            //await currentUser.GetUserAsync("gybarev");
             Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Users.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
             InitializeComponent();
         }
+
+        async void MainClickSaver()
+        {
+            await Task.Delay(1000);
+            click = true;
+        }
+
         #endregion
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -127,7 +139,7 @@ namespace Moiro_Orders
 
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://localhost:55544/")        //"http://10.10.0.34/"
+            BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
         };
 
         internal static User Im = new User();
