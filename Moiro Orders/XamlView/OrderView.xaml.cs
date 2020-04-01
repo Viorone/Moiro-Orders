@@ -332,7 +332,6 @@ namespace Moiro_Orders.XamlView
         {
             IUser user = new CurrentUser();
             var status = await user.DeleteOrder(selectedOrder.Id);
-            //GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
             changeOrder.Visibility = Visibility.Hidden;
             DeleteOrder.Visibility = Visibility.Hidden;
             addOrder.Visibility = Visibility.Visible;
