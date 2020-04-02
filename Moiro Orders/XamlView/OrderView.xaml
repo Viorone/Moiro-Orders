@@ -100,7 +100,7 @@
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue"  >
             <Grid>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
-                    <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="DateText" Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
                     <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">

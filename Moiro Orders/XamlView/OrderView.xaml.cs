@@ -81,8 +81,10 @@ namespace Moiro_Orders.XamlView
                 cts.Cancel();
                 selectedOrder = (Order)e.AddedItems[0];               
                 Cancel.Visibility = Visibility.Visible;
+                datePick.Visibility = Visibility.Hidden;
+                DateText.Visibility = Visibility.Hidden;
 
-                if(selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6)
+                if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6)
                 {
                     AcceptOrder.Visibility = Visibility.Visible;
                 }
@@ -107,7 +109,9 @@ namespace Moiro_Orders.XamlView
                 }             
                 addOrder.Visibility = Visibility.Hidden;
                 Cancel.Visibility = Visibility.Visible;
-                if(selectedOrder.StatusId == 2)
+                datePick.Visibility = Visibility.Hidden;
+                DateText.Visibility = Visibility.Hidden;
+                if (selectedOrder.StatusId == 2)
                 {
                     AcceptCompleteOrder.Visibility = Visibility.Visible;
                 }                
@@ -122,6 +126,8 @@ namespace Moiro_Orders.XamlView
                 click = false;
                 Task.Run(() => ClickSaver());
                 addOrder.Visibility = Visibility.Hidden;
+                datePick.Visibility = Visibility.Hidden;
+                DateText.Visibility = Visibility.Hidden;
                 isProblem = false;
                 cts.Cancel();
             }           
@@ -141,6 +147,8 @@ namespace Moiro_Orders.XamlView
                 DeleteOrder.Visibility = Visibility.Hidden;
                 addOrder.Visibility = Visibility.Hidden;
                 Cancel.Visibility = Visibility.Hidden;
+                datePick.Visibility = Visibility.Hidden;
+                DateText.Visibility = Visibility.Hidden;
                 cts.Cancel();
             }            
         }
@@ -193,6 +201,8 @@ namespace Moiro_Orders.XamlView
                 listOrders.Visibility = Visibility.Visible;
                 addOrder.Visibility = Visibility.Visible;
                 Cancel.Visibility = Visibility.Hidden;
+                datePick.Visibility = Visibility.Visible;
+                DateText.Visibility = Visibility.Visible;
                 //datePick.SelectedDate = DateTime.Now.Date;
                 problem.Text = null;
                 description.Text = null;
@@ -212,6 +222,8 @@ namespace Moiro_Orders.XamlView
                 {
                     AcceptOrder.Visibility = Visibility.Hidden;
                     Cancel.Visibility = Visibility.Hidden;
+                    datePick.Visibility = Visibility.Visible;
+                    DateText.Visibility = Visibility.Visible;
                     UpdateOrdersListAdmin();
                 }
                 else //user
@@ -221,6 +233,8 @@ namespace Moiro_Orders.XamlView
                     DeleteOrder.Visibility = Visibility.Hidden;
                     Cancel.Visibility = Visibility.Hidden;
                     AcceptCompleteOrder.Visibility = Visibility.Hidden;
+                    datePick.Visibility = Visibility.Visible;
+                    DateText.Visibility = Visibility.Visible;
                     UpdateOrdersListUser();                   
                 }
             }                  
@@ -235,6 +249,7 @@ namespace Moiro_Orders.XamlView
                 Cancel.Visibility = Visibility.Hidden;
                 listOrders.Visibility = Visibility.Hidden;
                 AcceptOrder.Visibility = Visibility.Hidden;
+                datePick.Visibility = Visibility.Hidden;
                 ProblemView.Text = selectedOrder.Problem;
                 DescriptionView.Text = selectedOrder.Description;
                 UserView.Text = selectedOrder.UserName;
@@ -259,6 +274,7 @@ namespace Moiro_Orders.XamlView
         private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
         {
             listOrders.Visibility = Visibility.Visible;
+            datePick.Visibility = Visibility.Hidden;
             if (click)
             {
                 click = false;
@@ -475,7 +491,7 @@ namespace Moiro_Orders.XamlView
 
         async void ClickSaver()
         {
-            await Task.Delay(1000);
+            await Task.Delay(200);
             click = true;
         }
 
