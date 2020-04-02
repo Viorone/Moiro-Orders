@@ -164,17 +164,10 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5"  >
                 <Button x:Name="addOrder" Grid.Row="1" Content="Добавить заявку" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
                 <Button x:Name="Cancel" Grid.Row="1" Content="Oтмена" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Visibility="Hidden" Click="Cancel_Click"/>
-                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Удалить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
+                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
                 <Button x:Name="changeOrder" Grid.Row="2" Content="Изменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="ChangeOrder_Click"/>
                 <Button x:Name="AcceptOrder" Grid.Row="2" Content="Подтвердить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
-
-                <Button Content="2x" Height="40" Margin="5" Visibility="Hidden">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger >
-                            <i:InvokeCommandAction Command="{Binding DoubleCommand}" CommandName="DoubleCommand" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+                <Button x:Name="AcceptCompleteOrder" Grid.Row="2" Content="Подтвердить выполнение"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptCompleteOrder_Click"/>
             </StackPanel>
         </Grid>
         <StackPanel x:Name="OrderDetails" VerticalAlignment="Stretch">
