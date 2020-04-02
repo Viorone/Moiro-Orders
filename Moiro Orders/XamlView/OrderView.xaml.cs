@@ -1,6 +1,7 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -437,9 +438,10 @@ namespace Moiro_Orders.XamlView
         async Task GetStatusesList()
         {
             IAdmin admin = new CurrentUser();
-            var statuses = await admin.GetStatuses();
+            var statusesTmp = await admin.GetStatuses();
             StatusList.DisplayMemberPath = "Name";
-            statuses = statuses.RemoveAt(index:);
+            var statuses = statusesTmp.Where(x => x.Id != 1 && x.Id != 3 && x.Id != 6);
+
             StatusList.ItemsSource = statuses;
             StatusList.SelectedItem = StatusList.Items[0];
         }
