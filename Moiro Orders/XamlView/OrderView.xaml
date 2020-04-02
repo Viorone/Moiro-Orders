@@ -163,11 +163,11 @@
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5"  >
                 <Button x:Name="addOrder" Grid.Row="1" Content="Добавить заявку" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
-                <Button x:Name="Cancel" Grid.Row="1" Content="Oтмена" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Visibility="Hidden" Click="Cancel_Click"/>
-                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
+                <Button x:Name="Cancel" IsCancel= "true" Grid.Row="1" Content="Назад" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Visibility="Hidden" Click="Cancel_Click" />
                 <Button x:Name="changeOrder" Grid.Row="2" Content="Изменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="ChangeOrder_Click"/>
-                <Button x:Name="AcceptOrder" Grid.Row="2" Content="Подтвердить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
-                <Button x:Name="AcceptCompleteOrder" Grid.Row="2" Content="Подтвердить выполнение"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptCompleteOrder_Click"/>
+                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="OrangeRed" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
+                <Button x:Name="AcceptOrder" Grid.Row="2" Content="Подтвердить заявку"  Margin="5"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
+                <Button x:Name="AcceptCompleteOrder" Grid.Row="2" Content="Подтвердить выполнение"  Margin="5"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptCompleteOrder_Click"/>
             </StackPanel>
         </Grid>
         <StackPanel x:Name="OrderDetails" VerticalAlignment="Stretch">
@@ -183,8 +183,8 @@
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" />
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="backToOrderList"  Height="40"  Margin="10" Click="BackToOrderList_Click"/>
-                            <Button Content="Сохранить" x:Name="SaveOrder" Margin="10"  Height="40" Click="SaveOrder_Click" />
+                            <Button Content="Назад" x:Name="backToOrderList" Height="40" Margin="10" Click="BackToOrderList_Click"/>
+                            <Button Content="Сохранить" x:Name="SaveOrder" Margin="10" Height="40" Click="SaveOrder_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -226,7 +226,7 @@
                             
                         </ComboBox>
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="BackToOrderAdmin"  Height="40"  Margin="10" Click="BackToOrderAdmin_Click"/>
+                            <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40"  Margin="10" Click="BackToOrderAdmin_Click"/>
                             <Button Content="Сохранить" x:Name="SaveOrderAdmin" Margin="10"  Height="40" Click="SaveOrderAdmin_Click" />
                         </StackPanel>
                     </StackPanel>
