@@ -20,6 +20,7 @@ namespace Moiro_Orders.Models
         public string Room { get; set; }
         public string StatusName { get; set; }
         public string UserLogin { get; set; }
-      
+        public string AdminComment { get; set; }
+     
     }
 }
