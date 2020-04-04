@@ -301,8 +301,6 @@ namespace Moiro_Orders.XamlView
             {
                 click = false;
                 Task.Run(() => ClickSaver());
-
-
                 UpdateOrdersListAdmin();                
             }
             Cancel.Visibility = Visibility.Hidden;
