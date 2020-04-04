@@ -305,8 +305,8 @@ namespace Moiro_Orders.XamlView
 
                 UpdateOrdersListAdmin();                
             }
-            Cancel.Visibility = Visibility.Visible;
-            AcceptOrder.Visibility = Visibility.Visible;
+            Cancel.Visibility = Visibility.Hidden;
+            AcceptOrder.Visibility = Visibility.Hidden;
             listOrders.Visibility = Visibility.Visible;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
@@ -336,7 +336,8 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+                datePick.SelectedDate = DateTime.Now.Date;
+                GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
             }
         }
 
