@@ -9,14 +9,6 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Style TargetType="TextBlock">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=checkBox1, Path=IsChecked}"
-                        Value="True">
-                    <Setter Property="IsEnabled" Value="False"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="MainFont">
             <Setter Property="Control.FontFamily" Value="Segoe UI" />
             <Setter Property="Control.FontSize" Value="20" />
