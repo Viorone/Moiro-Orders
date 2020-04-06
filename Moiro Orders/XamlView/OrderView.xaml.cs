@@ -140,6 +140,8 @@ namespace Moiro_Orders.XamlView
             datePick.Visibility = Visibility.Hidden;
             DateText.Visibility = Visibility.Hidden;
             listOrders.Visibility = Visibility.Hidden;
+            backToOrderList.Visibility = Visibility.Visible;
+            SaveOrder.Visibility = Visibility.Visible;
         }
 
         private void ChangeOrder_Click(object sender, RoutedEventArgs e) //user
@@ -160,6 +162,8 @@ namespace Moiro_Orders.XamlView
             Cancel.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Hidden;
             DateText.Visibility = Visibility.Hidden;
+            backToOrderList.Visibility = Visibility.Visible;
+            SaveOrder.Visibility = Visibility.Visible;
         }
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e) //user
@@ -181,6 +185,8 @@ namespace Moiro_Orders.XamlView
             listOrders.Visibility = Visibility.Visible;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
+            backToOrderList.Visibility = Visibility.Hidden;
+            SaveOrder.Visibility = Visibility.Hidden;
         }
 
         private void AcceptCompleteOrder_Click(object sender, RoutedEventArgs e) //user
@@ -232,6 +238,8 @@ namespace Moiro_Orders.XamlView
             Cancel.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
+            backToOrderList.Visibility = Visibility.Hidden;
+            SaveOrder.Visibility = Visibility.Hidden;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -282,6 +290,8 @@ namespace Moiro_Orders.XamlView
             AcceptOrder.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Hidden;
             DateText.Visibility = Visibility.Hidden;
+            BackToOrderAdmin.Visibility = Visibility.Visible;
+            SaveOrderAdmin.Visibility = Visibility.Visible;
         }
 
         private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
@@ -295,6 +305,8 @@ namespace Moiro_Orders.XamlView
             listOrders.Visibility = Visibility.Visible;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
+            BackToOrderAdmin.Visibility = Visibility.Hidden;
+            SaveOrderAdmin.Visibility = Visibility.Hidden;
         }
 
         private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
@@ -310,6 +322,8 @@ namespace Moiro_Orders.XamlView
             listOrders.Visibility = Visibility.Visible;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
+            BackToOrderAdmin.Visibility = Visibility.Hidden;
+            SaveOrderAdmin.Visibility = Visibility.Hidden;
         }
 
 
