@@ -21,6 +21,6 @@ namespace Moiro_Orders.Models
         public string StatusName { get; set; }
         public string UserLogin { get; set; }
         public string AdminComment { get; set; }
-     
+        public DateTime CompletionDate { get; set; }
     }
 }

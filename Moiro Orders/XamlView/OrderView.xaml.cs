@@ -1,6 +1,7 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -300,12 +301,10 @@ namespace Moiro_Orders.XamlView
             {
                 click = false;
                 Task.Run(() => ClickSaver());
-
-
                 UpdateOrdersListAdmin();                
             }
-            Cancel.Visibility = Visibility.Visible;
-            AcceptOrder.Visibility = Visibility.Visible;
+            Cancel.Visibility = Visibility.Hidden;
+            AcceptOrder.Visibility = Visibility.Hidden;
             listOrders.Visibility = Visibility.Visible;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
@@ -335,7 +334,8 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+                datePick.SelectedDate = DateTime.Now.Date;
+                GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
             }
         }
 
@@ -388,7 +388,8 @@ namespace Moiro_Orders.XamlView
                 Description = description.Text,
                 UserId = PublicResources.Im.Id,
                 Problem = problem.Text,
-                StatusId = 1
+                StatusId = 1,
+                CompletionDate = Convert.ToDateTime("1900 - 01 - 01 00:00:00.000")
             });
             problem.Text = null;
             description.Text = null;
@@ -412,6 +413,7 @@ namespace Moiro_Orders.XamlView
         {
             IUser user = new CurrentUser();
             selectedOrder.StatusId = 3;                              //Подтверждение выполнения заявки пользователем
+            selectedOrder.CompletionDate = DateTime.Now;
             var status = await user.EditOrder(selectedOrder);           
             datePick.SelectedDate = selectedOrder.Date;
             UpdateOrdersListUser();
@@ -441,6 +443,7 @@ namespace Moiro_Orders.XamlView
         {
             IAdmin admin = new CurrentUser();
             selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
+            selectedOrder.AdminComment = AdminDescription.Text;
             var status = await admin.EditOrder(selectedOrder);
             UpdateOrdersListAdmin();
         }
@@ -467,7 +470,7 @@ namespace Moiro_Orders.XamlView
 
         async void AutoUpdateOrdersListUser(CancellationToken cancellationToken)
         {
-            IUser user = new CurrentUser();
+            IUser user = new CurrentUser();           
             try
             {
                 while (!cancellationToken.IsCancellationRequested)

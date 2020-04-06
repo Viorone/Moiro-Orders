@@ -28,7 +28,7 @@
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
-        
+
         <Storyboard x:Key="OrderDetailsOpen" >
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
@@ -106,9 +106,7 @@
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="MinHeight" Value="35"  />
                                 <Setter Property="MinWidth" Value="35" />
-
                             </Style>
-
                         </DatePicker.Resources>
                     </DatePicker>
                 </StackPanel>
@@ -116,10 +114,9 @@
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
                      x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,65" >
-                
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
                             <Border>
                                 <Border.Style>
                                     <Style TargetType="Border">
@@ -142,16 +139,18 @@
                                         <RowDefinition Height="10*"/>
                                         <RowDefinition Height="10*"/>
                                         <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80*"/>
                                         <ColumnDefinition Width="200*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="22" Text="{Binding Path=Problem}" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
-
+                                    <TextBlock Text="{Binding Path=Problem}" FontSize="22" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1"  FontSize="14" HorizontalAlignment="Right" />
-                                    <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}"  Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" />
+                                    <TextBlock Text="{Binding Path=CompletionDate, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="4" Grid.Column="1"  FontSize="14" HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" FontSize="18" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" />
+                                    <TextBlock Text="{Binding Path=AdminComment}" TextWrapping="Wrap" FontSize="18" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" />
                                     <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
                                     <TextBlock Text="{Binding Path=Room}" Grid.Row="2" Grid.Column="2"  FontSize="14"  HorizontalAlignment="Right" />
                                     <TextBlock Text="{Binding Path=StatusName}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
@@ -220,11 +219,9 @@
                                 <TextBlock x:Name="RoomView"             Style="{StaticResource SubFont}"/>
                             </StackPanel>
                         </Grid>
-                        <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" 
-                                  Style="{StaticResource MainFont}"  
-                                  Margin="0 25 0 10">
-                            
-                        </ComboBox>
+
+                        <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 25 0" x:Name="AdminDescription" />
+                        <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" Style="{StaticResource MainFont}" Margin="0 25 0 10"></ComboBox>
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40"  Margin="10" Click="BackToOrderAdmin_Click"/>
                             <Button Content="Сохранить" x:Name="SaveOrderAdmin" Margin="10"  Height="40" Click="SaveOrderAdmin_Click" />
