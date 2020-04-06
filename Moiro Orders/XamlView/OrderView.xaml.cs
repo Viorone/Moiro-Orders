@@ -106,15 +106,17 @@ namespace Moiro_Orders.XamlView
                 DeleteOrder.Visibility = Visibility.Hidden;
                 changeOrder.Visibility = Visibility.Hidden;
                 AcceptCompleteOrder.Visibility = Visibility.Hidden;
+                //если разница в пол часа изменять - нельзя 
                 if (changeTime < time.TimeOfDay && selectedOrder.StatusId != 3)
                 {
-                    if (selectedOrder.StatusId != 6)
+                    if (selectedOrder.StatusId != 6) // если заявка не отменена
                     {
                         DeleteOrder.Visibility = Visibility.Visible;
+                        changeOrder.Visibility = Visibility.Visible;
                     }
-                    changeOrder.Visibility = Visibility.Visible;
+                  
                 }
-                if (selectedOrder.StatusId == 2)
+                if (selectedOrder.StatusId == 2)  //если выполняется заявка то пользователь может подтверить выполненние 
                 {
                     AcceptCompleteOrder.Visibility = Visibility.Visible;
                 }
