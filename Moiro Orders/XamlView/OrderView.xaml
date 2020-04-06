@@ -9,6 +9,21 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
     <UserControl.Resources>
+
+        
+        <Style x:Key="EconomyClassStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="#6eb1f5"/>
+        </Style>
+        <Style x:Key="MiddleClassStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="#c76ef5"/>
+        </Style>
+        <Style x:Key="BuisnessClassStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="#f7d034"/>
+        </Style>
+        <Style x:Key="PremiumClassStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="#74f734"/>
+        </Style>
+
         <Style x:Key="MainFont">
             <Setter Property="Control.FontFamily" Value="Segoe UI" />
             <Setter Property="Control.FontSize" Value="20" />
@@ -27,6 +42,9 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
+        
+        
+        
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
 
         <Storyboard x:Key="OrderDetailsOpen" >
@@ -68,8 +86,8 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
-            
         </Storyboard>
+       
     </UserControl.Resources>
 
     <UserControl.Triggers>
@@ -115,7 +133,7 @@
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
                      x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,65" >
-
+                   
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border>
@@ -125,6 +143,18 @@
                                         <Setter Property="BorderBrush" Value="Transparent" />
 
                                         <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="6">
+                                                <Setter Property="Background" Value="#FECECE" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="3">
+                                                <Setter Property="Background" Value="#CEFFCE" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="4">
+                                                <Setter Property="Background" Value="#FEFED0" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="2">
+                                                <Setter Property="Background" Value="#DEDAFE" />
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
                                                 <Setter Property="BorderBrush" Value="#FF3F51B5" />
@@ -148,17 +178,31 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Text="{Binding Path=Problem}" FontSize="22" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1"  FontSize="14" HorizontalAlignment="Right" />
-                                    <TextBlock Text="{Binding Path=CompletionDate, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="4" Grid.Column="1"  FontSize="14" HorizontalAlignment="Right" />
-                                    <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" FontSize="18" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=AdminComment}" TextWrapping="Wrap" FontSize="18" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding Path=Room}" Grid.Row="2" Grid.Column="2"  FontSize="14"  HorizontalAlignment="Right" />
-                                    <TextBlock Text="{Binding Path=StatusName}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" />
+                                    <StackPanel Grid.Row="2"  Orientation="Horizontal">
+                                        <Label Content="// " FontSize="18" VerticalAlignment ="Center"/>
+                                        <TextBlock Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" FontStyle="Italic" FontSize="18" Grid.Row="2"  Grid.Column="0" />
+                                    </StackPanel>
+
+
+                                    <StackPanel Grid.Column="1" Grid.RowSpan="10" HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                            <Label Content="Отправлено : " FontSize="14" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" FontSize="14" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <TextBlock Text="{Binding Path=StatusName}" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            <Label Content=" " FontSize="14" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Path=CompletionDate, StringFormat='{}{0:f}', ConverterCulture='ru'}" FontSize="14" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap"  FontStyle="Italic" FontSize="14"  HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding Path=Room}"  FontSize="14"  HorizontalAlignment="Right" />
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                  
                 </ListBox>
             </Grid>
           

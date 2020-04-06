@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Moiro_Orders.ViewModel
@@ -75,6 +77,33 @@ namespace Moiro_Orders.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
+    }
+
+    public class CategoryHighlightStyleSelector : StyleSelector
+    {
+        public Style EconomyClassStyle { get; set; }
+        public Style MiddleClassStyle { get; set; }
+        public Style BuisnessClassStyle { get; set; }
+        public Style PremiumClassStyle { get; set; }
+
+        public override Style SelectStyle(object item, DependencyObject container)
+        {
+            Order order = (Order)item;
+
+            switch (order.StatusId)
+            {
+                case 1:
+                    return EconomyClassStyle;
+                case 2:
+                    return MiddleClassStyle;
+                case 3:
+                    return BuisnessClassStyle;
+                case 4:
+                    return PremiumClassStyle;
+                default:
+                    return null;
+            }
+        }
     }
 
 }

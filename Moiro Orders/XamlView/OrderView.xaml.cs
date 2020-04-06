@@ -187,6 +187,7 @@ namespace Moiro_Orders.XamlView
             DateText.Visibility = Visibility.Visible;
             backToOrderList.Visibility = Visibility.Hidden;
             SaveOrder.Visibility = Visibility.Hidden;
+            AcceptCompleteOrder.Visibility = Visibility.Hidden;
         }
 
         private void AcceptCompleteOrder_Click(object sender, RoutedEventArgs e) //user
@@ -475,7 +476,12 @@ namespace Moiro_Orders.XamlView
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var orders = await admin.GetAllOrdersToday(DateTime.Now);
-                    Action action = () => listOrders.ItemsSource = orders;
+                  
+                    Action action = () => 
+                    {
+                        orders.Reverse();
+                        listOrders.ItemsSource = orders;
+                    };
                     await listOrders.Dispatcher.BeginInvoke(action);
                     //MessageBox.Show("REWQ");
                     await Task.Delay(5000, cancellationToken);
@@ -492,7 +498,11 @@ namespace Moiro_Orders.XamlView
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, DateTime.Now.Date);
-                    Action action = () => listOrders.ItemsSource = orders;
+                    Action action = () =>
+                    {
+                        orders.Reverse();
+                        listOrders.ItemsSource = orders;
+                    };
                     await listOrders.Dispatcher.BeginInvoke(action);
                     //MessageBox.Show("QWER");
                     await Task.Delay(10000, cancellationToken);
@@ -506,5 +516,7 @@ namespace Moiro_Orders.XamlView
             await Task.Delay(200);
             click = true;
         }
+
+       
     }
 }
