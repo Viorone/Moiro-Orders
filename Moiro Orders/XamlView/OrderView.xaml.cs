@@ -86,7 +86,7 @@ namespace Moiro_Orders.XamlView
                 datePick.Visibility = Visibility.Hidden;
                 DateText.Visibility = Visibility.Hidden;
 
-                if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6)
+                if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6 && selectedOrder.AdminId == PublicResources.Im.Id || selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6 && selectedOrder.AdminId == null)
                 {
                     AcceptOrder.Visibility = Visibility.Visible;
                 }
@@ -461,6 +461,7 @@ namespace Moiro_Orders.XamlView
             IAdmin admin = new CurrentUser();
             selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
             selectedOrder.AdminComment = AdminDescription.Text;
+            selectedOrder.AdminId = PublicResources.Im.Id;
             var status = await admin.EditOrder(selectedOrder);
             UpdateOrdersListAdmin();
         }
@@ -479,8 +480,11 @@ namespace Moiro_Orders.XamlView
                   
                     Action action = () => 
                     {
-                        orders.Reverse();
-                        listOrders.ItemsSource = orders;
+                        if (orders != null)
+                        {
+                            orders.Reverse();
+                            listOrders.ItemsSource = orders;
+                        }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
                     //MessageBox.Show("REWQ");
@@ -500,8 +504,11 @@ namespace Moiro_Orders.XamlView
                     var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, DateTime.Now.Date);
                     Action action = () =>
                     {
-                        orders.Reverse();
-                        listOrders.ItemsSource = orders;
+                        if(orders != null)
+                        {
+                            orders.Reverse();
+                            listOrders.ItemsSource = orders;
+                        }                       
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
                     //MessageBox.Show("QWER");
