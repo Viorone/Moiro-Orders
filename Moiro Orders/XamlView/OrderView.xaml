@@ -182,9 +182,9 @@
                                                 <!-- 2 строка свободна??? -->
                                                 <TextBlock Text="{Binding Path=AdminName}" Grid.Column="1" Grid.Row="3"/>
 
-                                               
+
                                                 <!-- Динамическое отображение состояния завки и, при необходимости, даты -->
-                                               
+
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0">
                                                     <Label Content="Отправлено : " FontSize="14" VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" FontSize="14" VerticalAlignment="Center" />
@@ -214,23 +214,31 @@
                                                         </TextBlock.Style>
                                                     </TextBlock>
                                                 </StackPanel>
-
-
                                             </Grid>
-
                                         </StackPanel>
                                     </Border>
-
-                                    <Grid Margin="13 -1"  Background="Transparent">
+                                    <!-- Комментарий администратора  -->
+                                    <Grid Margin="13 0"  Background="Transparent">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="7*"/>
                                             <ColumnDefinition Width="4*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Border  Margin="0 0 0 8" BorderThickness="1" BorderBrush="LightGray" Grid.Column="1" CornerRadius="0 0 10 10" Background="LightYellow" Padding="10 0">
+                                        <Border  Margin="0 0 0 8" BorderThickness="1 0 1 1" BorderBrush="LightGray" Grid.Column="1" CornerRadius="0 0 10 10" Background="LightYellow" Padding="10 0" >
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=AdminComment, Path=Text}" Value="">
+                                                            <Setter Property="Height" Value="0" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
                                             <StackPanel Grid.Row="4"  Orientation="Horizontal">
                                                 <Label Content="// " FontSize="18" VerticalAlignment ="Center"/>
-                                                <TextBlock Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" FontStyle="Italic" FontSize="18" Grid.Row="2"  Grid.Column="0" Width="500"/>
+                                                <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" FontStyle="Italic" FontSize="18" Grid.Row="2"  Grid.Column="0" Width="500"/>
+
+
                                             </StackPanel>
                                         </Border>
                                     </Grid>
