@@ -57,7 +57,7 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Заявки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Events" Visibility="Hidden" Height="60" MouseLeftButtonUp="Events_MouseLeftButtonUp">
+                    <ListViewItem x:Name="Events" Height="60" MouseLeftButtonUp="Events_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="EventNote" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Мероприятия" VerticalAlignment="Center" Margin="20 10"/>

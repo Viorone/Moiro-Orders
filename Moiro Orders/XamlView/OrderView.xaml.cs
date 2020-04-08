@@ -116,7 +116,7 @@ namespace Moiro_Orders.XamlView
                         DeleteOrder.Visibility = Visibility.Visible;
                         changeOrder.Visibility = Visibility.Visible;
                     }
-                  
+
                 }
                 if (selectedOrder.StatusId == 2)  //если выполняется заявка то пользователь может подтверить выполненние 
                 {
@@ -125,16 +125,16 @@ namespace Moiro_Orders.XamlView
                 addOrder.Visibility = Visibility.Hidden;
                 Cancel.Visibility = Visibility.Visible;
                 datePick.Visibility = Visibility.Hidden;
-                DateText.Visibility = Visibility.Hidden;               
+                DateText.Visibility = Visibility.Hidden;
             }
         }
 
         private void AddOrder_Click(object sender, RoutedEventArgs e) //user
-        {          
+        {
             if (click)
             {
                 click = false;
-                Task.Run(() => ClickSaver());               
+                Task.Run(() => ClickSaver());
                 isProblem = false;
                 cts.Cancel();
             }
@@ -199,7 +199,7 @@ namespace Moiro_Orders.XamlView
             {
                 click = false;
                 Task.Run(() => ClickSaver());
-                CompleteSelectedOrder().GetAwaiter();              
+                CompleteSelectedOrder().GetAwaiter();
             }
             changeOrder.Visibility = Visibility.Hidden;
             DeleteOrder.Visibility = Visibility.Hidden;
@@ -250,7 +250,7 @@ namespace Moiro_Orders.XamlView
         {
             listOrders.Visibility = Visibility.Visible;
             if (click)
-            {              
+            {
                 click = false;
                 Task.Run(() => ClickSaver());
                 if (PublicResources.Im.Admin) //admin
@@ -266,7 +266,7 @@ namespace Moiro_Orders.XamlView
                     changeOrder.Visibility = Visibility.Hidden;
                     DeleteOrder.Visibility = Visibility.Hidden;
                     AcceptCompleteOrder.Visibility = Visibility.Hidden;
-                    UpdateOrdersListUser();                   
+                    UpdateOrdersListUser();
                 }
             }
             Cancel.Visibility = Visibility.Hidden;
@@ -314,12 +314,12 @@ namespace Moiro_Orders.XamlView
         }
 
         private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
-        {         
+        {
             if (click)
             {
                 click = false;
                 Task.Run(() => ClickSaver());
-                UpdateOrdersListAdmin();                
+                UpdateOrdersListAdmin();
             }
             Cancel.Visibility = Visibility.Hidden;
             AcceptOrder.Visibility = Visibility.Hidden;
@@ -354,8 +354,8 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                datePick.SelectedDate = DateTime.Now.Date;
-                GetOrdersOfDateUser(DateTime.Now).GetAwaiter();
+                //datePick.SelectedDate = DateTime.Now.Date;
+                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
             }
         }
 
@@ -393,7 +393,7 @@ namespace Moiro_Orders.XamlView
             IUser user = new CurrentUser();
             var status = await user.EditOrder(selectedOrder);
             problem.Text = null;
-            description.Text = null;           
+            description.Text = null;
             datePick.SelectedDate = selectedOrder.Date;
             UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
@@ -422,7 +422,7 @@ namespace Moiro_Orders.XamlView
         {
             IUser user = new CurrentUser();
             selectedOrder.StatusId = 5;                              //Отмена заявки пользователем
-            var status = await user.EditOrder(selectedOrder);                
+            var status = await user.EditOrder(selectedOrder);
             datePick.SelectedDate = selectedOrder.Date;
             UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
@@ -433,7 +433,7 @@ namespace Moiro_Orders.XamlView
             IUser user = new CurrentUser();
             selectedOrder.StatusId = 3;                              //Подтверждение выполнения заявки пользователем
             selectedOrder.CompletionDate = DateTime.Now;
-            var status = await user.EditOrder(selectedOrder);           
+            var status = await user.EditOrder(selectedOrder);
             datePick.SelectedDate = selectedOrder.Date;
             UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
@@ -466,19 +466,19 @@ namespace Moiro_Orders.XamlView
         {
             IAdmin admin = new CurrentUser();
             var order = await admin.GetOrderById(selectedOrder.Id);
-            if(selectedOrder.StatusId == order.StatusId)
+            if (selectedOrder.StatusId == order.StatusId)
             {
                 selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
                 selectedOrder.AdminComment = AdminDescription.Text;
                 selectedOrder.AdminId = PublicResources.Im.Id;
                 var status = await admin.EditOrder(selectedOrder);
+                listOrders.ItemsSource = null;
             }
-            
+
             UpdateOrdersListAdmin();
         }
 
         #endregion
-
 
         async void AutoUpdateOrdersListAdmin(CancellationToken cancellationToken)
         {
@@ -488,58 +488,26 @@ namespace Moiro_Orders.XamlView
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var orders = await admin.GetAllOrdersToday(DateTime.Now);
-                  
-                    Action action = () => 
+
+                    Action action = () =>
                     {
-                        if (listOrders.Items.Count > 0)
-                        {
-                            List<Order> ordersChange = new List<Order>();
-                            ordersChange = orders;
-                            // сначала в orders заносятся новые элементы
-                            List<Order> tmpList = new List<Order>();
+                        var ordersChange = orders;
+                        List<Order> tmpList = new List<Order>();
+                        var tmp1 = listOrders.Items.Cast<Order>();
+                        tmpList.AddRange(tmp1);
 
-
-                            ordersChange = orders;
-                            var result = tmpList.Join(ordersChange, ok => ok.Description, ik => ik.Description, (one, two) => new { one, two }).ToList();
-                            ordersChange.RemoveAll(x => result.Any(r => x == r.two));
-
-                            //ниже код который сравнить и присовит новое значение
-                            if (ordersChange != null)
-                            {
-                                foreach (var tmpOrd in ordersChange)
-                                {
-                                    // обновление элемента
-                                    var lol = listOrders.Items.Cast<Order>().Where(x => x.Id == tmpOrd.Id);
-                                    Order ordForSerchIndx = lol.FirstOrDefault();
-
-                                    int indx = listOrders.Items.IndexOf(ordForSerchIndx);
-                                    listOrders.Items[indx] = tmpOrd;
-                                }
-                            }
-
-                            //!!!! очистка orders после внесения изменённых даннных в листбокс - НАПИСАТЬ!!!!!!
-
-                            var tmp1 =  listOrders.Items.Cast<Order>();
-                            tmpList.AddRange(tmp1);
-                             result = tmpList.Join(ordersChange, ok => ok.Id, ik => ik.Id, (one, two) => new { one, two }).ToList();
-                            ordersChange.RemoveAll(x => result.Any(r => x == r.two));
-
-                            // ниже код который вносит новые элементы
-                            foreach (var oneOrd in orders)
-                            {
-                                listOrders.Items.Insert(0,oneOrd);
-                            }
-                            orders =  orders.Except(ordersChange).ToList();
-
-                            //потом в orders занести значения изменённых элементов 
-                            
-                        }
-                        if (listOrders.Items.Count == 0)
+                        if(tmpList.Count != orders.Count)
                         {
                             var ord = orders.OrderBy(a => a.StatusId);
-                            foreach (var oneOrd in ord)
+                            listOrders.ItemsSource = ord;
+                        }
+                        else
+                        {
+                            var except = ordersChange.Except(tmpList, new DBComparer()).ToList();                          
+                            if (except.Count != 0)
                             {
-                                listOrders.Items.Add(oneOrd);
+                                var ord = orders.OrderBy(a => a.StatusId);
+                                listOrders.ItemsSource = ord;
                             }
                         }
                     };
@@ -553,7 +521,7 @@ namespace Moiro_Orders.XamlView
 
         async void AutoUpdateOrdersListUser(CancellationToken cancellationToken)
         {
-            IUser user = new CurrentUser();           
+            IUser user = new CurrentUser();
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -561,10 +529,23 @@ namespace Moiro_Orders.XamlView
                     var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, DateTime.Now.Date);
                     Action action = () =>
                     {
-                        if(orders != null)
+                        var ordersChange = orders;
+                        List<Order> tmpList = new List<Order>();
+                        var tmp1 = listOrders.Items.Cast<Order>();
+                        tmpList.AddRange(tmp1);
+
+                        if (tmpList.Count != orders.Count)
                         {
                             listOrders.ItemsSource = orders;
-                        }                       
+                        }
+                        else
+                        {
+                            var except = ordersChange.Except(tmpList, new DBComparer()).ToList();
+                            if (except.Count != 0)
+                            {                              
+                                listOrders.ItemsSource = orders;
+                            }
+                        }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
                     //MessageBox.Show("QWER");
@@ -579,7 +560,23 @@ namespace Moiro_Orders.XamlView
             await Task.Delay(200);
             click = true;
         }
+    }
 
-       
+    public class DBComparer : IEqualityComparer<Order>
+    {
+        public bool Equals(Order x, Order y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            return x != null && y != null 
+                && x.Id.Equals(y.Id) 
+                && x.Problem.Equals(y.Problem) 
+                && x.Description.Equals(y.Description) 
+                && x.AdminId.Equals(y.AdminId)
+                && x.StatusId.Equals(y.StatusId);
+        }
+        public int GetHashCode(Order obj)
+        {
+            return obj.AdminComment == null ? 0 : obj.AdminComment.GetHashCode();
+        }
     }
 }

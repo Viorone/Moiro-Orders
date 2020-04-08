@@ -51,7 +51,7 @@ namespace Moiro_Orders
                 click = false;
                 Task.Run(() => MainClickSaver());
                 SwitchScreen(new OrderView());
-            }         
+            }
         }
 
         private void Users_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -62,7 +62,7 @@ namespace Moiro_Orders
             }
             else
             {
-                MessageBox.Show("У Вас совсем нет прав! Грустно, но такова жизнь...");
+                Users.Visibility = Visibility.Hidden;
             }
 
         }
@@ -99,7 +99,7 @@ namespace Moiro_Orders
 
         async void MainClickSaver()
         {
-            await Task.Delay(1000);
+            await Task.Delay(200);
             click = true;
         }
 
@@ -118,32 +118,15 @@ namespace Moiro_Orders
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static class PublicResources
     {
-
         public static HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri("http://10.10.0.34/")        //"http://10.10.0.34/"
+            //BaseAddress = new Uri("http://localhost:55544/")      
+            BaseAddress = new Uri("http://10.10.0.34/")
         };
 
         internal static User Im = new User();
-
         static PublicResources()
         {
             client.DefaultRequestHeaders.Accept.Clear();
@@ -151,6 +134,5 @@ namespace Moiro_Orders
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }
-    
 }
 
