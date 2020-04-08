@@ -101,7 +101,7 @@
     <Grid >
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue"  >
             <Grid>
-                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0">
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10">
                     <TextBlock x:Name="DateText" Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
                     <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
@@ -122,24 +122,27 @@
                             <Border>
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderThickness" Value="3" />
                                         <Setter Property="BorderBrush" Value="Transparent" />
                                         <Setter Property="CornerRadius" Value="12"/>
                                         <Setter Property="Background" Value="Transparent"/>
-
+                                        <Setter Property="Margin" Value="10 0"/>
                                         <Style.Triggers>
                                             <!-- Тригерры для изменения цвета и выделения выбранного элемента -->
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="5">
-                                                <Setter Property="Background" Value="#FECECE" />
+                                                <Setter Property="Background" Value="#FF5151" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="3">
-                                                <Setter Property="Background" Value="#CEFFCE" />
+                                                <Setter Property="Background" Value="#56A423" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="4">
-                                                <Setter Property="Background" Value="#FEFED0" />
+                                                <Setter Property="Background" Value="#FFD239" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="2">
-                                                <Setter Property="Background" Value="#DEDAFE" />
+                                                <Setter Property="Background" Value="#68A1DA" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="1">
+                                                <Setter Property="Background" Value="#FFFFaa" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
@@ -150,7 +153,7 @@
                                 </Border.Style>
                                 <!-- Шаблон для добавления элементов -->
                                 <StackPanel>
-                                    <Border CornerRadius="10" Margin="8 8 8 0" Background="White" BorderThickness="3" BorderBrush="LightGray">
+                                    <Border CornerRadius="10" Margin="4 4 4 0" Background="White" BorderThickness="3" BorderBrush="LightGray">
                                         <StackPanel>
                                             <Grid Margin="5" Background="White" >
 
@@ -166,7 +169,7 @@
                                                     <ColumnDefinition Width="1*"/>
                                                 </Grid.ColumnDefinitions>
 
-                                                <TextBlock Text="{Binding Path=Problem}" FontSize="22" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                                <TextBlock Text="{Binding Path=Problem}" FontSize="24" FontFamily="Calibri"  TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
                                                 <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"  >
                                                     <Grid.ColumnDefinitions>
@@ -178,7 +181,7 @@
                                                     <TextBlock Text="{Binding Path=Room}"  FontSize="14" Grid.Column="2" HorizontalAlignment="Left"/>
                                                 </Grid>
 
-                                                <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.RowSpan="2"/>
+                                                <TextBlock Text="{Binding Path=Description}"  TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" />
                                                 <!-- 2 строка свободна??? -->
                                                 <TextBlock Text="{Binding Path=AdminName}" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" HorizontalAlignment="Right" FontSize="14" FontStyle="Italic"/>
 
@@ -235,7 +238,7 @@
                                                 </Style>
                                             </Border.Style>
                                             <StackPanel Grid.Row="4"  Orientation="Horizontal">
-                                                <Label Content="// " FontSize="18" VerticalAlignment ="Center"/>
+                                                <Label Content="// " FontSize="20" VerticalAlignment ="Top" Margin="0 -6"  />
                                                 <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" FontStyle="Italic" FontSize="18" Grid.Row="2"  Grid.Column="0" Width="500"/>
 
 
