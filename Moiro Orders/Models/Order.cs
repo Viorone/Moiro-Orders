@@ -23,6 +23,6 @@ namespace Moiro_Orders.Models
         public string AdminComment { get; set; }
         public int? AdminId { get; set; }
         public string AdminName { get; set; }
-        public DateTime CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
     }
 }

@@ -86,7 +86,7 @@ namespace Moiro_Orders.XamlView
                 datePick.Visibility = Visibility.Hidden;
                 DateText.Visibility = Visibility.Hidden;
 
-                if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6 && selectedOrder.AdminId == PublicResources.Im.Id || selectedOrder.StatusId != 3 && selectedOrder.StatusId != 6 && selectedOrder.AdminId == null)
+                if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == PublicResources.Im.Id || selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == null)
                 {
                     AcceptOrder.Visibility = Visibility.Visible;
                 }
@@ -405,8 +405,7 @@ namespace Moiro_Orders.XamlView
                 Description = description.Text,
                 UserId = PublicResources.Im.Id,
                 Problem = problem.Text,
-                StatusId = 1,
-                CompletionDate = Convert.ToDateTime("1900 - 01 - 01 00:00:00.000")
+                StatusId = 1
             });
             problem.Text = null;
             description.Text = null;
@@ -451,7 +450,7 @@ namespace Moiro_Orders.XamlView
             IAdmin admin = new CurrentUser();
             var statusesTmp = await admin.GetStatuses();
             StatusList.DisplayMemberPath = "Name";
-            var statuses = statusesTmp.Where(x => x.Id != 1 && x.Id != 3 && x.Id != 6);
+            var statuses = statusesTmp.Where(x => x.Id != 1 && x.Id != 3 && x.Id != 5);
             StatusList.ItemsSource = statuses;
             StatusList.SelectedItem = StatusList.Items[0];
         }
