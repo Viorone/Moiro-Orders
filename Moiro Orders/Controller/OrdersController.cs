@@ -67,6 +67,20 @@ namespace Moiro_Orders.Controller
             return response.StatusCode;
         }
 
+        public async Task<Order> GetOrderAsync(int id)
+        {
+            HttpResponseMessage response = await PublicResources.client.GetAsync(
+                $"api/OrdersAPI/{id}");
+            response.EnsureSuccessStatusCode();
+            Order order = null;
+            if (response.IsSuccessStatusCode)
+            {
+                order = await response.Content.ReadAsAsync<Order>();
+            }
+            return order;
+        }
+
+
         public async Task<HttpStatusCode> DeleteOrderAsync(int id)
         {
             HttpResponseMessage response = await PublicResources.client.DeleteAsync(

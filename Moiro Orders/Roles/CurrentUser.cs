@@ -61,6 +61,13 @@ namespace Moiro_Orders.Roles
 
         #region Orders
         //ORDERS
+        public async Task<Order> GetOrderById(int id)
+        {
+            OrdersController ordersController = new OrdersController();
+            var order = await ordersController.GetOrderAsync(id);
+            return order;
+        }
+
         public async Task<HttpStatusCode> CreateOrder(Order order)
         {
             OrdersController ordersController = new OrdersController();
@@ -174,6 +181,8 @@ namespace Moiro_Orders.Roles
             var statuses = await statusController.GetStatusesListAsync();
             return statuses;
         }
+
+        
         #endregion
     }
 }
