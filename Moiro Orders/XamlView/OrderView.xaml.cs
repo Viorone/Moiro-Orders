@@ -445,7 +445,11 @@ namespace Moiro_Orders.XamlView
         {
             IAdmin admin = new CurrentUser();
             var orders = await admin.GetAllOrdersToday(selectDate);
-            listOrders.ItemsSource = orders;
+            if (orders != null)
+            {
+                var ord = orders.OrderBy(a => a.StatusId);
+                listOrders.ItemsSource = ord;
+            }
         }
 
         async Task GetStatusesList()
@@ -489,8 +493,8 @@ namespace Moiro_Orders.XamlView
                     {
                         if (orders != null)
                         {
-                            orders.Reverse();
-                            listOrders.ItemsSource = orders;
+                            var ord = orders.OrderBy(a => a.StatusId);
+                            listOrders.ItemsSource = ord;
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
@@ -513,7 +517,6 @@ namespace Moiro_Orders.XamlView
                     {
                         if(orders != null)
                         {
-                            orders.Reverse();
                             listOrders.ItemsSource = orders;
                         }                       
                     };
