@@ -491,10 +491,56 @@ namespace Moiro_Orders.XamlView
                   
                     Action action = () => 
                     {
-                        if (orders != null)
+                        if (listOrders.Items.Count > 0)
+                        {
+                            List<Order> ordersChange = new List<Order>();
+                            ordersChange = orders;
+                            // сначала в orders заносятся новые элементы
+                            List<Order> tmpList = new List<Order>();
+
+
+                            ordersChange = orders;
+                            var result = tmpList.Join(ordersChange, ok => ok.Description, ik => ik.Description, (one, two) => new { one, two }).ToList();
+                            ordersChange.RemoveAll(x => result.Any(r => x == r.two));
+
+                            //ниже код который сравнить и присовит новое значение
+                            if (ordersChange != null)
+                            {
+                                foreach (var tmpOrd in ordersChange)
+                                {
+                                    // обновление элемента
+                                    var lol = listOrders.Items.Cast<Order>().Where(x => x.Id == tmpOrd.Id);
+                                    Order ordForSerchIndx = lol.FirstOrDefault();
+
+                                    int indx = listOrders.Items.IndexOf(ordForSerchIndx);
+                                    listOrders.Items[indx] = tmpOrd;
+                                }
+                            }
+
+                            //!!!! очистка orders после внесения изменённых даннных в листбокс - НАПИСАТЬ!!!!!!
+
+                            var tmp1 =  listOrders.Items.Cast<Order>();
+                            tmpList.AddRange(tmp1);
+                             result = tmpList.Join(ordersChange, ok => ok.Id, ik => ik.Id, (one, two) => new { one, two }).ToList();
+                            ordersChange.RemoveAll(x => result.Any(r => x == r.two));
+
+                            // ниже код который вносит новые элементы
+                            foreach (var oneOrd in orders)
+                            {
+                                listOrders.Items.Insert(0,oneOrd);
+                            }
+                            orders =  orders.Except(ordersChange).ToList();
+
+                            //потом в orders занести значения изменённых элементов 
+                            
+                        }
+                        if (listOrders.Items.Count == 0)
                         {
                             var ord = orders.OrderBy(a => a.StatusId);
-                            listOrders.ItemsSource = ord;
+                            foreach (var oneOrd in ord)
+                            {
+                                listOrders.Items.Add(oneOrd);
+                            }
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
