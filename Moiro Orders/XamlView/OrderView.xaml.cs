@@ -98,6 +98,8 @@ namespace Moiro_Orders.XamlView
                     return;
                 }
                 cts.Cancel();
+                problem.Text = null;
+                description.Text = null;
                 isProblem = true;
                 selectedOrder = (Order)e.AddedItems[0];
                 var nowTime = DateTime.Now;
@@ -109,7 +111,7 @@ namespace Moiro_Orders.XamlView
                 //если разница в пол часа изменять - нельзя 
                 if (changeTime < time.TimeOfDay && selectedOrder.StatusId != 3)
                 {
-                    if (selectedOrder.StatusId != 6) // если заявка не отменена
+                    if (selectedOrder.StatusId != 5) // если заявка не отменена
                     {
                         DeleteOrder.Visibility = Visibility.Visible;
                         changeOrder.Visibility = Visibility.Visible;
@@ -162,6 +164,7 @@ namespace Moiro_Orders.XamlView
             Cancel.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Hidden;
             DateText.Visibility = Visibility.Hidden;
+            AcceptCompleteOrder.Visibility = Visibility.Hidden;
             backToOrderList.Visibility = Visibility.Visible;
             SaveOrder.Visibility = Visibility.Visible;
         }
@@ -442,7 +445,11 @@ namespace Moiro_Orders.XamlView
         {
             IAdmin admin = new CurrentUser();
             var orders = await admin.GetAllOrdersToday(selectDate);
-            listOrders.ItemsSource = orders;
+            if (orders != null)
+            {
+                var ord = orders.OrderBy(a => a.StatusId);
+                listOrders.ItemsSource = ord;
+            }
         }
 
         async Task GetStatusesList()
@@ -458,10 +465,15 @@ namespace Moiro_Orders.XamlView
         async Task ChangeOrderStatusAdmin()
         {
             IAdmin admin = new CurrentUser();
-            selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
-            selectedOrder.AdminComment = AdminDescription.Text;
-            selectedOrder.AdminId = PublicResources.Im.Id;
-            var status = await admin.EditOrder(selectedOrder);
+            var order = await admin.GetOrderById(selectedOrder.Id);
+            if(selectedOrder.StatusId == order.StatusId)
+            {
+                selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
+                selectedOrder.AdminComment = AdminDescription.Text;
+                selectedOrder.AdminId = PublicResources.Im.Id;
+                var status = await admin.EditOrder(selectedOrder);
+            }
+            
             UpdateOrdersListAdmin();
         }
 
@@ -481,8 +493,8 @@ namespace Moiro_Orders.XamlView
                     {
                         if (orders != null)
                         {
-                            orders.Reverse();
-                            listOrders.ItemsSource = orders;
+                            var ord = orders.OrderBy(a => a.StatusId);
+                            listOrders.ItemsSource = ord;
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
@@ -505,7 +517,6 @@ namespace Moiro_Orders.XamlView
                     {
                         if(orders != null)
                         {
-                            orders.Reverse();
                             listOrders.ItemsSource = orders;
                         }                       
                     };

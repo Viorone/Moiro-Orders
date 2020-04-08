@@ -101,7 +101,7 @@
     <Grid >
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue"  >
             <Grid>
-                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0">
                     <TextBlock x:Name="DateText" Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
                     <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
@@ -115,7 +115,7 @@
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
-                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10,65" >
+                     x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10 40 10 60" >
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -125,7 +125,7 @@
                                         <Setter Property="BorderThickness" Value="2" />
                                         <Setter Property="BorderBrush" Value="Transparent" />
                                         <Setter Property="CornerRadius" Value="12"/>
-                                        <Setter Property="Background" Value="AliceBlue"/>
+                                        <Setter Property="Background" Value="Transparent"/>
 
                                         <Style.Triggers>
                                             <!-- Тригерры для изменения цвета и выделения выбранного элемента -->
@@ -168,19 +168,19 @@
 
                                                 <TextBlock Text="{Binding Path=Problem}" FontSize="22" FontFamily="Calibri" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
-                                                <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 10 0" >
+                                                <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"  >
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="1*"/>
                                                         <ColumnDefinition Width="10"/>
                                                         <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap"  FontStyle="Italic" FontSize="14" Grid.Column="0" HorizontalAlignment="Left" />
-                                                    <TextBlock Text="{Binding Path=Room}"  FontSize="14" Grid.Column="1" HorizontalAlignment="Left"/>
+                                                    <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap" FontStyle="Italic" FontSize="14" Grid.Column="0" HorizontalAlignment="Left" />
+                                                    <TextBlock Text="{Binding Path=Room}"  FontSize="14" Grid.Column="2" HorizontalAlignment="Left"/>
                                                 </Grid>
 
                                                 <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.RowSpan="2"/>
                                                 <!-- 2 строка свободна??? -->
-                                                <TextBlock Text="{Binding Path=AdminName}" Grid.Column="1" Grid.Row="3"/>
+                                                <TextBlock Text="{Binding Path=AdminName}" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" HorizontalAlignment="Right" FontSize="14" FontStyle="Italic"/>
 
 
                                                 <!-- Динамическое отображение состояния завки и, при необходимости, даты -->
@@ -195,7 +195,7 @@
                                                         <Label.Style>
                                                             <Style TargetType="Label">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ElementName=CompletionDate, Path=Text}" Value="1 января 1900 г. 0:00">
+                                                                    <DataTrigger Binding="{Binding ElementName=CompletionDate, Path=Text}" Value="">
                                                                         <Setter Property="Width" Value="0"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -250,13 +250,13 @@
                 </ListBox>
             </Grid>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="0,0,0,5">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="addOrder" Grid.Row="1" IsDefault="True" Content="Добавить заявку" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
+            <StackPanel Orientation="Horizontal" >
+                <Button x:Name="addOrder" Grid.Row="1" IsDefault="True" Content="Добавить заявку" Height="40" Margin="5 0"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
                 <Button x:Name="Cancel"  Grid.Row="1" Content="Назад" Height="40" Margin="5" IsCancel="True" Foreground="AliceBlue" BorderBrush="{x:Null}" Visibility="Hidden" Click="Cancel_Click" />
-                <Button x:Name="changeOrder" Grid.Row="2" Content="Изменить заявку" IsDefault="True" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="ChangeOrder_Click"/>
-                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="OrangeRed" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
-                <Button x:Name="AcceptOrder" Grid.Row="2" Content="Подтвердить заявку" IsDefault="True" Margin="5"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
-                <Button x:Name="AcceptCompleteOrder" Grid.Row="2" Content="Подтвердить выполнение"  Margin="5"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptCompleteOrder_Click"/>
+                <Button x:Name="changeOrder" Grid.Row="2" Content="Изменить заявку" IsDefault="True" Margin="5 0"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="ChangeOrder_Click"/>
+                <Button x:Name="DeleteOrder" Grid.Row="2" Content="Отменить заявку"  Margin="5 0"  Foreground="OrangeRed" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
+                <Button x:Name="AcceptOrder" Grid.Row="2" Content="Подтвердить заявку" IsDefault="True" Margin="5 0"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
+                <Button x:Name="AcceptCompleteOrder" Grid.Row="2" Content="Подтвердить выполнение"  Margin="5 0"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptCompleteOrder_Click"/>
             </StackPanel>
             </Grid>
 
