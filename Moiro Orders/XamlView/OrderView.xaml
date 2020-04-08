@@ -129,7 +129,7 @@
 
                                         <Style.Triggers>
                                             <!-- Тригерры для изменения цвета и выделения выбранного элемента -->
-                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="6">
+                                            <DataTrigger Binding="{Binding Path=StatusId}"  Value="5">
                                                 <Setter Property="Background" Value="#FECECE" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="3">
@@ -206,7 +206,7 @@
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ElementName=CompletionDate, Path=Text}" Value="1 января 1900 г. 0:00">
+                                                                    <DataTrigger Binding="{Binding ElementName=CompletionDate, Path=Text}" Value="">
                                                                         <Setter Property="Width" Value="0" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
