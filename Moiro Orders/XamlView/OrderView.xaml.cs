@@ -418,7 +418,7 @@ namespace Moiro_Orders.XamlView
         async Task DeleteSelectedOrder()
         {
             IUser user = new CurrentUser();
-            selectedOrder.StatusId = 6;                              //Отмена заявки пользователем
+            selectedOrder.StatusId = 5;                              //Отмена заявки пользователем
             var status = await user.EditOrder(selectedOrder);                
             datePick.SelectedDate = selectedOrder.Date;
             UpdateOrdersListUser();
