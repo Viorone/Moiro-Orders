@@ -60,11 +60,6 @@ namespace Moiro_Orders
             {
                 SwitchScreen(new UserView());
             }
-            else
-            {
-                Users.Visibility = Visibility.Hidden;
-            }
-
         }
 
         private void Events_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -94,6 +89,10 @@ namespace Moiro_Orders
             Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Users.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
+            if (PublicResources.Im.Admin == false)
+            {
+                Users.Visibility = Visibility.Hidden;
+            }
             InitializeComponent();
         }
 
@@ -106,12 +105,6 @@ namespace Moiro_Orders
         #endregion
 
     }
-
-
-
-
-
-
 
 
 

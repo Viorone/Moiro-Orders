@@ -317,6 +317,7 @@ namespace Moiro_Orders.XamlView
         {
             if (click)
             {
+                listOrders.SelectedIndex = -1;
                 click = false;
                 Task.Run(() => ClickSaver());
                // UpdateOrdersListAdmin();
