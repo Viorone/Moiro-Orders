@@ -23,6 +23,7 @@ namespace Moiro_Orders.XamlView
         public OrderView()
         {
             InitializeComponent();
+
             datePick.SelectedDate = DateTime.Now.Date;
             if (PublicResources.Im.Admin) //admin
             {
@@ -556,8 +557,6 @@ namespace Moiro_Orders.XamlView
             await Task.Delay(200);
             click = true;
         }
-
-        
     }
 
     public class DBComparer : IEqualityComparer<Order>
