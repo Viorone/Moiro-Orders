@@ -71,7 +71,7 @@
                     </ListViewItem>
                     <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseLeftButtonUp" Visibility="Hidden">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Foreground="LightGray" Kind="Face" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon  Foreground="LightGray" Kind="ShieldAccount" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
