@@ -251,13 +251,13 @@ namespace Moiro_Orders.XamlView
             listOrders.Visibility = Visibility.Visible;
             if (click)
             {
+                listOrders.SelectedIndex = -1;
                 click = false;
                 Task.Run(() => ClickSaver());
                 if (PublicResources.Im.Admin) //admin
                 {
+                   
                     AcceptOrder.Visibility = Visibility.Hidden;
-
-
                     UpdateOrdersListAdmin();
                 }
                 else //user
@@ -319,7 +319,7 @@ namespace Moiro_Orders.XamlView
             {
                 click = false;
                 Task.Run(() => ClickSaver());
-                UpdateOrdersListAdmin();
+               // UpdateOrdersListAdmin();
             }
             Cancel.Visibility = Visibility.Hidden;
             AcceptOrder.Visibility = Visibility.Hidden;
@@ -368,7 +368,7 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                GetOrdersOfDateAdmin(selectedOrder.Date).GetAwaiter();
+                Task.Run(() => GetOrdersOfDateAdmin(selectedOrder.Date));
             }
         }
 
@@ -448,7 +448,7 @@ namespace Moiro_Orders.XamlView
             if (orders != null)
             {
                 var ord = orders.OrderBy(a => a.StatusId);
-                listOrders.ItemsSource = ord;
+                await listOrders.Dispatcher.BeginInvoke( new Action(()=> listOrders.ItemsSource = ord));
             }
         }
 
@@ -496,14 +496,14 @@ namespace Moiro_Orders.XamlView
                         var tmp1 = listOrders.Items.Cast<Order>();
                         tmpList.AddRange(tmp1);
 
-                        if(tmpList.Count != orders.Count)
+                        if (tmpList.Count != orders.Count)
                         {
                             var ord = orders.OrderBy(a => a.StatusId);
                             listOrders.ItemsSource = ord;
                         }
                         else
                         {
-                            var except = ordersChange.Except(tmpList, new DBComparer()).ToList();                          
+                            var except = ordersChange.Except(tmpList, new DBComparer()).ToList();
                             if (except.Count != 0)
                             {
                                 var ord = orders.OrderBy(a => a.StatusId);
