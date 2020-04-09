@@ -108,7 +108,7 @@ namespace Moiro_Orders.XamlView
                 DeleteOrder.Visibility = Visibility.Hidden;
                 changeOrder.Visibility = Visibility.Hidden;
                 AcceptCompleteOrder.Visibility = Visibility.Hidden;
-                //если разница в пол часа изменять - нельзя 
+                //если разница в пол часа, изменять - нельзя 
                 if (changeTime < time.TimeOfDay && selectedOrder.StatusId != 3)
                 {
                     if (selectedOrder.StatusId != 5) // если заявка не отменена
@@ -116,9 +116,8 @@ namespace Moiro_Orders.XamlView
                         DeleteOrder.Visibility = Visibility.Visible;
                         changeOrder.Visibility = Visibility.Visible;
                     }
-
                 }
-                if (selectedOrder.StatusId == 2)  //если выполняется заявка то пользователь может подтверить выполненние 
+                if (selectedOrder.StatusId == 2)  //если выполняется заявка, то пользователь может подтверить выполненние 
                 {
                     AcceptCompleteOrder.Visibility = Visibility.Visible;
                 }
@@ -286,6 +285,7 @@ namespace Moiro_Orders.XamlView
                 DateView.Text = selectedOrder.Date.ToString();
                 LoginView.Text = selectedOrder.UserLogin;
                 RoomView.Text = selectedOrder.Room.ToString();
+                AdminDescription.Text = selectedOrder.AdminComment;
                 cts.Cancel();
                 GetStatusesList().GetAwaiter();
             }
@@ -336,13 +336,6 @@ namespace Moiro_Orders.XamlView
 
 
 
-
-
-
-
-
-
-
         #region Update metods
 
         void UpdateOrdersListUser()
@@ -355,7 +348,7 @@ namespace Moiro_Orders.XamlView
             else
             {
                 //datePick.SelectedDate = DateTime.Now.Date;
-                GetOrdersOfDateUser(selectedOrder.Date).GetAwaiter();
+                Task.Run(() => GetOrdersOfDateUser(selectedOrder.Date));
             }
         }
 
@@ -382,7 +375,10 @@ namespace Moiro_Orders.XamlView
         {
             IUser user = new CurrentUser();
             var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
-            listOrders.ItemsSource = orders;
+            if (orders != null)
+            {
+                await listOrders.Dispatcher.BeginInvoke(new Action(() => listOrders.ItemsSource = orders));
+            }
         }
 
         async Task UpdateOrderAsync()
