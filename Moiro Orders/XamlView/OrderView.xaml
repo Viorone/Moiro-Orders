@@ -41,7 +41,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="OrderDetailsClose">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Height"  Storyboard.TargetName="OrderDetails">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY"  Storyboard.TargetName="OrderDetails">
                 <EasingDoubleKeyFrame  KeyTime="0" Value="1"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
@@ -189,13 +189,23 @@
 
                                                 <Grid  x:Name="userOrder" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" >
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="{Binding ElementName=govno2, Path=ActualWidth}"/>
+                                                        <ColumnDefinition Width="{Binding ElementName=Customer, Path=ActualWidth}"/>
                                                         <ColumnDefinition Width="2*"/>
                                                         <ColumnDefinition Width="10"/>
                                                         <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock x:Name="govno2" Text="Заявитель:  " FontSize="14"/>
-                                                    <TextBlock Text="{Binding Path=UserName}" TextWrapping="Wrap" FontStyle="Italic" FontSize="14" Grid.Column="1" HorizontalAlignment="Left" />
+                                                    <TextBlock x:Name="Customer" Text="Заявитель:  " FontSize="14">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=UserName, Path=Text}" Value="">
+                                                                        <Setter Property="Width" Value="0"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <TextBlock x:Name="UserName" Text="{Binding Path=UserName}" TextWrapping="Wrap" FontStyle="Italic" FontSize="14" Grid.Column="1" HorizontalAlignment="Left" />
                                                     <TextBlock Text="{Binding Path=Room}"  FontSize="14" Grid.Column="3" HorizontalAlignment="Left"/>
                                                 </Grid>
 
