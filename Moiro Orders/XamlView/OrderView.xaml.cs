@@ -19,6 +19,7 @@ namespace Moiro_Orders.XamlView
         public Order selectedOrder;
         bool click = true;
         CancellationTokenSource cts = new CancellationTokenSource();
+        int sortCount = 2;
 
         public OrderView()
         {
@@ -27,6 +28,17 @@ namespace Moiro_Orders.XamlView
             if (PublicResources.Im.Admin) //admin
             {
                 addOrder.Visibility = Visibility.Hidden;
+                List<string> sortList = new List<string>();
+                sortList.Add("Сначала новые");
+                sortList.Add("Сначала старые");
+                sortList.Add("По статусу");
+                sortList.Add("В очереди на выполнение");
+                sortList.Add("Выполняются");
+                sortList.Add("Требуется ремонт/закупка");
+                sortList.Add("Отменено");
+                OrderSortBox.Visibility = Visibility.Visible;
+                OrderSortBox.ItemsSource = sortList;
+                OrderSortBox.SelectedItem = OrderSortBox.Items[2];
             }
         }
 
@@ -330,7 +342,10 @@ namespace Moiro_Orders.XamlView
             SaveOrderAdmin.Visibility = Visibility.Hidden;
         }
 
-
+        private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
+        {
+            var i = OrderSortBox.SelectedIndex;
+        }
 
 
 
@@ -470,7 +485,6 @@ namespace Moiro_Orders.XamlView
                 var status = await admin.EditOrder(selectedOrder);
                 listOrders.ItemsSource = null;
             }
-
             UpdateOrdersListAdmin();
         }
 
@@ -555,14 +569,7 @@ namespace Moiro_Orders.XamlView
         {
             await Task.Delay(200);
             click = true;
-        }
-
-        
-
-        private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        }   
     }
 
     public class DBComparer : IEqualityComparer<Order>
