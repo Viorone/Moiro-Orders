@@ -558,6 +558,11 @@ namespace Moiro_Orders.XamlView
         }
 
         
+
+        private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     public class DBComparer : IEqualityComparer<Order>
