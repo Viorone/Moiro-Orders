@@ -301,7 +301,7 @@ namespace Moiro_Orders.XamlView
                 GetStatusesList().GetAwaiter();
             }
             Cancel.Visibility = Visibility.Hidden;
-            listOrders.Visibility = Visibility.Hidden;
+            listOrders.IsEnabled = false;
             AcceptOrder.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Hidden;
             DateText.Visibility = Visibility.Hidden;
@@ -335,7 +335,7 @@ namespace Moiro_Orders.XamlView
             }
             Cancel.Visibility = Visibility.Hidden;
             AcceptOrder.Visibility = Visibility.Hidden;
-            listOrders.Visibility = Visibility.Visible;
+            listOrders.IsEnabled = true;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
             BackToOrderAdmin.Visibility = Visibility.Hidden;

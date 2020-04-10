@@ -54,27 +54,21 @@
         <Storyboard x:Key="OrderStatusOpen" >
             <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="OrderStatus"
                                          Duration="0:0:0.3"
-                                         From="0"
-                                         To="{Binding RelativeSource={RelativeSource 
-                                                 AncestorType={x:Type Window}, 
-                                                 Mode=FindAncestor}, 
-                                                 Path=ActualHeight}">
-
-            </DoubleAnimation>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrdersList" >
-                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.3"/>
+                                         From="0" To="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualHeight}"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Brush.Opacity)" Storyboard.TargetName="fon" >
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.3"/>
             </DoubleAnimationUsingKeyFrames>
-           
+          
         </Storyboard>
+        
         <Storyboard x:Key="OrderStatusClose">
             <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" 
                              Storyboard.TargetName="OrderStatus"
-                             Duration="0:0:0.3"
-                             To="0"/>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrdersList" >
+                             Duration="0:0:0.2" To="0"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Brush.Opacity)" Storyboard.TargetName="fon" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
@@ -106,7 +100,10 @@
 
 
     <Grid >
-        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" Background="AliceBlue"  >
+        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}"  >
+            <Grid.Background>
+                <SolidColorBrush x:Name="fon" Color="Black" Opacity="0" />
+            </Grid.Background>
             <!-- Верхняя шапка с датой и сортировкой -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="10 10 0 0">
@@ -121,10 +118,13 @@
                     </DatePicker>
                    
                 </StackPanel>
-                <ComboBox x:Name="OrderSortBox" Visibility="Hidden" materialDesign:HintAssist.Hint="Выберите тип сортировки" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Right" Margin="0 10 20 0" />
+                <ComboBox x:Name="OrderSortBox" Visibility="Hidden"  SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Right" Margin="0 10 20 0" />
             </Grid>
             <!-- ListBox содержищий заявки локигу отображения и все что в него засунули -->
             <Grid>
+                <Grid.Background>
+                    <SolidColorBrush x:Name="fon1" Color="Black" Opacity="0" />
+                </Grid.Background>
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" 
                      x:Name="listOrders"  SelectionChanged="ListOrders_Selected" Margin="10 55 10 60" Background="Transparent" >
@@ -221,7 +221,7 @@
                                                 </Grid>
 
                                                 <TextBlock Text="{Binding Path=Description}"  TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" />
-                                                <!-- 2 строка свободна??? -->
+                                                <!-- данные по исполнителю конкретной заявки -->
                                                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  HorizontalAlignment="Right" Width="{Binding ElementName=userOrder, Path=ActualWidth}" >
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -244,7 +244,7 @@
                                                                     </Style>
                                                                 </TextBlock.Style>
                                                             </TextBlock>
-                                                            <TextBlock  Grid.Column="1" x:Name="AdminName" Text="{Binding Path=AdminName}"  TextWrapping="Wrap" HorizontalAlignment="Stretch"  FontSize="14" FontStyle="Italic" />
+                                                            <TextBlock  Grid.Column="1" x:Name="AdminName" Text="{Binding Path=AdminName}"  TextWrapping="Wrap" HorizontalAlignment="Center"  FontSize="14" FontStyle="Italic" />
                                                         </Grid>
                                                     </Grid>
 
@@ -363,7 +363,7 @@
             </StackPanel.Background>
 
             <StackPanel>
-            <Border BorderThickness="3" BorderBrush="Gray" Background="White" CornerRadius="10" Margin="10">
+            <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
                 <Grid>
                     <StackPanel Margin="10" >
                         <Label Content="Проблема"           Style="{StaticResource MainFont}"/>
