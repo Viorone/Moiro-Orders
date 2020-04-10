@@ -27,6 +27,8 @@ namespace Moiro_Orders.XamlView
             datePick.SelectedDate = DateTime.Now.Date;
             if (PublicResources.Im.Admin) //admin
             {
+                OrderStatus.IsEnabled = true;
+                OrderDetails.IsEnabled = false;
                 addOrder.Visibility = Visibility.Hidden;
                 List<string> sortList = new List<string>();
                 sortList.Add("Сначала новые");
@@ -153,7 +155,7 @@ namespace Moiro_Orders.XamlView
             addOrder.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Hidden;
             DateText.Visibility = Visibility.Hidden;
-            listOrders.Visibility = Visibility.Hidden;
+            listOrders.IsEnabled = false;
             backToOrderList.Visibility = Visibility.Visible;
             SaveOrder.Visibility = Visibility.Visible;
         }
@@ -169,7 +171,7 @@ namespace Moiro_Orders.XamlView
                 description.Text = selectedOrder.Description;
                 cts.Cancel();
             }
-            listOrders.Visibility = Visibility.Hidden;
+            listOrders.IsEnabled = false;
             changeOrder.Visibility = Visibility.Hidden;
             DeleteOrder.Visibility = Visibility.Hidden;
             addOrder.Visibility = Visibility.Hidden;
@@ -183,26 +185,35 @@ namespace Moiro_Orders.XamlView
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e) //user
         {
-            if (click)
+
+
+            if (problem.Text.Length > 128 && description.Text.Length > 255)
             {
-                click = false;
-                Task.Run(() => ClickSaver());
-                if (isProblem)
-                {
-                    UpdateOrderAsync().GetAwaiter();
-                }
-                else
-                {
-                    CreateNewOrder().GetAwaiter();
-                }
+                MessageBox.Show("Нелья вводить так много символов!!!", "Сообщение для одарённых!!!");
             }
-            addOrder.Visibility = Visibility.Visible;
-            listOrders.Visibility = Visibility.Visible;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
-            backToOrderList.Visibility = Visibility.Hidden;
-            SaveOrder.Visibility = Visibility.Hidden;
-            AcceptCompleteOrder.Visibility = Visibility.Hidden;
+            else
+            {
+                if (click)
+                {
+                    click = false;
+                    Task.Run(() => ClickSaver());
+                    if (isProblem)
+                    {
+                        UpdateOrderAsync().GetAwaiter();
+                    }
+                    else
+                    {
+                        CreateNewOrder().GetAwaiter();
+                    }
+                }
+                addOrder.Visibility = Visibility.Visible;
+                listOrders.IsEnabled = true;
+                datePick.Visibility = Visibility.Visible;
+                DateText.Visibility = Visibility.Visible;
+                backToOrderList.Visibility = Visibility.Hidden;
+                SaveOrder.Visibility = Visibility.Hidden;
+                AcceptCompleteOrder.Visibility = Visibility.Hidden;
+            }
         }
 
         private void AcceptCompleteOrder_Click(object sender, RoutedEventArgs e) //user
@@ -249,7 +260,7 @@ namespace Moiro_Orders.XamlView
                 description.Text = null;
                 UpdateOrdersListUser();
             }
-            listOrders.Visibility = Visibility.Visible;
+            listOrders.IsEnabled = true;
             addOrder.Visibility = Visibility.Visible;
             Cancel.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Visible;
@@ -260,7 +271,7 @@ namespace Moiro_Orders.XamlView
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            listOrders.Visibility = Visibility.Visible;
+            listOrders.IsEnabled = true;
             if (click)
             {
                 listOrders.SelectedIndex = -1;
@@ -269,6 +280,7 @@ namespace Moiro_Orders.XamlView
                 if (PublicResources.Im.Admin) //admin
                 {
                     AcceptOrder.Visibility = Visibility.Hidden;
+                    OrderSortBox.Visibility = Visibility.Visible;
                     UpdateOrdersListAdmin();
                 }
                 else //user
@@ -282,8 +294,7 @@ namespace Moiro_Orders.XamlView
             }
             Cancel.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
-            OrderSortBox.Visibility = Visibility.Visible;
+            DateText.Visibility = Visibility.Visible;            
         }
 
         private void AcceptOrder_Click(object sender, RoutedEventArgs e) //admin
@@ -309,21 +320,30 @@ namespace Moiro_Orders.XamlView
             DateText.Visibility = Visibility.Hidden;
             BackToOrderAdmin.Visibility = Visibility.Visible;
             SaveOrderAdmin.Visibility = Visibility.Visible;
+            OrderSortBox.Visibility = Visibility.Hidden;
         }
 
         private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
         {
-            if (click)
+            if (AdminDescription.Text.Length > 255)
             {
-                click = false;
-                Task.Run(() => ClickSaver());
-                ChangeOrderStatusAdmin().GetAwaiter();
+                MessageBox.Show("Нелья вводить так много символов!!!", "Сообщение для одарённых!!!");
             }
-            listOrders.Visibility = Visibility.Visible;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
-            BackToOrderAdmin.Visibility = Visibility.Hidden;
-            SaveOrderAdmin.Visibility = Visibility.Hidden;
+            else
+            {
+                if (click)
+                {
+                    click = false;
+                    Task.Run(() => ClickSaver());
+                    ChangeOrderStatusAdmin().GetAwaiter();
+                }
+                listOrders.IsEnabled = true;
+                datePick.Visibility = Visibility.Visible;
+                DateText.Visibility = Visibility.Visible;
+                BackToOrderAdmin.Visibility = Visibility.Hidden;
+                SaveOrderAdmin.Visibility = Visibility.Hidden;
+                OrderSortBox.Visibility = Visibility.Visible;
+            }
         }
 
         private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
@@ -342,6 +362,7 @@ namespace Moiro_Orders.XamlView
             DateText.Visibility = Visibility.Visible;
             BackToOrderAdmin.Visibility = Visibility.Hidden;
             SaveOrderAdmin.Visibility = Visibility.Hidden;
+            OrderSortBox.Visibility = Visibility.Visible;
         }
 
         private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
@@ -400,6 +421,7 @@ namespace Moiro_Orders.XamlView
 
         async Task UpdateOrderAsync()
         {
+
             selectedOrder.Problem = problem.Text;
             selectedOrder.Description = description.Text;
 
@@ -580,10 +602,10 @@ namespace Moiro_Orders.XamlView
             switch (sortCount)
             {
                 case 0:
-                    sortOrd = ord; 
+                    sortOrd = ord.Reverse<Order>(); 
                     break;
                 case 1:
-                    sortOrd = ord.Reverse<Order>();
+                    sortOrd = ord;
                     break;
                 case 2:
                     sortOrd = ord.OrderBy(a => a.StatusId);

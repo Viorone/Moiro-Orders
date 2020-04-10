@@ -86,7 +86,7 @@ namespace Moiro_Orders
             UsersController currentUser = new UsersController();
             await currentUser.GetUserAsync(Environment.UserName);
             //await currentUser.GetUserAsync("gybarev");
-            Title = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
+            HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Users.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
             if (PublicResources.Im.Admin == false)
@@ -104,6 +104,15 @@ namespace Moiro_Orders
 
         #endregion
 
+        private void CloseApp_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 
 

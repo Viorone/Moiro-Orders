@@ -98,15 +98,18 @@
         </EventTrigger>
     </UserControl.Triggers>
 
-
     <Grid >
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}"  >
             <Grid.Background>
                 <SolidColorBrush x:Name="fon" Color="Black" Opacity="0" />
             </Grid.Background>
             <!-- Верхняя шапка с датой и сортировкой -->
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="10 10 0 0">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Panel.ZIndex="98" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0">
                     <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
                     <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
@@ -116,9 +119,9 @@
                             </Style>
                         </DatePicker.Resources>
                     </DatePicker>
-                   
+
                 </StackPanel>
-                <ComboBox x:Name="OrderSortBox" Visibility="Hidden"  SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Right" Margin="0 10 20 0" />
+                <ComboBox x:Name="OrderSortBox"  Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White"/>
             </Grid>
             <!-- ListBox содержищий заявки локигу отображения и все что в него засунули -->
             <Grid>
@@ -179,7 +182,6 @@
                                     <Border CornerRadius="10" Margin="4 4 4 0" Background="White" BorderThickness="3" BorderBrush="LightGray">
                                         <StackPanel>
                                             <Grid Margin="5" Background="White" >
-
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="1*"/>
                                                     <RowDefinition Height="1*"/>
@@ -247,8 +249,6 @@
                                                             <TextBlock  Grid.Column="1" x:Name="AdminName" Text="{Binding Path=AdminName}"  TextWrapping="Wrap" HorizontalAlignment="Center"  FontSize="14" FontStyle="Italic" />
                                                         </Grid>
                                                     </Grid>
-
-
                                                 </Grid>
 
                                                 <!-- Динамическое отображение состояния завки и, при необходимости, даты -->
@@ -357,7 +357,7 @@
             </Border>
         </StackPanel>
         <!-- Блок редактирования заявок Администратором -->
-        <StackPanel x:Name="OrderStatus"   Height="0" VerticalAlignment="Top" >
+        <StackPanel x:Name="OrderStatus"   Height="0" VerticalAlignment="Top" IsEnabled="False" >
             <StackPanel.Background>
                 <SolidColorBrush Color="Transparent" Opacity="0.3" />
             </StackPanel.Background>
@@ -389,9 +389,9 @@
                             </StackPanel>
                         </Grid>
 
-                        <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" />
-                        <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" FontSize ="20" Margin="0 25 0 10"></ComboBox>
-                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" />
+                            <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" FontSize ="20" Margin="0 25 0 10" FontFamily="Segoe UI Light"/>
+                            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click" Visibility="Hidden"/>
                             <Button Content="Сохранить" x:Name="SaveOrderAdmin" IsDefault="True" Margin="10"  Height="40" Click="SaveOrderAdmin_Click" Visibility="Hidden" />
                         </StackPanel>

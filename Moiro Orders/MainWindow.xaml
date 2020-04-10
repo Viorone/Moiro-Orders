@@ -1,4 +1,5 @@
 ﻿<Window
+             
         x:Class="Moiro_Orders.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Moiro_Orders"
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"  
-        Title="Вы не авторизированы" Height="600" Width="1080" Visibility="Visible" WindowStartupLocation="CenterScreen" Background="White" Icon="Resources/moiro.ico" >
+       Height="800" Width="900"  WindowStartupLocation="CenterScreen"  Icon="Resources/moiro.ico" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -35,12 +36,24 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Grid DataContext="{StaticResource ViewModelOrder }">
-        <Grid x:Name="loadingGrid" Background="Black" Opacity="0.7" Panel.ZIndex="99" Visibility="Visible" >
+    <Grid DataContext="{StaticResource ViewModelOrder }" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0" Background="#FF3F51B5"  VerticalAlignment="Top"  Panel.ZIndex="105" Height="50" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <TextBlock x:Name="HeaderText" Text="Вы не авторизированы" Margin="20 0 " VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Panel.ZIndex="101" Margin="0 0 5 0" >
+                <Button x:Name="CloseApp" BorderThickness="0" Background="#FF3F51B5" Click="CloseApp_Click" Width="45" Height="30">
+                    <materialDesign:PackIcon Foreground="White" Kind="Close"  Width="20" Height="20" HorizontalAlignment="Center" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="loadingGrid" Background="Black" Opacity="0.7" Panel.ZIndex="99" Visibility="Visible" Grid.Row="1">
             <TextBlock Text="Загрузка....." Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="44" FontFamily="Seguo" />
         </Grid>
-        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF3F51B5" Panel.ZIndex="98" Grid.Row="1">
-            <StackPanel>
+        <Grid x:Name="GridMenu" Width="60"  HorizontalAlignment="Left" Background="#FF3F51B5"  Panel.ZIndex="98" Grid.Row="1">
+            <StackPanel >
                 <Grid Height="150" Background="#FF3F51B5" >
                     <Button x:Name="CloseMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
                         <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft"  Width="25" Height="25"/>
@@ -50,7 +63,7 @@
                     </Button>
                 </Grid>
 
-                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
                     <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Assignment" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
@@ -80,12 +93,12 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1">
+        <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1" Grid.Row="1">
             <Grid x:Name="mainView">
-               
+
             </Grid>
         </Grid>
-       
-        
+
+
     </Grid>
 </Window>
