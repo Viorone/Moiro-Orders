@@ -19,7 +19,7 @@ namespace Moiro_Orders.XamlView
         public Order selectedOrder;
         bool click = true;
         CancellationTokenSource cts = new CancellationTokenSource();
-        int sortCount = 2;
+        int sortCount = -1;
 
         public OrderView()
         {
@@ -34,11 +34,12 @@ namespace Moiro_Orders.XamlView
                 sortList.Add("По статусу");
                 sortList.Add("В очереди на выполнение");
                 sortList.Add("Выполняются");
+                sortList.Add("Выполнены");
                 sortList.Add("Требуется ремонт/закупка");
                 sortList.Add("Отменено");
                 OrderSortBox.Visibility = Visibility.Visible;
                 OrderSortBox.ItemsSource = sortList;
-                OrderSortBox.SelectedItem = OrderSortBox.Items[2];
+                OrderSortBox.Text = OrderSortBox.Items[2].ToString();
             }
         }
 
@@ -96,6 +97,7 @@ namespace Moiro_Orders.XamlView
                 Cancel.Visibility = Visibility.Visible;
                 datePick.Visibility = Visibility.Hidden;
                 DateText.Visibility = Visibility.Hidden;
+                OrderSortBox.Visibility = Visibility.Hidden;
 
                 if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == PublicResources.Im.Id || selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == null)
                 {
@@ -266,7 +268,6 @@ namespace Moiro_Orders.XamlView
                 Task.Run(() => ClickSaver());
                 if (PublicResources.Im.Admin) //admin
                 {
-                   
                     AcceptOrder.Visibility = Visibility.Hidden;
                     UpdateOrdersListAdmin();
                 }
@@ -282,6 +283,7 @@ namespace Moiro_Orders.XamlView
             Cancel.Visibility = Visibility.Hidden;
             datePick.Visibility = Visibility.Visible;
             DateText.Visibility = Visibility.Visible;
+            OrderSortBox.Visibility = Visibility.Visible;
         }
 
         private void AcceptOrder_Click(object sender, RoutedEventArgs e) //admin
@@ -344,11 +346,11 @@ namespace Moiro_Orders.XamlView
 
         private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
         {
-            var i = OrderSortBox.SelectedIndex;
+            sortCount = OrderSortBox.SelectedIndex;
+            cts.Cancel();
+            listOrders.ItemsSource = null;
+            UpdateOrdersListAdmin();
         }
-
-
-
 
 
         #region Update metods
@@ -458,8 +460,9 @@ namespace Moiro_Orders.XamlView
             var orders = await admin.GetAllOrdersToday(selectDate);
             if (orders != null)
             {
-                var ord = orders.OrderBy(a => a.StatusId);
-                await listOrders.Dispatcher.BeginInvoke( new Action(()=> listOrders.ItemsSource = ord));
+                var sortOrd = OrdersSort(orders);
+                listOrders.ItemsSource = sortOrd;
+                await listOrders.Dispatcher.BeginInvoke( new Action(()=> listOrders.ItemsSource = sortOrd));
             }
         }
 
@@ -508,16 +511,16 @@ namespace Moiro_Orders.XamlView
 
                         if (tmpList.Count != orders.Count)
                         {
-                            var ord = orders.OrderBy(a => a.StatusId);
-                            listOrders.ItemsSource = ord;
+                            var sortOrd = OrdersSort(orders);
+                            listOrders.ItemsSource = sortOrd;
                         }
                         else
                         {
                             var except = ordersChange.Except(tmpList, new DBComparer()).ToList();
                             if (except.Count != 0)
                             {
-                                var ord = orders.OrderBy(a => a.StatusId);
-                                listOrders.ItemsSource = ord;
+                                var sortOrd = OrdersSort(orders);
+                                listOrders.ItemsSource = sortOrd;
                             }
                         }
                     };
@@ -569,7 +572,42 @@ namespace Moiro_Orders.XamlView
         {
             await Task.Delay(200);
             click = true;
-        }   
+        }
+
+        IEnumerable<Order> OrdersSort(List<Order> ord)
+        {
+            IEnumerable<Order> sortOrd;
+            switch (sortCount)
+            {
+                case 0:
+                    sortOrd = ord; 
+                    break;
+                case 1:
+                    sortOrd = ord.Reverse<Order>();
+                    break;
+                case 2:
+                    sortOrd = ord.OrderBy(a => a.StatusId);
+                    break;
+                case 3:
+                    sortOrd = ord.Where(a => a.StatusId == 1);
+                    break;
+                case 4:
+                    sortOrd = ord.Where(a => a.StatusId == 2);
+                    break;
+                case 5:
+                    sortOrd = ord.Where(a => a.StatusId == 3);
+                    break;
+                case 6:
+                    sortOrd = ord.Where(a => a.StatusId == 4);
+                    break;
+                case 7:
+                    sortOrd = ord.Where(a => a.StatusId == 5);
+                    break;
+                default: sortOrd = ord.OrderBy(a => a.StatusId);
+                    break;
+            }
+            return sortOrd;
+        }
     }
 
     public class DBComparer : IEqualityComparer<Order>
