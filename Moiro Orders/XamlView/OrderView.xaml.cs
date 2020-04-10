@@ -345,7 +345,6 @@ namespace Moiro_Orders.XamlView
         private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
         {
             var i = OrderSortBox.SelectedIndex;
-            MessageBox.Show(i.ToString());
         }
 
 
