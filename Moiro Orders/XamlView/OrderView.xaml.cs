@@ -16,10 +16,16 @@ namespace Moiro_Orders.XamlView
     public partial class OrderView : UserControl
     {
         private bool isProblem = true;
-        public Order selectedOrder;
+        public Order selectedOrder = new Order
+        {
+            Id = 0,
+            Date = DateTime.Now,
+            UserId = 0,
+            Problem = "message",
+            StatusId = 0
+        };
         bool click = true;
         CancellationTokenSource cts = new CancellationTokenSource();
-        int sortCount = -1;
 
         public OrderView()
         {
@@ -30,18 +36,27 @@ namespace Moiro_Orders.XamlView
                 OrderStatus.IsEnabled = true;
                 OrderDetails.IsEnabled = false;
                 addOrder.Visibility = Visibility.Hidden;
-                List<string> sortList = new List<string>();
-                sortList.Add("Сначала новые");
-                sortList.Add("Сначала старые");
-                sortList.Add("По статусу");
-                sortList.Add("В очереди на выполнение");
-                sortList.Add("Выполняются");
-                sortList.Add("Выполнены");
-                sortList.Add("Требуется ремонт/закупка");
-                sortList.Add("Отменено");
+                List<string> sortList = new List<string>
+                {
+                    "Сначала новые",
+                    "Сначала старые",
+                    "По статусу",
+                    "В очереди на выполнение",
+                    "Выполняются",
+                    "Выполнены",
+                    "Требуется ремонт/закупка",
+                    "Отменено"
+                };
                 OrderSortBox.Visibility = Visibility.Visible;
                 OrderSortBox.ItemsSource = sortList;
-                OrderSortBox.Text = OrderSortBox.Items[2].ToString();
+                if(PublicResources.sortCount == -1)
+                {
+                    OrderSortBox.Text = OrderSortBox.Items[2].ToString();
+                }
+                else
+                {
+                    OrderSortBox.Text = OrderSortBox.Items[PublicResources.sortCount].ToString();
+                }
             }
         }
 
@@ -367,9 +382,9 @@ namespace Moiro_Orders.XamlView
 
         private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
         {
-            sortCount = OrderSortBox.SelectedIndex;
+            PublicResources.sortCount = OrderSortBox.SelectedIndex;
             cts.Cancel();
-            listOrders.ItemsSource = null;
+            listOrders.ItemsSource = null;          
             UpdateOrdersListAdmin();
         }
 
@@ -385,7 +400,7 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                //datePick.SelectedDate = DateTime.Now.Date;
+                selectedOrder.Date = datePick.SelectedDate.Value;
                 Task.Run(() => GetOrdersOfDateUser(selectedOrder.Date));
             }
         }
@@ -399,6 +414,7 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
+                selectedOrder.Date = datePick.SelectedDate.Value;
                 Task.Run(() => GetOrdersOfDateAdmin(selectedOrder.Date));
             }
         }
@@ -483,7 +499,6 @@ namespace Moiro_Orders.XamlView
             if (orders != null)
             {
                 var sortOrd = OrdersSort(orders);
-                listOrders.ItemsSource = sortOrd;
                 await listOrders.Dispatcher.BeginInvoke( new Action(()=> listOrders.ItemsSource = sortOrd));
             }
         }
@@ -599,7 +614,7 @@ namespace Moiro_Orders.XamlView
         IEnumerable<Order> OrdersSort(List<Order> ord)
         {
             IEnumerable<Order> sortOrd;
-            switch (sortCount)
+            switch (PublicResources.sortCount)
             {
                 case 0:
                     sortOrd = ord.Reverse<Order>(); 

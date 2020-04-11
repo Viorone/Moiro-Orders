@@ -111,7 +111,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0">
                     <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
-                    <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
+                    <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="MinHeight" Value="35"  />
@@ -119,9 +119,8 @@
                             </Style>
                         </DatePicker.Resources>
                     </DatePicker>
-
                 </StackPanel>
-                <ComboBox x:Name="OrderSortBox"  Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White"/>
+                <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White"/>
             </Grid>
             <!-- ListBox содержищий заявки локигу отображения и все что в него засунули -->
             <Grid>
@@ -311,9 +310,6 @@
                                                 <Label x:Name="ContentComment" Content="// " FontSize="18" VerticalAlignment ="Top" Grid.Column="0" HorizontalAlignment="Left" />
                                                 <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontSize="18" Grid.Column="1"  />
                                             </Grid>
-
-
-                                       
                                         </Border>
                                     </Grid>
                                 </StackPanel>
