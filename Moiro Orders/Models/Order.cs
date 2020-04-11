@@ -10,12 +10,12 @@ namespace Moiro_Orders.Models
 {
     public class Order
     {
-        public int Id { get; set; }
-        public string Problem { get; set; }
+        public int Id { get; set; } = 0;
+        public string Problem { get; set; } = "message";
         public string Description { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
-        public int StatusId { get; set; }
-        public int UserId { get; set; }
+        public int StatusId { get; set; } = 0;
+        public int UserId { get; set; } = 0;
         public string UserName { get; set; }
         public string Room { get; set; }
         public string StatusName { get; set; }

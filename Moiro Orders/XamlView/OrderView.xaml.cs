@@ -16,14 +16,7 @@ namespace Moiro_Orders.XamlView
     public partial class OrderView : UserControl
     {
         private bool isProblem = true;
-        public Order selectedOrder = new Order
-        {
-            Id = 0,
-            Date = DateTime.Now,
-            UserId = 0,
-            Problem = "message",
-            StatusId = 0
-        };
+        public Order selectedOrder = new Order();
         bool click = true;
         CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -114,7 +107,6 @@ namespace Moiro_Orders.XamlView
                 Cancel.Visibility = Visibility.Visible;
                 datePick.Visibility = Visibility.Hidden;
                 DateText.Visibility = Visibility.Hidden;
-                OrderSortBox.Visibility = Visibility.Hidden;
 
                 if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == PublicResources.Im.Id || selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == null)
                 {
@@ -295,7 +287,6 @@ namespace Moiro_Orders.XamlView
                 if (PublicResources.Im.Admin) //admin
                 {
                     AcceptOrder.Visibility = Visibility.Hidden;
-                    OrderSortBox.Visibility = Visibility.Visible;
                     //UpdateOrdersListAdmin();
                 }
                 else //user
@@ -335,7 +326,6 @@ namespace Moiro_Orders.XamlView
             DateText.Visibility = Visibility.Hidden;
             BackToOrderAdmin.Visibility = Visibility.Visible;
             SaveOrderAdmin.Visibility = Visibility.Visible;
-            OrderSortBox.Visibility = Visibility.Hidden;
         }
 
         private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
@@ -357,7 +347,6 @@ namespace Moiro_Orders.XamlView
                 DateText.Visibility = Visibility.Visible;
                 BackToOrderAdmin.Visibility = Visibility.Hidden;
                 SaveOrderAdmin.Visibility = Visibility.Hidden;
-                OrderSortBox.Visibility = Visibility.Visible;
             }
         }
 
@@ -377,16 +366,25 @@ namespace Moiro_Orders.XamlView
             DateText.Visibility = Visibility.Visible;
             BackToOrderAdmin.Visibility = Visibility.Hidden;
             SaveOrderAdmin.Visibility = Visibility.Hidden;
-            OrderSortBox.Visibility = Visibility.Visible;
         }
 
         private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
         {
             PublicResources.sortCount = OrderSortBox.SelectedIndex;
             cts.Cancel();
-            listOrders.ItemsSource = null;          
+            listOrders.ItemsSource = null;
+            selectedOrder = new Order();
+            Cancel.Visibility = Visibility.Hidden;
+            datePick.Visibility = Visibility.Visible;
+            DateText.Visibility = Visibility.Visible;
+            AcceptOrder.Visibility = Visibility.Hidden;
             UpdateOrdersListAdmin();
         }
+
+
+
+
+
 
 
         #region Update metods
@@ -550,8 +548,12 @@ namespace Moiro_Orders.XamlView
                         {
                             var sortOrd = OrdersSort(orders);
                             listOrders.ItemsSource = sortOrd;
-                            selectedOrder = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
-                            listOrders.SelectedItem = selectedOrder;
+                            if (selectedOrder != null)
+                            {
+                                var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
+
+                                listOrders.SelectedItem = tmp;
+                            }
                         }
                         else
                         {
@@ -560,8 +562,11 @@ namespace Moiro_Orders.XamlView
                             {
                                 var sortOrd = OrdersSort(orders);
                                 listOrders.ItemsSource = sortOrd;
-                                selectedOrder = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
-                                listOrders.SelectedItem = selectedOrder;
+                                if (selectedOrder != null)
+                                {
+                                    var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
+                                    listOrders.SelectedItem = tmp;
+                                }                               
                             }                                                       
                         }
                     };
