@@ -39,7 +39,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid  Grid.Row="0" Background="#FF3F51B5"  VerticalAlignment="Top"  Panel.ZIndex="105" Height="50" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-            <TextBlock x:Name="HeaderText" Text="Вы не авторизированы" Margin="20 0 " VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <TextBlock x:Name="HeaderText" Text="Вы не авторизированы" Margin="60 0 " VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Panel.ZIndex="101" Margin="0 0 5 0" >
                 <Button x:Name="CloseApp" BorderThickness="0" Background="IndianRed" Click="CloseApp_Click" Width="45" Height="30">
                     <materialDesign:PackIcon Foreground="White" Kind="Close"  Width="20" Height="20" HorizontalAlignment="Center" />

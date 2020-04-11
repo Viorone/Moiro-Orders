@@ -108,7 +108,7 @@ namespace Moiro_Orders.XamlView
                 {
                     return;
                 }
-                cts.Cancel();
+               // cts.Cancel();
                 selectedOrder = (Order)e.AddedItems[0];
                 AcceptOrder.Visibility = Visibility.Hidden;
                 Cancel.Visibility = Visibility.Visible;
@@ -296,7 +296,7 @@ namespace Moiro_Orders.XamlView
                 {
                     AcceptOrder.Visibility = Visibility.Hidden;
                     OrderSortBox.Visibility = Visibility.Visible;
-                    UpdateOrdersListAdmin();
+                    //UpdateOrdersListAdmin();
                 }
                 else //user
                 {
@@ -550,6 +550,8 @@ namespace Moiro_Orders.XamlView
                         {
                             var sortOrd = OrdersSort(orders);
                             listOrders.ItemsSource = sortOrd;
+                            selectedOrder = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
+                            listOrders.SelectedItem = selectedOrder;
                         }
                         else
                         {
@@ -558,10 +560,13 @@ namespace Moiro_Orders.XamlView
                             {
                                 var sortOrd = OrdersSort(orders);
                                 listOrders.ItemsSource = sortOrd;
-                            }
+                                selectedOrder = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
+                                listOrders.SelectedItem = selectedOrder;
+                            }                                                       
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
+
                     //MessageBox.Show("REWQ");
                     await Task.Delay(5000, cancellationToken);
                 }
