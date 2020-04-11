@@ -18,16 +18,14 @@ namespace Moiro_Orders.XamlView
         private bool isProblem = true;
         public Order selectedOrder = new Order();
         bool click = true;
-        CancellationTokenSource cts = new CancellationTokenSource();
+        List<Order> ordersTmp;
 
         public OrderView()
         {
             InitializeComponent();
             datePick.SelectedDate = DateTime.Now.Date;
-            if (PublicResources.Im.Admin) //admin
-            {
-                OrderStatus.IsEnabled = true;
-                OrderDetails.IsEnabled = false;
+            if (PublicResources.Im.Admin)
+            {         
                 addOrder.Visibility = Visibility.Hidden;
                 List<string> sortList = new List<string>
                 {
@@ -41,8 +39,9 @@ namespace Moiro_Orders.XamlView
                     "Отменено"
                 };
                 OrderSortBox.Visibility = Visibility.Visible;
+                OrderSortBox.IsEnabled = true;
                 OrderSortBox.ItemsSource = sortList;
-                if(PublicResources.sortCount == -1)
+                if (PublicResources.sortCount == -1)
                 {
                     OrderSortBox.Text = OrderSortBox.Items[2].ToString();
                 }
@@ -51,6 +50,7 @@ namespace Moiro_Orders.XamlView
                     OrderSortBox.Text = OrderSortBox.Items[PublicResources.sortCount].ToString();
                 }
             }
+
         }
 
         private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -60,35 +60,24 @@ namespace Moiro_Orders.XamlView
                 var selectDate = datePick.SelectedDate.Value.Date;
                 if (PublicResources.Im.Admin) //admin
                 {
-                    if (datePick.SelectedDate == DateTime.Now.Date)
-                    {
-                        cts.Cancel();
-                        click = false;
-                        Task.Run(() => ClickSaver());
-                        cts = new CancellationTokenSource();
-                        Task.Run(() => AutoUpdateOrdersListAdmin(cts.Token));
-                    }
-                    else
-                    {
-                        cts.Cancel();
-                        GetOrdersOfDateAdmin(selectDate).GetAwaiter();
-                    }
+                    selectedOrder = new Order();
+                    click = false;
+                    Task.Run(() => ClickSaver());
+                    UpdateOrdersListAdmin();
+
+                    AcceptOrder.Visibility = Visibility.Hidden;
                 }
                 else //user
                 {
-                    if (datePick.SelectedDate == DateTime.Now.Date)
-                    {
-                        cts.Cancel();
-                        click = false;
-                        Task.Run(() => ClickSaver());
-                        cts = new CancellationTokenSource();
-                        Task.Run(() => AutoUpdateOrdersListUser(cts.Token));
-                    }
-                    else
-                    {
-                        cts.Cancel();
-                        GetOrdersOfDateUser(selectDate).GetAwaiter();
-                    }
+                    selectedOrder = new Order();
+                    click = false;
+                    Task.Run(() => ClickSaver());
+                    UpdateOrdersListUser();
+
+                    AcceptCompleteOrder.Visibility = Visibility.Hidden;
+                    DeleteOrder.Visibility = Visibility.Hidden;
+                    changeOrder.Visibility = Visibility.Hidden;
+                    addOrder.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -101,12 +90,8 @@ namespace Moiro_Orders.XamlView
                 {
                     return;
                 }
-               // cts.Cancel();
                 selectedOrder = (Order)e.AddedItems[0];
                 AcceptOrder.Visibility = Visibility.Hidden;
-                Cancel.Visibility = Visibility.Visible;
-                datePick.Visibility = Visibility.Hidden;
-                DateText.Visibility = Visibility.Hidden;
 
                 if (selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == PublicResources.Im.Id || selectedOrder.StatusId != 3 && selectedOrder.StatusId != 5 && selectedOrder.AdminId == null)
                 {
@@ -119,7 +104,7 @@ namespace Moiro_Orders.XamlView
                 {
                     return;
                 }
-                cts.Cancel();
+                //cts.Cancel();
                 problem.Text = null;
                 description.Text = null;
                 isProblem = true;
@@ -130,23 +115,18 @@ namespace Moiro_Orders.XamlView
                 DeleteOrder.Visibility = Visibility.Hidden;
                 changeOrder.Visibility = Visibility.Hidden;
                 AcceptCompleteOrder.Visibility = Visibility.Hidden;
-                //если разница в пол часа, изменять - нельзя 
-                if (changeTime < time.TimeOfDay && selectedOrder.StatusId != 3)
+                if (changeTime < time.TimeOfDay && selectedOrder.StatusId != 3)  //Time chek
                 {
-                    if (selectedOrder.StatusId != 5) // если заявка не отменена
+                    if (selectedOrder.StatusId != 5)
                     {
                         DeleteOrder.Visibility = Visibility.Visible;
                         changeOrder.Visibility = Visibility.Visible;
                     }
                 }
-                if (selectedOrder.StatusId == 2)  //если выполняется заявка, то пользователь может подтверить выполненние 
+                if (selectedOrder.StatusId == 2)
                 {
                     AcceptCompleteOrder.Visibility = Visibility.Visible;
                 }
-                addOrder.Visibility = Visibility.Hidden;
-                Cancel.Visibility = Visibility.Visible;
-                datePick.Visibility = Visibility.Hidden;
-                DateText.Visibility = Visibility.Hidden;
             }
         }
 
@@ -157,14 +137,14 @@ namespace Moiro_Orders.XamlView
                 click = false;
                 Task.Run(() => ClickSaver());
                 isProblem = false;
-                cts.Cancel();
+                PublicResources.ordersCts.Cancel();
+                problem.Text = null;
+                description.Text = null;
             }
-            addOrder.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Hidden;
-            DateText.Visibility = Visibility.Hidden;
+            OrderDetails.IsEnabled = true;
+            OrdersButtonPanel.IsEnabled = false;
+            datePick.IsEnabled = false;
             listOrders.IsEnabled = false;
-            backToOrderList.Visibility = Visibility.Visible;
-            SaveOrder.Visibility = Visibility.Visible;
         }
 
         private void ChangeOrder_Click(object sender, RoutedEventArgs e) //user
@@ -176,24 +156,16 @@ namespace Moiro_Orders.XamlView
                 isProblem = true;
                 problem.Text = selectedOrder.Problem;
                 description.Text = selectedOrder.Description;
-                cts.Cancel();
+                PublicResources.ordersCts.Cancel();
             }
+            OrderDetails.IsEnabled = true;
+            OrdersButtonPanel.IsEnabled = false;
+            datePick.IsEnabled = false;
             listOrders.IsEnabled = false;
-            changeOrder.Visibility = Visibility.Hidden;
-            DeleteOrder.Visibility = Visibility.Hidden;
-            addOrder.Visibility = Visibility.Hidden;
-            Cancel.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Hidden;
-            DateText.Visibility = Visibility.Hidden;
-            AcceptCompleteOrder.Visibility = Visibility.Hidden;
-            backToOrderList.Visibility = Visibility.Visible;
-            SaveOrder.Visibility = Visibility.Visible;
         }
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e) //user
         {
-
-
             if (problem.Text.Length > 128 && description.Text.Length > 255)
             {
                 MessageBox.Show("Нелья вводить так много символов!!!", "Сообщение для одарённых!!!");
@@ -213,13 +185,10 @@ namespace Moiro_Orders.XamlView
                         CreateNewOrder().GetAwaiter();
                     }
                 }
-                addOrder.Visibility = Visibility.Visible;
+                OrderDetails.IsEnabled = false;
+                OrdersButtonPanel.IsEnabled = true;
+                datePick.IsEnabled = true;
                 listOrders.IsEnabled = true;
-                datePick.Visibility = Visibility.Visible;
-                DateText.Visibility = Visibility.Visible;
-                backToOrderList.Visibility = Visibility.Hidden;
-                SaveOrder.Visibility = Visibility.Hidden;
-                AcceptCompleteOrder.Visibility = Visibility.Hidden;
             }
         }
 
@@ -231,13 +200,6 @@ namespace Moiro_Orders.XamlView
                 Task.Run(() => ClickSaver());
                 CompleteSelectedOrder().GetAwaiter();
             }
-            changeOrder.Visibility = Visibility.Hidden;
-            DeleteOrder.Visibility = Visibility.Hidden;
-            addOrder.Visibility = Visibility.Visible;
-            Cancel.Visibility = Visibility.Hidden;
-            AcceptCompleteOrder.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
         }
 
         private void DeleteOrder_Click(object sender, RoutedEventArgs e) //user
@@ -248,13 +210,6 @@ namespace Moiro_Orders.XamlView
                 Task.Run(() => ClickSaver());
                 DeleteSelectedOrder().GetAwaiter();
             }
-            changeOrder.Visibility = Visibility.Hidden;
-            DeleteOrder.Visibility = Visibility.Hidden;
-            addOrder.Visibility = Visibility.Visible;
-            Cancel.Visibility = Visibility.Hidden;
-            AcceptCompleteOrder.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
         }
 
         private void BackToOrderList_Click(object sender, RoutedEventArgs e) //user
@@ -267,18 +222,14 @@ namespace Moiro_Orders.XamlView
                 description.Text = null;
                 UpdateOrdersListUser();
             }
+            OrderDetails.IsEnabled = false;
+            OrdersButtonPanel.IsEnabled = true;
+            datePick.IsEnabled = true;
             listOrders.IsEnabled = true;
-            addOrder.Visibility = Visibility.Visible;
-            Cancel.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
-            backToOrderList.Visibility = Visibility.Hidden;
-            SaveOrder.Visibility = Visibility.Hidden;
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void OrdersList_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) //cancel selected
         {
-            listOrders.IsEnabled = true;
             if (click)
             {
                 listOrders.SelectedIndex = -1;
@@ -287,21 +238,16 @@ namespace Moiro_Orders.XamlView
                 if (PublicResources.Im.Admin) //admin
                 {
                     AcceptOrder.Visibility = Visibility.Hidden;
-                    //UpdateOrdersListAdmin();
                 }
                 else //user
                 {
-                    addOrder.Visibility = Visibility.Visible;
                     changeOrder.Visibility = Visibility.Hidden;
                     DeleteOrder.Visibility = Visibility.Hidden;
                     AcceptCompleteOrder.Visibility = Visibility.Hidden;
-                    UpdateOrdersListUser();
                 }
             }
-            Cancel.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;            
         }
+
 
         private void AcceptOrder_Click(object sender, RoutedEventArgs e) //admin
         {
@@ -316,16 +262,13 @@ namespace Moiro_Orders.XamlView
                 LoginView.Text = selectedOrder.UserLogin;
                 RoomView.Text = selectedOrder.Room.ToString();
                 AdminDescription.Text = selectedOrder.AdminComment;
-                cts.Cancel();
+                PublicResources.ordersCts.Cancel();
                 GetStatusesList().GetAwaiter();
             }
-            Cancel.Visibility = Visibility.Hidden;
             listOrders.IsEnabled = false;
-            AcceptOrder.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Hidden;
-            DateText.Visibility = Visibility.Hidden;
-            BackToOrderAdmin.Visibility = Visibility.Visible;
-            SaveOrderAdmin.Visibility = Visibility.Visible;
+            OrderStatus.IsEnabled = true;
+            OrdersButtonPanel.IsEnabled = false;
+            OrderSortBox.IsEnabled = false;
         }
 
         private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
@@ -343,10 +286,9 @@ namespace Moiro_Orders.XamlView
                     ChangeOrderStatusAdmin().GetAwaiter();
                 }
                 listOrders.IsEnabled = true;
-                datePick.Visibility = Visibility.Visible;
-                DateText.Visibility = Visibility.Visible;
-                BackToOrderAdmin.Visibility = Visibility.Hidden;
-                SaveOrderAdmin.Visibility = Visibility.Hidden;
+                OrderStatus.IsEnabled = false;
+                OrdersButtonPanel.IsEnabled = true;
+                OrderSortBox.IsEnabled = true;
             }
         }
 
@@ -354,29 +296,22 @@ namespace Moiro_Orders.XamlView
         {
             if (click)
             {
-                listOrders.SelectedIndex = -1;
                 click = false;
                 Task.Run(() => ClickSaver());
-               // UpdateOrdersListAdmin();
+                UpdateOrdersListAdmin();
             }
-            Cancel.Visibility = Visibility.Hidden;
-            AcceptOrder.Visibility = Visibility.Hidden;
             listOrders.IsEnabled = true;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
-            BackToOrderAdmin.Visibility = Visibility.Hidden;
-            SaveOrderAdmin.Visibility = Visibility.Hidden;
+            OrderStatus.IsEnabled = false;
+            OrdersButtonPanel.IsEnabled = true;
+            OrderSortBox.IsEnabled = true;
         }
 
-        private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected
+        private void OrderSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Sort selected admin
         {
             PublicResources.sortCount = OrderSortBox.SelectedIndex;
-            cts.Cancel();
+            PublicResources.ordersCts.Cancel();
             listOrders.ItemsSource = null;
             selectedOrder = new Order();
-            Cancel.Visibility = Visibility.Hidden;
-            datePick.Visibility = Visibility.Visible;
-            DateText.Visibility = Visibility.Visible;
             AcceptOrder.Visibility = Visibility.Hidden;
             UpdateOrdersListAdmin();
         }
@@ -391,30 +326,18 @@ namespace Moiro_Orders.XamlView
 
         void UpdateOrdersListUser()
         {
-            if (datePick.SelectedDate == DateTime.Now.Date)
-            {
-                cts = new CancellationTokenSource();
-                Task.Run(() => AutoUpdateOrdersListUser(cts.Token));
-            }
-            else
-            {
-                selectedOrder.Date = datePick.SelectedDate.Value;
-                Task.Run(() => GetOrdersOfDateUser(selectedOrder.Date));
-            }
+            PublicResources.ordersCts.Cancel();
+            var selectedDate = datePick.SelectedDate.Value;
+            PublicResources.ordersCts = new CancellationTokenSource();
+            Task.Run(() => AutoUpdateOrdersListUser(PublicResources.ordersCts.Token, selectedDate));
         }
 
         void UpdateOrdersListAdmin()
         {
-            if (datePick.SelectedDate == DateTime.Now.Date)
-            {
-                cts = new CancellationTokenSource();
-                Task.Run(() => AutoUpdateOrdersListAdmin(cts.Token));
-            }
-            else
-            {
-                selectedOrder.Date = datePick.SelectedDate.Value;
-                Task.Run(() => GetOrdersOfDateAdmin(selectedOrder.Date));
-            }
+            PublicResources.ordersCts.Cancel();
+            var selectedDate = datePick.SelectedDate.Value;
+            PublicResources.ordersCts = new CancellationTokenSource();
+            Task.Run(() => AutoUpdateOrdersListAdmin(PublicResources.ordersCts.Token, selectedDate));
         }
 
         #endregion
@@ -423,27 +346,17 @@ namespace Moiro_Orders.XamlView
         #region ASYNC metods
 
         //User Metods
-        async Task GetOrdersOfDateUser(DateTime selectDate)
-        {
-            IUser user = new CurrentUser();
-            var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectDate);
-            if (orders != null)
-            {
-                await listOrders.Dispatcher.BeginInvoke(new Action(() => listOrders.ItemsSource = orders));
-            }
-        }
 
         async Task UpdateOrderAsync()
         {
-
             selectedOrder.Problem = problem.Text;
             selectedOrder.Description = description.Text;
-
             IUser user = new CurrentUser();
             var status = await user.EditOrder(selectedOrder);
             problem.Text = null;
             description.Text = null;
-            datePick.SelectedDate = selectedOrder.Date;
+            ordersTmp.Remove(selectedOrder);
+            listOrders.ItemsSource = ordersTmp;
             UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
         }
@@ -462,8 +375,7 @@ namespace Moiro_Orders.XamlView
             problem.Text = null;
             description.Text = null;
             datePick.SelectedDate = DateTime.Now;
-            cts = new CancellationTokenSource();
-            await Task.Run(() => AutoUpdateOrdersListUser(cts.Token));
+            UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
         }
 
@@ -472,7 +384,8 @@ namespace Moiro_Orders.XamlView
             IUser user = new CurrentUser();
             selectedOrder.StatusId = 5;                              //Отмена заявки пользователем
             var status = await user.EditOrder(selectedOrder);
-            datePick.SelectedDate = selectedOrder.Date;
+            ordersTmp.Remove(selectedOrder);
+            listOrders.ItemsSource = ordersTmp;
             UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
         }
@@ -483,23 +396,14 @@ namespace Moiro_Orders.XamlView
             selectedOrder.StatusId = 3;                              //Подтверждение выполнения заявки пользователем
             selectedOrder.CompletionDate = DateTime.Now;
             var status = await user.EditOrder(selectedOrder);
-            datePick.SelectedDate = selectedOrder.Date;
+            ordersTmp.Remove(selectedOrder);
+            listOrders.ItemsSource = ordersTmp;
             UpdateOrdersListUser();
             //MessageBox.Show(status.ToString());
         }
 
 
         //Admin Metods
-        async Task GetOrdersOfDateAdmin(DateTime selectDate)
-        {
-            IAdmin admin = new CurrentUser();
-            var orders = await admin.GetAllOrdersToday(selectDate);
-            if (orders != null)
-            {
-                var sortOrd = OrdersSort(orders);
-                await listOrders.Dispatcher.BeginInvoke( new Action(()=> listOrders.ItemsSource = sortOrd));
-            }
-        }
 
         async Task GetStatusesList()
         {
@@ -508,7 +412,7 @@ namespace Moiro_Orders.XamlView
             StatusList.DisplayMemberPath = "Name";
             var statuses = statusesTmp.Where(x => x.Id != 1 && x.Id != 3 && x.Id != 5);
             StatusList.ItemsSource = statuses;
-            StatusList.SelectedItem = StatusList.Items[0];
+            StatusList.SelectedIndex = 0;
         }
 
         async Task ChangeOrderStatusAdmin()
@@ -521,22 +425,30 @@ namespace Moiro_Orders.XamlView
                 selectedOrder.AdminComment = AdminDescription.Text;
                 selectedOrder.AdminId = PublicResources.Im.Id;
                 var status = await admin.EditOrder(selectedOrder);
-                listOrders.ItemsSource = null;
+                ordersTmp.Remove(selectedOrder);
+                listOrders.ItemsSource = ordersTmp;
             }
             UpdateOrdersListAdmin();
         }
 
         #endregion
 
-        async void AutoUpdateOrdersListAdmin(CancellationToken cancellationToken)
+
+
+
+
+
+
+
+        async void AutoUpdateOrdersListAdmin(CancellationToken cancellationToken, DateTime selectedDate)
         {
             IAdmin admin = new CurrentUser();
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var orders = await admin.GetAllOrdersToday(DateTime.Now);
-
+                    var orders = await admin.GetAllOrdersToday(selectedDate);
+                    ordersTmp = orders;
                     Action action = () =>
                     {
                         var ordersChange = orders;
@@ -551,7 +463,6 @@ namespace Moiro_Orders.XamlView
                             if (selectedOrder != null)
                             {
                                 var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
-
                                 listOrders.SelectedItem = tmp;
                             }
                         }
@@ -566,12 +477,11 @@ namespace Moiro_Orders.XamlView
                                 {
                                     var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                     listOrders.SelectedItem = tmp;
-                                }                               
-                            }                                                       
+                                }
+                            }
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
-
                     //MessageBox.Show("REWQ");
                     await Task.Delay(5000, cancellationToken);
                 }
@@ -579,14 +489,15 @@ namespace Moiro_Orders.XamlView
             catch (OperationCanceledException) { }
         }
 
-        async void AutoUpdateOrdersListUser(CancellationToken cancellationToken)
+        async void AutoUpdateOrdersListUser(CancellationToken cancellationToken, DateTime selectedDate)
         {
             IUser user = new CurrentUser();
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, DateTime.Now.Date);
+                    var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectedDate);
+                    ordersTmp = orders;
                     Action action = () =>
                     {
                         var ordersChange = orders;
@@ -597,19 +508,29 @@ namespace Moiro_Orders.XamlView
                         if (tmpList.Count != orders.Count)
                         {
                             listOrders.ItemsSource = orders;
+                            if (selectedOrder != null)
+                            {
+                                var tmp = orders.FirstOrDefault(a => a.Id == selectedOrder.Id);
+                                listOrders.SelectedItem = tmp;
+                            }
                         }
                         else
                         {
                             var except = ordersChange.Except(tmpList, new DBComparer()).ToList();
                             if (except.Count != 0)
-                            {                              
+                            {
                                 listOrders.ItemsSource = orders;
+                                if (selectedOrder != null)
+                                {
+                                    var tmp = orders.FirstOrDefault(a => a.Id == selectedOrder.Id);
+                                    listOrders.SelectedItem = tmp;
+                                }
                             }
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
                     //MessageBox.Show("QWER");
-                    await Task.Delay(10000, cancellationToken);
+                    await Task.Delay(5000, cancellationToken);
                 }
             }
             catch (OperationCanceledException) { }
@@ -627,7 +548,7 @@ namespace Moiro_Orders.XamlView
             switch (PublicResources.sortCount)
             {
                 case 0:
-                    sortOrd = ord.Reverse<Order>(); 
+                    sortOrd = ord.Reverse<Order>();
                     break;
                 case 1:
                     sortOrd = ord;
@@ -650,11 +571,14 @@ namespace Moiro_Orders.XamlView
                 case 7:
                     sortOrd = ord.Where(a => a.StatusId == 5);
                     break;
-                default: sortOrd = ord.OrderBy(a => a.StatusId);
+                default:
+                    sortOrd = ord.OrderBy(a => a.StatusId);
                     break;
             }
             return sortOrd;
         }
+
+
     }
 
     public class DBComparer : IEqualityComparer<Order>
@@ -662,10 +586,10 @@ namespace Moiro_Orders.XamlView
         public bool Equals(Order x, Order y)
         {
             if (ReferenceEquals(x, y)) return true;
-            return x != null && y != null 
-                && x.Id.Equals(y.Id) 
-                && x.Problem.Equals(y.Problem) 
-                && x.Description.Equals(y.Description) 
+            return x != null && y != null
+                && x.Id.Equals(y.Id)
+                && x.Problem.Equals(y.Problem)
+                && x.Description.Equals(y.Description)
                 && x.AdminId.Equals(y.AdminId)
                 && x.StatusId.Equals(y.StatusId);
         }
