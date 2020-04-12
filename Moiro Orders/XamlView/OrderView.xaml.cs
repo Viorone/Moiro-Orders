@@ -166,7 +166,7 @@ namespace Moiro_Orders.XamlView
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e) //user
         {
-            if (problem.Text.Length > 128 && description.Text.Length > 255)
+            if ((problem.Text.Length > 128 && description.Text.Length > 255) || problem.Text.Length > 128 || description.Text.Length > 255)
             {
                 MessageBox.Show("Нелья вводить так много символов!!!", "Сообщение для одарённых!!!");
             }
@@ -185,11 +185,11 @@ namespace Moiro_Orders.XamlView
                         CreateNewOrder().GetAwaiter();
                     }
                 }
-                OrderDetails.IsEnabled = false;
-                OrdersButtonPanel.IsEnabled = true;
-                datePick.IsEnabled = true;
-                listOrders.IsEnabled = true;
             }
+            OrderDetails.IsEnabled = false;
+            OrdersButtonPanel.IsEnabled = true;
+            datePick.IsEnabled = true;
+            listOrders.IsEnabled = true;
         }
 
         private void AcceptCompleteOrder_Click(object sender, RoutedEventArgs e) //user
@@ -285,11 +285,11 @@ namespace Moiro_Orders.XamlView
                     Task.Run(() => ClickSaver());
                     ChangeOrderStatusAdmin().GetAwaiter();
                 }
-                listOrders.IsEnabled = true;
-                OrderStatus.IsEnabled = false;
-                OrdersButtonPanel.IsEnabled = true;
-                OrderSortBox.IsEnabled = true;
             }
+            listOrders.IsEnabled = true;
+            OrderStatus.IsEnabled = false;
+            OrdersButtonPanel.IsEnabled = true;
+            OrderSortBox.IsEnabled = true;
         }
 
         private void BackToOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
@@ -349,8 +349,15 @@ namespace Moiro_Orders.XamlView
 
         async Task UpdateOrderAsync()
         {
-            selectedOrder.Problem = problem.Text;
-            selectedOrder.Description = description.Text;
+            try
+            {
+                selectedOrder.Problem = problem.Text;
+                selectedOrder.Description = description.Text;
+            }
+            catch
+            {
+
+            }
             IUser user = new CurrentUser();
             var status = await user.EditOrder(selectedOrder);
             problem.Text = null;
@@ -364,14 +371,21 @@ namespace Moiro_Orders.XamlView
         async Task CreateNewOrder()
         {
             IUser user = new CurrentUser();
-            var status = await user.CreateOrder(new Order
+            try
             {
-                Date = DateTime.Now,
-                Description = description.Text,
-                UserId = PublicResources.Im.Id,
-                Problem = problem.Text,
-                StatusId = 1
-            });
+                var status = await user.CreateOrder(new Order
+                {
+                    Date = DateTime.Now,
+                    Description = description.Text,
+                    UserId = PublicResources.Im.Id,
+                    Problem = problem.Text,
+                    StatusId = 1
+                });
+            }
+            catch
+            {
+
+            }
             problem.Text = null;
             description.Text = null;
             datePick.SelectedDate = DateTime.Now;
@@ -422,7 +436,14 @@ namespace Moiro_Orders.XamlView
             if (selectedOrder.StatusId == order.StatusId)
             {
                 selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
-                selectedOrder.AdminComment = AdminDescription.Text;
+                try
+                {
+                    selectedOrder.AdminComment = AdminDescription.Text;
+                }
+                catch
+                {
+
+                }               
                 selectedOrder.AdminId = PublicResources.Im.Id;
                 var status = await admin.EditOrder(selectedOrder);
                 ordersTmp.Remove(selectedOrder);
@@ -432,9 +453,6 @@ namespace Moiro_Orders.XamlView
         }
 
         #endregion
-
-
-
 
 
 
