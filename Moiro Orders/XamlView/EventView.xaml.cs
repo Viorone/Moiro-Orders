@@ -1,19 +1,9 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Moiro_Orders.XamlView
 {
@@ -52,7 +42,7 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                MessageBox.Show("Для того, что бы оставить заявку необходимо в настройках", "Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("Для того, что бы оставить заявку необходимо в настройках указать Ваш кабинет", "Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
 
