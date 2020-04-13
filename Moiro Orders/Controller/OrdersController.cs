@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using Moiro_Orders.Models;
-using Moiro_Orders.Roles;
-using Newtonsoft.Json;
 
 namespace Moiro_Orders.Controller
 {
@@ -79,7 +73,6 @@ namespace Moiro_Orders.Controller
             }
             return order;
         }
-
 
         public async Task<HttpStatusCode> DeleteOrderAsync(int id)
         {

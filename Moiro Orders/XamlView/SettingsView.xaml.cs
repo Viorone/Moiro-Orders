@@ -58,6 +58,10 @@ namespace Moiro_Orders.XamlView
                 {
                     throw new Exception();
                 }
+                if(UserName.Text.Length > 100)
+                {
+                    throw new Exception();
+                }
             }
             catch
             {

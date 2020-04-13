@@ -99,7 +99,7 @@
     </UserControl.Triggers>
 
     <Grid >
-        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}"  >
+        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" MouseLeftButtonDown="OrdersList_MouseLeftButtonDown">
             <Grid.Background>
                 <SolidColorBrush x:Name="fon" Color="Black" Opacity="0" />
             </Grid.Background>
@@ -111,7 +111,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0">
                     <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
-                    <DatePicker  x:Name="datePick" Width="180" Height="auto"  FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
+                    <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="MinHeight" Value="35"  />
@@ -119,9 +119,8 @@
                             </Style>
                         </DatePicker.Resources>
                     </DatePicker>
-
                 </StackPanel>
-                <ComboBox x:Name="OrderSortBox"  Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White"/>
+                <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White" IsEditable="False"/>
             </Grid>
             <!-- ListBox содержищий заявки локигу отображения и все что в него засунули -->
             <Grid>
@@ -311,9 +310,6 @@
                                                 <Label x:Name="ContentComment" Content="// " FontSize="18" VerticalAlignment ="Top" Grid.Column="0" HorizontalAlignment="Left" />
                                                 <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontSize="18" Grid.Column="1"  />
                                             </Grid>
-
-
-                                       
                                         </Border>
                                     </Grid>
                                 </StackPanel>
@@ -324,10 +320,9 @@
                 </ListBox>
             </Grid>
             <!-- Нижняя панель с отображением кнопок и их логикой -->
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="0,0,0,5">
+            <Grid x:Name="OrdersButtonPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="0,0,0,5">
                 <StackPanel Orientation="Horizontal" >
                     <Button x:Name="addOrder" Grid.Row="1" IsDefault="True" Content="Добавить заявку" Height="40" Margin="5 0"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
-                    <Button x:Name="Cancel"  Grid.Row="1" Content="Назад" Height="40" Margin="5" IsCancel="True" Foreground="AliceBlue" BorderBrush="{x:Null}" Visibility="Hidden" Click="Cancel_Click" />
                     <Button x:Name="changeOrder" Grid.Row="2" Content="Изменить заявку" IsDefault="True" Margin="5 0"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="ChangeOrder_Click"/>
                     <Button x:Name="DeleteOrder" Grid.Row="2" Content="Отменить заявку"  Margin="5 0"  Foreground="OrangeRed" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="DeleteOrder_Click"/>
                     <Button x:Name="AcceptOrder" Grid.Row="2" Content="Подтвердить заявку" IsDefault="True" Margin="5 0"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
@@ -336,7 +331,7 @@
             </Grid>
         </Grid>
         <!-- Блок добавления заявок пользователем -->
-        <StackPanel x:Name="OrderDetails" VerticalAlignment="Stretch">
+        <StackPanel x:Name="OrderDetails" VerticalAlignment="Stretch" IsEnabled="False">
             <StackPanel.RenderTransform>
                 <ScaleTransform ScaleY="0"/>
             </StackPanel.RenderTransform>
@@ -349,8 +344,8 @@
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" />
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click" Visibility="Hidden"/>
-                            <Button Content="Сохранить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click" Visibility="Hidden" />
+                            <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click"/>
+                            <Button Content="Сохранить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -392,8 +387,8 @@
                         <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" />
                             <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" FontSize ="20" Margin="0 25 0 10" FontFamily="Segoe UI Light"/>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click" Visibility="Hidden"/>
-                            <Button Content="Сохранить" x:Name="SaveOrderAdmin" IsDefault="True" Margin="10"  Height="40" Click="SaveOrderAdmin_Click" Visibility="Hidden" />
+                            <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click"/>
+                            <Button Content="Сохранить" x:Name="SaveOrderAdmin" IsDefault="True" Margin="10"  Height="40" Click="SaveOrderAdmin_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
