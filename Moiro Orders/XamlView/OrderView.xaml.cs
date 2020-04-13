@@ -304,10 +304,6 @@ namespace Moiro_Orders.XamlView
 
 
 
-
-
-
-
         #region Update metods
 
         void UpdateOrdersListUser()
@@ -334,18 +330,19 @@ namespace Moiro_Orders.XamlView
         //User Metods
 
         async Task UpdateOrderAsync()
-        {
+        {           
+            IUser user = new CurrentUser();
+            var order = await user.GetOrderById(selectedOrder.Id);
             try
             {
-                selectedOrder.Problem = problem.Text;
-                selectedOrder.Description = description.Text;
+                order.Problem = problem.Text;
+                order.Description = description.Text;
             }
             catch
             {
 
             }
-            IUser user = new CurrentUser();
-            var status = await user.EditOrder(selectedOrder);
+            var status = await user.EditOrder(order);
             problem.Text = null;
             description.Text = null;
             ordersTmp.Remove(selectedOrder);
@@ -420,17 +417,17 @@ namespace Moiro_Orders.XamlView
             var order = await admin.GetOrderById(selectedOrder.Id);
             if (selectedOrder.StatusId == order.StatusId)
             {
-                selectedOrder.StatusId = ((Status)StatusList.SelectedItem).Id;
+                order.StatusId = ((Status)StatusList.SelectedItem).Id;
                 try
                 {
-                    selectedOrder.AdminComment = AdminDescription.Text;
+                    order.AdminComment = AdminDescription.Text;
+                    order.AdminId = PublicResources.Im.Id;
                 }
                 catch
                 {
 
-                }               
-                selectedOrder.AdminId = PublicResources.Im.Id;
-                var status = await admin.EditOrder(selectedOrder);
+                }                              
+                var status = await admin.EditOrder(order);
                 ordersTmp.Remove(selectedOrder);
                 listOrders.ItemsSource = ordersTmp;
             }

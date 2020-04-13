@@ -15,6 +15,7 @@ namespace Moiro_Orders.Roles
         Task<HttpStatusCode> DeleteEvent(int id);                          //поставить таймер на возможность удаления (возможно на час)
 
         Task<List<Order>> GetOrdersList(int count, int id);
+        Task<Order> GetOrderById(int id);
         Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date);  //Get Orders list by current date
         Task<HttpStatusCode> CreateOrder(Order order);
         Task<HttpStatusCode> EditOrder(Order order);                      //поставить таймер на возможность редактирования (возможно на час)

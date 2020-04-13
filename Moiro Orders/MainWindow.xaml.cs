@@ -115,7 +115,7 @@ namespace Moiro_Orders
         {
             UsersController currentUser = new UsersController();
             //await currentUser.GetUserAsync(Environment.UserName);
-            await currentUser.GetUserAsync("gybarev");
+            await currentUser.GetUserAsync("gybarev2");
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Admins.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
@@ -173,10 +173,7 @@ namespace Moiro_Orders
             //{
             //    CloseMenuButton_Click(sender,e);
             //}
-        }
-
-     
-       
+        }  
     }
 
 
