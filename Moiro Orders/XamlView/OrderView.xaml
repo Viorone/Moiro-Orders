@@ -27,7 +27,6 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
-
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <!-- Анимация открытия окна для Пользователя -->
         <Storyboard x:Key="OrderDetailsOpen" >
@@ -59,9 +58,7 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.3"/>
             </DoubleAnimationUsingKeyFrames>
-          
         </Storyboard>
-        
         <Storyboard x:Key="OrderStatusClose">
             <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" 
                              Storyboard.TargetName="OrderStatus"
@@ -71,9 +68,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-
     </UserControl.Resources>
-
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="addOrder">
             <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}"/>
@@ -97,7 +92,6 @@
             <BeginStoryboard Storyboard="{StaticResource OrderStatusClose}" />
         </EventTrigger>
     </UserControl.Triggers>
-
     <Grid >
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" MouseLeftButtonDown="OrdersList_MouseLeftButtonDown">
             <Grid.Background>
@@ -168,12 +162,10 @@
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="1">
                                                 <Setter Property="Background" Value="#FFFFaa" />
                                             </DataTrigger>
-                                           
                                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
                                                 <Setter Property="BorderBrush" Value="#FF3F51B5" />
                                             </DataTrigger>
-                                            
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -221,7 +213,6 @@
                                                         <TextBlock x:Name="Room" Text="{Binding Path=Room}"  FontSize="14" Grid.Column="2"  HorizontalAlignment="Right" />
                                                     </Grid>
                                                 </Grid>
-
                                                 <TextBlock Text="{Binding Path=Description}"  TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" />
                                                 <!-- данные по исполнителю конкретной заявки -->
                                                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  HorizontalAlignment="Right" Width="{Binding ElementName=userOrder, Path=ActualWidth}" >
@@ -250,9 +241,7 @@
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
-
                                                 <!-- Динамическое отображение состояния завки и, при необходимости, даты -->
-
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0">
                                                     <Label Content="Отправлено : " FontSize="14" VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" FontSize="14" VerticalAlignment="Center" />
@@ -292,7 +281,6 @@
                                             <ColumnDefinition Width="7*"/>
                                             <ColumnDefinition Width="3*"/>
                                         </Grid.ColumnDefinitions>
-
                                         <Border  Margin="0 0 0 8" BorderThickness="1 0 1 1" BorderBrush="LightGray" Grid.Column="1" CornerRadius="0 0 10 10" Background="LightYellow" Padding="10 0">
                                             <Border.Style>
                                                 <Style TargetType="Border">
@@ -325,14 +313,12 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </Button.Style>
-                                        </Button>
-                                        -->
+                                        </Button>-->
                                     </Grid>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-
                 </ListBox>
             </Grid>
             <!-- Нижняя панель с отображением кнопок и их логикой -->
@@ -351,14 +337,11 @@
             <StackPanel.RenderTransform>
                 <ScaleTransform ScaleY="0"/>
             </StackPanel.RenderTransform>
-
             <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
                 <Grid>
                     <StackPanel Margin="10" >
-
                         <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" MaxLength="128" />
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" MaxLength="300"/>
-
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click"/>
                             <Button Content="Сохранить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click"/>
@@ -372,7 +355,6 @@
             <StackPanel.Background>
                 <SolidColorBrush Color="Transparent" Opacity="0.3" />
             </StackPanel.Background>
-
             <StackPanel>
             <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
                 <Grid>
@@ -381,26 +363,25 @@
                         <TextBlock x:Name="ProblemView"     Style="{StaticResource SubFont}"/>
                         <Label Content="Описание"           Style="{StaticResource MainFont}"/>
                         <TextBlock x:Name="DescriptionView" Style="{StaticResource SubFont}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <Label Content="Дата отправки"           Style="{StaticResource MainFont}"/>
-                                <TextBlock x:Name="DateView"             Style="{StaticResource SubFont}"/>
-                                <Label Content="Дата выполнения"           Style="{StaticResource MainFont}"/>
-                                <TextBlock x:Name="UserView"             Style="{StaticResource SubFont}"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="1">
-                                <Label Content="Логин пользователя"      Style="{StaticResource MainFont}"/>
-                                <TextBlock x:Name="LoginView"            Style="{StaticResource SubFont}"/>
-                                <Label Content="Кабинет"                 Style="{StaticResource MainFont}"/>
-                                <TextBlock x:Name="RoomView"             Style="{StaticResource SubFont}"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" MaxLength="300" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <Label Content="Дата отправки"           Style="{StaticResource MainFont}"/>
+                                    <TextBlock x:Name="DateView"             Style="{StaticResource SubFont}"/>
+                                    <Label Content="Дата выполнения"           Style="{StaticResource MainFont}"/>
+                                    <TextBlock x:Name="UserView"             Style="{StaticResource SubFont}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <Label Content="Логин пользователя"      Style="{StaticResource MainFont}"/>
+                                    <TextBlock x:Name="LoginView"            Style="{StaticResource SubFont}"/>
+                                    <Label Content="Кабинет"                 Style="{StaticResource MainFont}"/>
+                                    <TextBlock x:Name="RoomView"             Style="{StaticResource SubFont}"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" MaxLength="300" />
                             <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" FontSize ="20" Margin="0 25 0 10" FontFamily="Segoe UI Light"/>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click"/>

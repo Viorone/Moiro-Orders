@@ -221,7 +221,7 @@ namespace Moiro_Orders.XamlView
             listOrders.IsEnabled = true;
         }
 
-        private void OrdersList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //cancel selected
+        private void OrdersList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //cancel (selected)
         {
             if (click)
             {
@@ -240,7 +240,6 @@ namespace Moiro_Orders.XamlView
                 }
             }
         }
-
 
         private void AcceptOrder_Click(object sender, RoutedEventArgs e) //admin
         {
