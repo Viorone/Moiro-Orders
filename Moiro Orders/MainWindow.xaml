@@ -7,7 +7,15 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Moiro_Orders"
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"  
-       Height="800" Width="900"  WindowStartupLocation="CenterScreen"  Icon="Resources/moiro.ico" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
+        Height="800" 
+        Width="900"  
+        WindowStartupLocation="CenterScreen"  
+        Icon="Resources/moiro.ico" 
+        WindowStyle="None" 
+        ResizeMode="CanResizeWithGrip" 
+        AllowsTransparency="True"
+        MinWidth="800"
+        MinHeight="800">
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -33,23 +41,39 @@
             <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
         </EventTrigger>
     </Window.Triggers>
+    <!-- Главный элемент Компоновки -->
     <Grid DataContext="{StaticResource ViewModelOrder }" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        <!-- Шапка с кнопками логотипом и информацией о пользователе -->
         <Grid  Grid.Row="0" Background="#FF3F51B5"  VerticalAlignment="Top"  Panel.ZIndex="105" Height="50" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <Image Source="Resources/moiro.ico" Height="40" Width="40" HorizontalAlignment="Left" Margin="10 5 5 5">
+               
+            </Image>
             <TextBlock x:Name="HeaderText" Text="Вы не авторизированы" Margin="60 0 " VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Panel.ZIndex="101" Margin="0 0 5 0" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Panel.ZIndex="101" Margin="0 0 5 0" Background="#FF3F51B5" >
+                <Button x:Name="MinimazedApp" BorderThickness="0" Background="Transparent" Click="MinimazedApp_Click" Width="45" Height="30" Margin="5 0 5 0">
+                    <materialDesign:PackIcon x:Name="MinimazedImage" Foreground="White" Kind="WindowMinimize"  Width="20" Height="20" HorizontalAlignment="Center" />
+                </Button>
+                <Button x:Name="MaximaizedApp" BorderThickness="0" Background="Transparent" Click="MaximaizedApp_Click" Width="45" Height="30" Margin="5 0 5 0">
+                    <materialDesign:PackIcon x:Name="FullScreenImage" Foreground="White" Kind="WindowMaximize"  Width="20" Height="20" HorizontalAlignment="Center"  />
+                </Button>
                 <Button x:Name="CloseApp" BorderThickness="0" Background="IndianRed" Click="CloseApp_Click" Width="45" Height="30">
-                    <materialDesign:PackIcon Foreground="White" Kind="Close"  Width="20" Height="20" HorizontalAlignment="Center" />
+                    <materialDesign:PackIcon  Foreground="White" Kind="Close"  Width="20" Height="20" HorizontalAlignment="Center" />
                 </Button>
             </StackPanel>
         </Grid>
+        <!-- Сетка загрузки, работает как LoadingScreen -->
         <Grid x:Name="loadingGrid" Background="Black" Opacity="0.7" Panel.ZIndex="99" Visibility="Visible" Grid.Row="1">
             <TextBlock Text="Загрузка....." Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="44" FontFamily="Seguo" />
         </Grid>
-        <Grid x:Name="GridMenu" Width="60"  HorizontalAlignment="Left" Background="#FF3F51B5"  Panel.ZIndex="98" Grid.Row="1">
+        <!-- Боковая сетка с элементами меню -->
+        <Grid x:Name="GridMenu" Width="60"  HorizontalAlignment="Left" Background="#FF3F51B5"  Panel.ZIndex="98" Grid.Row="1" MouseLeave="GridMenu_MouseLeave" >
+        
+           
+       
             <StackPanel >
                 <Grid Height="150" Background="#FF3F51B5" >
                     <Button x:Name="CloseMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >

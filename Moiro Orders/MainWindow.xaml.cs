@@ -122,6 +122,7 @@ namespace Moiro_Orders
 
         #endregion
 
+        #region Обработчики на форму для замены стандартных контролов
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -130,6 +131,35 @@ namespace Moiro_Orders
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void MaximaizedApp_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                FullScreenImage.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
+                WindowState = WindowState.Normal;
+            }
+            else
+            {
+                FullScreenImage.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowRestore;
+                WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void MinimazedApp_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        #endregion
+
+        private void GridMenu_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (GridMenu.Width == 200)
+            {
+                CloseMenuButton_Click(sender,e);
+            }
         }
     }
 

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Moiro_Orders.XamlView
 {
@@ -104,7 +105,6 @@ namespace Moiro_Orders.XamlView
                 {
                     return;
                 }
-                //cts.Cancel();
                 problem.Text = null;
                 description.Text = null;
                 isProblem = true;
@@ -166,24 +166,17 @@ namespace Moiro_Orders.XamlView
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e) //user
         {
-            if ((problem.Text.Length > 128 && description.Text.Length > 255) || problem.Text.Length > 128 || description.Text.Length > 255)
+            if (click)
             {
-                MessageBox.Show("Нелья вводить так много символов!!!", "Сообщение для одарённых!!!");
-            }
-            else
-            {
-                if (click)
+                click = false;
+                Task.Run(() => ClickSaver());
+                if (isProblem)
                 {
-                    click = false;
-                    Task.Run(() => ClickSaver());
-                    if (isProblem)
-                    {
-                        UpdateOrderAsync().GetAwaiter();
-                    }
-                    else
-                    {
-                        CreateNewOrder().GetAwaiter();
-                    }
+                    UpdateOrderAsync().GetAwaiter();
+                }
+                else
+                {
+                    CreateNewOrder().GetAwaiter();
                 }
             }
             OrderDetails.IsEnabled = false;
@@ -228,7 +221,7 @@ namespace Moiro_Orders.XamlView
             listOrders.IsEnabled = true;
         }
 
-        private void OrdersList_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) //cancel selected
+        private void OrdersList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //cancel selected
         {
             if (click)
             {
@@ -273,18 +266,11 @@ namespace Moiro_Orders.XamlView
 
         private void SaveOrderAdmin_Click(object sender, RoutedEventArgs e) //admin
         {
-            if (AdminDescription.Text.Length > 255)
+            if (click)
             {
-                MessageBox.Show("Нелья вводить так много символов!!!", "Сообщение для одарённых!!!");
-            }
-            else
-            {
-                if (click)
-                {
-                    click = false;
-                    Task.Run(() => ClickSaver());
-                    ChangeOrderStatusAdmin().GetAwaiter();
-                }
+                click = false;
+                Task.Run(() => ClickSaver());
+                ChangeOrderStatusAdmin().GetAwaiter();
             }
             listOrders.IsEnabled = true;
             OrderStatus.IsEnabled = false;
@@ -365,7 +351,6 @@ namespace Moiro_Orders.XamlView
             ordersTmp.Remove(selectedOrder);
             listOrders.ItemsSource = ordersTmp;
             UpdateOrdersListUser();
-            //MessageBox.Show(status.ToString());
         }
 
         async Task CreateNewOrder()
@@ -500,7 +485,6 @@ namespace Moiro_Orders.XamlView
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
-                    //MessageBox.Show("REWQ");
                     await Task.Delay(5000, cancellationToken);
                 }
             }
@@ -547,7 +531,6 @@ namespace Moiro_Orders.XamlView
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
-                    //MessageBox.Show("QWER");
                     await Task.Delay(5000, cancellationToken);
                 }
             }

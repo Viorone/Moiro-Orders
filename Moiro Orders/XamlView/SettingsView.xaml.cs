@@ -1,6 +1,7 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,40 +26,18 @@ namespace Moiro_Orders.XamlView
             UserLastLogin.Text = PublicResources.Im.LastLogin.ToString();
         }
 
-        private void UserName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (UserName.IsReadOnly)
-            {
-                UserName.IsReadOnly = false;
-            }
-            else
-            {
-                UserName.IsReadOnly = true;
-            }
-        }
-
-        private void UserRoom_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (UserRoom.IsReadOnly)
-            {
-                UserRoom.IsReadOnly = false;
-            }
-            else
-            {
-                UserRoom.IsReadOnly = true;
-            }
-        }
-
         private void ApplySettings_Click(object sender, RoutedEventArgs e)
         {
+            StatusChange.Opacity = 1;
+            StatusChange.Content = "";
             try
             {
                 int room = Convert.ToInt32(UserRoom.Text);
-                if (room > 500 && room <= 0)
+                if (room > 500 || room <= 0)
                 {
                     throw new Exception();
                 }
-                if(UserName.Text.Length > 100)
+                if (UserName.Text.Length > 100)
                 {
                     throw new Exception();
                 }
@@ -66,16 +45,17 @@ namespace Moiro_Orders.XamlView
             catch
             {
                 StatusChange.Content = "Пользователь не был изменён!\nОшибка в номере кабинета";
-                StatusChange.Foreground = Brushes.Gray;
+                StatusChange.Foreground = Brushes.Red;
+                return;
             }
             if (PublicResources.Im.FullName.Equals(UserName.Text) && PublicResources.Im.Room.ToString().Equals(UserRoom.Text))
             {
                 StatusChange.Content = "Пользователь не был изменён!";
-                StatusChange.Foreground = Brushes.Gray;
+                StatusChange.Foreground = Brushes.Red;
             }
             else
             {
-                if (UserName.Text == "" && UserRoom.Text == "")
+                if (UserName.Text == "" || UserRoom.Text == "")
                 {
                     StatusChange.Content = "Пользователь не был изменён!";
                     StatusChange.Foreground = Brushes.Gray;
@@ -85,6 +65,12 @@ namespace Moiro_Orders.XamlView
                     SetUser().GetAwaiter();
                 }
             }
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         #region ASYNC metods

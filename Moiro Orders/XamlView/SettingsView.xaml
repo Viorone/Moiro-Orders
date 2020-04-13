@@ -7,26 +7,57 @@
              xmlns:local="clr-namespace:Moiro_Orders.XamlView"
              xmlns:moiro_orders="clr-namespace:Moiro_Orders"
              mc:Ignorable="d">
-    <Grid >
+    
+    <UserControl.Resources>
+        <!-- Анимация элементов -->
+        <Storyboard x:Key="StatusHidden" >
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="StatusChange" >
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:7" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <!-- Тригера на события -->
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="applySettings">
+            <BeginStoryboard Storyboard="{StaticResource StatusHidden}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    
+    
+    <Grid>
         <StackPanel Margin="20">
             
             <Label Content="Вошли под пользователем : " FontFamily="Segoe UI Light" FontSize="20"/>
-            <TextBox  x:Name="UserName"  materialDesign:HintAssist.HelperText ="Укажите ФИО" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True" MouseDoubleClick="UserName_MouseDoubleClick"/>
-            
-            <Label Content="Ваш логин : " FontFamily="Segoe UI Light" FontSize="20"/>
-            <TextBox x:Name="UserLogin" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True"/>
+            <TextBox  x:Name="UserName"  materialDesign:HintAssist.HelperText="Укажите ФИО"  FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,25" MaxLength="120" >
+                <TextBox.Resources>
+                    <!--<Style TargetType="TextBox">
+                        <Setter Property="{Binding materialDesign:HintAssist }" Value="35"  />
+                        <Setter Property=" materialDesign:HintAssist.HelperText" Value="35" />
+                        </Style>-->
+                </TextBox.Resources>
+            </TextBox>
             
             <Label  Content="Ваш кабинет : " FontFamily="Segoe UI Light" FontSize="20"/>
-            <TextBox x:Name="UserRoom" materialDesign:HintAssist.HelperText ="Щёлкните два раза для изменения"  FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,15" IsReadOnly="True" MouseDoubleClick="UserRoom_MouseDoubleClick"/>
-            
+            <TextBox x:Name="UserRoom" materialDesign:HintAssist.HelperText ="Укажите кабинет"  FontFamily="Segoe UI" FontSize="18" 
+                     PreviewTextInput="NumberValidationTextBox" MaxLength="3" Margin="5,0,0,25"  />
+
+            <Label Content="Ваш логин : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBlock x:Name="UserLogin" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,15" />
+
             <Label Content="Подразделение в котором состоите : " FontFamily="Segoe UI Light" FontSize="20"/>
-            <TextBox x:Name="UserOrganizationalUnit" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True"/>
+            <TextBlock x:Name="UserOrganizationalUnit" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,25"   />
             
             <Label Content="Время последнего входа в программу : " FontFamily="Segoe UI Light" FontSize="20"/>
-            <TextBox x:Name="UserLastLogin" FontFamily="Segoe UI" FontSize="18" Margin="10,0,0,25" IsReadOnly="True"/>
+            <TextBlock x:Name="UserLastLogin" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,25" />
         
         </StackPanel>
-        <Label x:Name="StatusChange" Margin="20,40" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI" Foreground="Green"/>
-        <Button HorizontalAlignment="Right" x:Name="applySettings" VerticalAlignment="Bottom" Margin="40" Content="Применить" Click="ApplySettings_Click" />
+        <Label x:Name="StatusChange" Margin="20,20" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI" Foreground="Green"/>
+        <Button HorizontalAlignment="Right" x:Name="applySettings" VerticalAlignment="Bottom"  Content="Применить" Click="ApplySettings_Click" Margin="0,0,20,20" />
     </Grid>
 </UserControl>
+    
+    
+    
+<!-- Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" materialDesign:HintAssist.Hint="Hey, that's prexxxxxxxxxxxy good!"-->

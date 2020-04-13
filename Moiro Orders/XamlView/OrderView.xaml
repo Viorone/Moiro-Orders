@@ -173,6 +173,7 @@
                                                  Value="True">
                                                 <Setter Property="BorderBrush" Value="#FF3F51B5" />
                                             </DataTrigger>
+                                            
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -291,7 +292,7 @@
                                             <ColumnDefinition Width="7*"/>
                                             <ColumnDefinition Width="3*"/>
                                         </Grid.ColumnDefinitions>
-                                        
+
                                         <Border  Margin="0 0 0 8" BorderThickness="1 0 1 1" BorderBrush="LightGray" Grid.Column="1" CornerRadius="0 0 10 10" Background="LightYellow" Padding="10 0">
                                             <Border.Style>
                                                 <Style TargetType="Border">
@@ -311,6 +312,21 @@
                                                 <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontSize="18" Grid.Column="1"  />
                                             </Grid>
                                         </Border>
+                                        <!-- Было бы неплохо перенести кнопки управления в нижнюю часть заявки, ближе к коментариям -->
+                                        <!--
+                                        <Button x:Name="AcceptBTN" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"  BorderBrush="{x:Null}" Background="{x:Null}" Visibility="Hidden">
+                                            <materialDesign:PackIcon Foreground="White" Kind="DoneOutline"  Width="25" Height="25"/>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        -->
                                     </Grid>
                                 </StackPanel>
                             </Border>
@@ -336,12 +352,12 @@
                 <ScaleTransform ScaleY="0"/>
             </StackPanel.RenderTransform>
 
-            <Border BorderThickness="3" BorderBrush="Azure" Background="AliceBlue" CornerRadius="10" Margin="10">
+            <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
                 <Grid>
                     <StackPanel Margin="10" >
 
-                        <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" />
-                        <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" />
+                        <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" MaxLength="128" />
+                        <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" MaxLength="300"/>
 
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click"/>
@@ -384,7 +400,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" />
+                        <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" MaxLength="300" />
                             <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" FontSize ="20" Margin="0 25 0 10" FontFamily="Segoe UI Light"/>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click"/>
