@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Moiro_Orders.XamlView.UserView"
+﻿<UserControl x:Class="Moiro_Orders.XamlView.AdminView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,6 +6,7 @@
       mc:Ignorable="d" >
 
     <Grid Background="AliceBlue">
+        
         <ListBox x:Name="logList">
             
         </ListBox>

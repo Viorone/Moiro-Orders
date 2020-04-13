@@ -11,9 +11,9 @@ namespace Moiro_Orders.XamlView
     /// <summary>
     /// Логика взаимодействия для User.xaml
     /// </summary>
-    public partial class UserView : UserControl
+    public partial class AdminView : UserControl
     {
-        public UserView()
+        public AdminView()
         {
             InitializeComponent();
         }

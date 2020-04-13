@@ -21,14 +21,22 @@
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="200"/>
             </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
+                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="{Binding ElementName=BackMainView, Path=Margin}" />
+                <SplineThicknessKeyFrame KeyTime="00:00:0.2" Value="200,0,0,0" />
+            </ThicknessAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="MenuClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="60"/>
             </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
+                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="{Binding ElementName=BackMainView, Path=Margin}" />
+                <SplineThicknessKeyFrame KeyTime="00:00:0.2" Value="60,0,0,0" />
+            </ThicknessAnimationUsingKeyFrames>
         </Storyboard>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <ViewModel:UserViewModel x:Key="UserModel"/>
@@ -49,9 +57,7 @@
         </Grid.RowDefinitions>
         <!-- Шапка с кнопками логотипом и информацией о пользователе -->
         <Grid  Grid.Row="0" Background="#FF3F51B5"  VerticalAlignment="Top"  Panel.ZIndex="105" Height="50" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-            <Image Source="Resources/moiro.ico" Height="40" Width="40" HorizontalAlignment="Left" Margin="10 5 5 5">
-               
-            </Image>
+            <Image Source="Resources/moiro.ico" Height="40" Width="40" HorizontalAlignment="Left" Margin="10 5 5 5"/>
             <TextBlock x:Name="HeaderText" Text="Вы не авторизированы" Margin="60 0 " VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Panel.ZIndex="101" Margin="0 0 5 0" Background="#FF3F51B5" >
                 <Button x:Name="MinimazedApp" BorderThickness="0" Background="Transparent" Click="MinimazedApp_Click" Width="45" Height="30" Margin="5 0 5 0">
@@ -71,9 +77,6 @@
         </Grid>
         <!-- Боковая сетка с элементами меню -->
         <Grid x:Name="GridMenu" Width="60"  HorizontalAlignment="Left" Background="#FF3F51B5"  Panel.ZIndex="98" Grid.Row="1" MouseLeave="GridMenu_MouseLeave" >
-        
-           
-       
             <StackPanel >
                 <Grid Height="150" Background="#FF3F51B5" >
                     <Button x:Name="CloseMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
@@ -102,7 +105,13 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Настройки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Users" Height="60" MouseLeftButtonUp="Users_MouseLeftButtonUp" Visibility="Hidden">
+                    <ListViewItem x:Name="Info" Height="60" MouseLeftButtonUp="Info_MouseLeftButtonUp">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="InfoCircle" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Информация" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="Admins" Height="60" MouseLeftButtonUp="Admins_MouseLeftButtonUp" Visibility="Hidden">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon  Foreground="LightGray" Kind="ShieldAccount" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Админка" VerticalAlignment="Center" Margin="20 10"/>
@@ -111,7 +120,7 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1" Grid.Row="1">
+        <Grid x:Name="BackMainView" Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1" Grid.Row="1">
             <Grid x:Name="mainView">
             </Grid>
         </Grid>

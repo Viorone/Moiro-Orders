@@ -53,7 +53,7 @@ namespace Moiro_Orders
             }
         }
 
-        private void Users_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Admins_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (PublicResources.Im.Admin)
             {
@@ -62,7 +62,7 @@ namespace Moiro_Orders
                     click = false;
                     Task.Run(() => MainClickSaver());
                     PublicResources.ordersCts.Cancel();
-                    SwitchScreen(new UserView());
+                    SwitchScreen(new AdminView());
                 }
             }
         }
@@ -77,6 +77,18 @@ namespace Moiro_Orders
                 SwitchScreen(new EventView());
             }
         }
+        private void Info_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+            if (click)
+            {
+                click = false;
+                Task.Run(() => MainClickSaver());
+                PublicResources.ordersCts.Cancel();
+                SwitchScreen(new InfoView());
+            }
+        }
+
         private void UsersSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (click)
@@ -105,11 +117,11 @@ namespace Moiro_Orders
             await currentUser.GetUserAsync(Environment.UserName);
             //await currentUser.GetUserAsync("gybarev");
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
-            Users.Visibility = Visibility.Visible;
+            Admins.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
             if (PublicResources.Im.Admin == false)
             {
-                Users.Visibility = Visibility.Hidden;
+                Admins.Visibility = Visibility.Hidden;
             }
             InitializeComponent();
         }
@@ -123,6 +135,7 @@ namespace Moiro_Orders
         #endregion
 
         #region Обработчики на форму для замены стандартных контролов
+
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -156,11 +169,14 @@ namespace Moiro_Orders
 
         private void GridMenu_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (GridMenu.Width == 200)
-            {
-                CloseMenuButton_Click(sender,e);
-            }
+            //if (GridMenu.Width == 200)
+            //{
+            //    CloseMenuButton_Click(sender,e);
+            //}
         }
+
+     
+       
     }
 
 
