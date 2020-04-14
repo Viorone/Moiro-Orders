@@ -21,21 +21,21 @@
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
             </DoubleAnimationUsingKeyFrames>
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
-                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="{Binding ElementName=BackMainView, Path=Margin}" />
-                <SplineThicknessKeyFrame KeyTime="00:00:0.2" Value="200,0,0,0" />
+                <SplineThicknessKeyFrame KeyTime="0" Value="{Binding ElementName=BackMainView, Path=Margin}" />
+                <SplineThicknessKeyFrame KeyTime="0" Value="200,0,0,0" />
             </ThicknessAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="MenuClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
             </DoubleAnimationUsingKeyFrames>
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
-                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="{Binding ElementName=BackMainView, Path=Margin}" />
-                <SplineThicknessKeyFrame KeyTime="00:00:0.2" Value="60,0,0,0" />
+                <SplineThicknessKeyFrame KeyTime="0" Value="{Binding ElementName=BackMainView, Path=Margin}" />
+                <SplineThicknessKeyFrame KeyTime="0" Value="60,0,0,0" />
             </ThicknessAnimationUsingKeyFrames>
         </Storyboard>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
@@ -50,7 +50,7 @@
         </EventTrigger>
     </Window.Triggers>
     <!-- Главный элемент Компоновки -->
-    <Grid DataContext="{StaticResource ViewModelOrder }" >
+    <Grid DataContext="{StaticResource ViewModelOrder}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="1*"/>
@@ -76,8 +76,8 @@
             <TextBlock Text="Загрузка....." Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="44" FontFamily="Seguo" />
         </Grid>
         <!-- Боковая сетка с элементами меню -->
-        <Grid x:Name="GridMenu" Width="60"  HorizontalAlignment="Left" Background="#FF3F51B5"  Panel.ZIndex="98" Grid.Row="1" MouseLeave="GridMenu_MouseLeave" >
-            <StackPanel >
+        <Grid x:Name="GridMenu" Width="60"  HorizontalAlignment="Left" Background="#FF3F51B5"  Panel.ZIndex="98" Grid.Row="1"  >
+            <StackPanel>
                 <Grid Height="150" Background="#FF3F51B5" >
                     <Button x:Name="CloseMenuButton" Width="60" Height="60"  BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="CloseMenuButton_Click" >
                         <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft"  Width="25" Height="25"/>
@@ -86,7 +86,7 @@
                         <materialDesign:PackIcon Foreground="White" Kind="Menu" Width="25" Height="25"/>
                     </Button>
                 </Grid>
-                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <ListViewItem x:Name="Orders" Height="60" MouseLeftButtonUp="Orders_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="Assignment" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
@@ -105,12 +105,6 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Настройки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Info" Height="60" MouseLeftButtonUp="Info_MouseLeftButtonUp">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Foreground="LightGray" Kind="InfoCircle" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
-                            <TextBlock Foreground="LightGray" FontSize="18" Text="Информация" VerticalAlignment="Center" Margin="20 10"/>
-                        </StackPanel>
-                    </ListViewItem>
                     <ListViewItem x:Name="Admins" Height="60" MouseLeftButtonUp="Admins_MouseLeftButtonUp" Visibility="Hidden">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon  Foreground="LightGray" Kind="ShieldAccount" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
@@ -119,6 +113,14 @@
                     </ListViewItem>
                 </ListView>
             </StackPanel>
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" VerticalAlignment="Bottom">
+                <ListViewItem x:Name="Info"  MouseLeftButtonUp="Info_MouseLeftButtonUp">
+                    <StackPanel Orientation="Horizontal" Margin="12.5 0 0 0"  >
+                        <materialDesign:PackIcon Foreground="LightGray" Kind="InfoCircle"  Width="20" Height="20" VerticalAlignment="Center"/>
+                        <TextBlock Foreground="LightGray" FontSize="16" Text="О приложении" VerticalAlignment="Center" Margin="20 10"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
         </Grid>
         <Grid x:Name="BackMainView" Background="Transparent" Width="auto" Height="auto" Margin="60 0 0 0" Panel.ZIndex="1" Grid.Row="1">
             <Grid x:Name="mainView">

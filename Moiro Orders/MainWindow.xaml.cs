@@ -200,6 +200,7 @@ namespace Moiro_Orders
 
         internal static User Im = new User();
         internal static int sortCount = -1;
+        internal static string version = "0.26 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();       
         static PublicResources()
         {

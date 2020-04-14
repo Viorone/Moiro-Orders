@@ -100,8 +100,8 @@
             <!-- Верхняя шапка с датой и сортировкой -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Panel.ZIndex="98" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0">
                     <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
