@@ -344,7 +344,7 @@
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" MaxLength="300"/>
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click"/>
-                            <Button Content="Сохранить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click"/>
+                            <Button Content="Отправить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
