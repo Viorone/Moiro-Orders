@@ -1,5 +1,4 @@
-﻿
-using Moiro_Orders.Models;
+﻿using Moiro_Orders.Models;
 using Moiro_Orders.Controller;
 using System;
 using System.Net.Http;
@@ -97,6 +96,7 @@ namespace Moiro_Orders
                 Task.Run(() => MainClickSaver());
                 PublicResources.ordersCts.Cancel();
                 SwitchScreen(new SettingsView());
+                
             }
         }
 
@@ -105,7 +105,8 @@ namespace Moiro_Orders
            
             var clicl = (UserControl)sender;
             if (clicl != null)
-            {             
+            {
+                UpdateUserNameHeader();
                 mainView.Children.Clear();
                 mainView.Children.Add(clicl);
             }
@@ -114,8 +115,10 @@ namespace Moiro_Orders
         async Task GetUser()
         {
             UsersController currentUser = new UsersController();
-            await currentUser.GetUserAsync(Environment.UserName);
-            //await currentUser.GetUserAsync("gybarev");
+            var user = await currentUser.GetUserAsync(Environment.UserName);
+            //var user = await currentUser.GetUserAsync("gybarev2");
+            user.LastLogin = DateTime.Now;
+            await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Admins.Visibility = Visibility.Visible;
             loadingGrid.Visibility = Visibility.Hidden;
@@ -128,7 +131,7 @@ namespace Moiro_Orders
 
         async void MainClickSaver()
         {
-            await Task.Delay(500);
+            await Task.Delay(200);
             click = true;
         }
 
@@ -175,8 +178,11 @@ namespace Moiro_Orders
             //}
         }
 
-     
-       
+        public void UpdateUserNameHeader()
+        {
+            HeaderText.Text = null;
+            HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
+        }
     }
 
 
@@ -194,7 +200,7 @@ namespace Moiro_Orders
 
         internal static User Im = new User();
         internal static int sortCount = -1;
-        internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
+        internal static CancellationTokenSource ordersCts = new CancellationTokenSource();       
         static PublicResources()
         {
             client.DefaultRequestHeaders.Accept.Clear();
