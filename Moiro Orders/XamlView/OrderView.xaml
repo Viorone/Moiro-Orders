@@ -154,7 +154,7 @@
                                                 <Setter Property="Background" Value="#56A423" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="4">
-                                                <Setter Property="Background" Value="#FFD239" />
+                                                <Setter Property="Background" Value="#ff6800" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=StatusId}"  Value="2">
                                                 <Setter Property="Background" Value="#68A1DA" />

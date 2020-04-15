@@ -20,14 +20,8 @@ namespace Moiro_Orders
         bool click = true;
         public MainWindow()
         {
-            if (PublicResources.Im.FullName == null)
-            {
-                GetUser().GetAwaiter();
-            }
-            else
-            {
-                InitializeComponent();
-            }
+            InitializeComponent();
+            GetUser().GetAwaiter();
         }
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
@@ -96,7 +90,6 @@ namespace Moiro_Orders
                 Task.Run(() => MainClickSaver());
                 PublicResources.ordersCts.Cancel();
                 SwitchScreen(new SettingsView());
-                
             }
         }
 
@@ -121,12 +114,13 @@ namespace Moiro_Orders
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
             Admins.Visibility = Visibility.Visible;
+            SwitchScreen(new OrderView());
             loadingGrid.Visibility = Visibility.Hidden;
             if (PublicResources.Im.Admin == false)
             {
                 Admins.Visibility = Visibility.Hidden;
             }
-            InitializeComponent();
+            
         }
 
         async void MainClickSaver()
