@@ -105,7 +105,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0">
                     <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
-                    <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged">
+                    <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged" Language="ru">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="MinHeight" Value="35"  />

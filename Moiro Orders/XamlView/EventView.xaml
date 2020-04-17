@@ -1,34 +1,32 @@
 ﻿<UserControl x:Class="Moiro_Orders.XamlView.EventView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Moiro_Orders.XamlView"
-             mc:Ignorable="d" >
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:y=" Xceed.Wpf.Toolkit.DateTimeUpDown">
+
     <!--  временное сообщение -->
     <Grid>
-        <Grid Background="LightGray"  Panel.ZIndex="98">
-            <TextBlock Text="Данный раздел находится на стадии разработки :(" FontSize="32" FontFamily="Segoe UI Light" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Grid>
-        <Grid Background="AliceBlue" IsEnabled="False">
-            <Grid                    IsEnabled="False">
-                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
-                    <TextBlock Text="Выберите дату:" Height="auto" Margin="0,0,10,0" FontSize="20" FontFamily="Roboto"  FontWeight="Bold" VerticalAlignment="Center"/>
-                    <DatePicker  x:Name="datePick" Width="250" Height="auto"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged">
-                        <DatePicker.Resources>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="MinHeight" Value="35"  />
-                                <Setter Property="MinWidth" Value="35" />
-                            </Style>
-                        </DatePicker.Resources>
-                    </DatePicker>
-                </StackPanel>
-
-
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0">
+                <TextBlock Text="Выберите дату: "  FontSize="20" FontFamily="Roboto"  VerticalAlignment="Center"/>
+                <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
+                    <DatePicker.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="MinHeight" Value="35"  />
+                            <Setter Property="MinWidth" Value="35" />
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+            </StackPanel>
+            <Grid Grid.Row="1" Background="Azure">
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  Height="auto" ItemsSource="{Binding Orders}" 
-                     x:Name="listEvents"  Margin="10,100">
-
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  ItemsSource="{Binding Orders}" 
+                     x:Name="listEvents" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border>
@@ -69,14 +67,55 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-
             </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                <Button Grid.Row="1" Content="Добавить заявку" x:Name="addAllOrders" Click="AddAllEvents_Click" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
-                <Button Grid.Row="2" Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
 
+            <!-- Нижняя панель с кнопками на добавление заявки  -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Grid.Row="2" >
+                <Button Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
+                <Button Content="Добавить заявку" x:Name="addAllOrders" Click="AddAllEvents_Click" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
 
             </StackPanel>
+            <!-- Форма для добавления мероприятий -->
+            <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Visible">
+                <Grid.Background>
+                    <SolidColorBrush Color="White" Opacity="0.90" />
+                </Grid.Background>
+                <StackPanel>
+                    <Label Content="Название мероприятия" FontSize="22" FontFamily="Segoe UI Light"/>
+                    <TextBox materialDesign:HintAssist.Hint="Название вебинара, мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light"  Margin="5 0 5 15"/>
+                    <Label Content="Место проведения" FontSize="22" FontFamily="Segoe UI Light"/>
+                    <TextBox materialDesign:HintAssist.Hint="Кабинет, сторонняя организация или город" FontSize="18" FontFamily="Segoe UI Light"  Margin="5,0,5,15"/>
+                    <Label Content="Дополнительное описание" FontSize="22" FontFamily="Segoe UI Light"/>
+                    <TextBox materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" Margin="5 0 5 15"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Выберите дату(даты) проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" HorizontalAlignment="Center"/>
+                        <Calendar x:Name="CalendarWhithDate" HorizontalAlignment="Center" FontFamily="Segoe UI Light" SelectionMode="MultipleRange" SelectedDatesChanged="CalendarWhithDate_SelectedDatesChanged"   Margin="10 0 10 15" Grid.Row="1" />
+
+                        <Label Content="Выберите время проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
+
+                        <materialDesign:Clock Language="ru"  Is24Hours="True" Grid.Row="1"   Grid.Column="1" DisplayMode="Hours">
+                            <materialDesign:Clock.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </materialDesign:Clock.Resources>
+                        </materialDesign:Clock>
+                    </Grid>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal"  Background="White"  >
+                    <Button  Content="Назад" x:Name="BackToEvent" Click="BackToEvent_Click" Margin="10"  />
+                    <Button Content="Создать заявку" x:Name="SelectedDatesShow" Click="SelectedDatesShow_Click" Margin="10"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

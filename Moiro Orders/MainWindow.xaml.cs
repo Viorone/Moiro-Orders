@@ -95,7 +95,6 @@ namespace Moiro_Orders
 
         internal void SwitchScreen(object sender)
         {
-           
             var clicl = (UserControl)sender;
             if (clicl != null)
             {
@@ -119,8 +118,8 @@ namespace Moiro_Orders
             if (PublicResources.Im.Admin == false)
             {
                 Admins.Visibility = Visibility.Hidden;
-            }
-            
+
+            }    
         }
 
         async void MainClickSaver()

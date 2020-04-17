@@ -1,6 +1,7 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +21,9 @@ namespace Moiro_Orders.XamlView
 
         private void AddAllEvents_Click(object sender, RoutedEventArgs e)
         {
-            if (PublicResources.Im.Room != 0)
-            {
-                async Task SetEventsOfDate()
+            // при добавлении должен быть указан кабинет у пользователя!
+            FormAddEvent.Visibility = Visibility.Visible;
+            async Task SetEventsOfDate()
                 {
                     IUser user = new CurrentUser();
                     var status = await user.CreateEvent(new Event
@@ -38,12 +39,9 @@ namespace Moiro_Orders.XamlView
                     });
                     MessageBox.Show(status.ToString());
                 }
-                SetEventsOfDate().GetAwaiter();
-            }
-            else
-            {
-                MessageBox.Show("Для того, что бы оставить заявку необходимо в настройках указать Ваш кабинет", "Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
-            }
+               // SetEventsOfDate().GetAwaiter();
+               // отключил верхний таск что бы не спамили
+           
         }
 
         private void DatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -73,6 +71,32 @@ namespace Moiro_Orders.XamlView
                     var events = await admin.GetAllEventsToday(selectDate);
                     listEvents.ItemsSource = events;
                 }
+            }
+        }
+
+        private void BackToEvent_Click(object sender, RoutedEventArgs e)
+        {
+            FormAddEvent.Visibility = Visibility.Hidden;
+        }
+
+        private void SelectedDatesShow_Click(object sender, RoutedEventArgs e)
+        {
+            var collections = CalendarWhithDate.SelectedDates;
+            foreach (var tmpDate in collections)
+            {
+               // stackTrace.Text += tmpDate.Date+" ";
+            }
+        }
+
+        private void CalendarWhithDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CalendarWhithDate.SelectedDate == null)
+            {
+                return;
+            }
+            else
+            {
+                CalendarWhithDate.SelectedDates.Add(CalendarWhithDate.SelectedDate.Value);
             }
         }
     }
