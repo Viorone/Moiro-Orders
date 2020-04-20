@@ -16,8 +16,8 @@ namespace Moiro_Orders.XamlView
     /// </summary>
     public partial class OrderView : UserControl
     {
-        private bool isProblem = true;
-        public Order selectedOrder = new Order();
+        bool isProblem = true;
+        Order selectedOrder = new Order();
         bool click = true;
         List<Order> ordersTmp;
 
@@ -51,7 +51,6 @@ namespace Moiro_Orders.XamlView
                     OrderSortBox.Text = OrderSortBox.Items[PublicResources.sortCount].ToString();
                 }
             }
-
         }
 
         private void DatePicker_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -527,7 +526,7 @@ namespace Moiro_Orders.XamlView
                         }
                     };
                     await listOrders.Dispatcher.BeginInvoke(action);
-                    await Task.Delay(5000, cancellationToken);
+                    await Task.Delay(10000, cancellationToken);
                 }
             }
             catch (OperationCanceledException) { }
