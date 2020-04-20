@@ -88,15 +88,12 @@ namespace Moiro_Orders.XamlView
             }
         }
 
+        // 
         private void CalendarWhithDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CalendarWhithDate.SelectedDate == null)
+            if (CalendarWhithDate.SelectedDates.Count >= 31)
             {
-                return;
-            }
-            else
-            {
-                CalendarWhithDate.SelectedDates.Add(CalendarWhithDate.SelectedDate.Value);
+                MessageBox.Show("Выбрано слишком много дат!");
             }
         }
     }
