@@ -4,9 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:Moiro_Orders.XamlView"
-      xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="MainFont">
@@ -27,7 +24,7 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
-        <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
+      
         <!-- Анимация открытия окна для Пользователя -->
         <Storyboard x:Key="OrderDetailsOpen" >
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY" Storyboard.TargetName="OrderDetails" >
@@ -93,7 +90,7 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid >
-        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black" DataContext="{StaticResource ViewModelOrder}" MouseLeftButtonDown="OrdersList_MouseLeftButtonDown">
+        <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black"  MouseLeftButtonDown="OrdersList_MouseLeftButtonDown">
             <Grid.Background>
                 <SolidColorBrush x:Name="fon" Color="Black" Opacity="0" />
             </Grid.Background>
