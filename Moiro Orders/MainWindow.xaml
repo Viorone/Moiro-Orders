@@ -15,7 +15,7 @@
         ResizeMode="CanResizeWithGrip" 
         AllowsTransparency="True"
         MinWidth="800"
-        MinHeight="800">
+        MinHeight="600">
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -93,7 +93,13 @@
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Заявки" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="Events" Height="60" MouseLeftButtonUp="Events_MouseLeftButtonUp">
+                    <ListViewItem x:Name="Webinars" Height="60" MouseLeftButtonUp="Webinars_MouseLeftButtonUp">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Foreground="LightGray" Kind="Webcam" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="LightGray" FontSize="18" Text="Вебинары" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="Events" Height="60" MouseLeftButtonUp="Events_MouseLeftButtonUp" Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="LightGray" Kind="EventNote" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock Foreground="LightGray" FontSize="18" Text="Мероприятия" VerticalAlignment="Center" Margin="20 10"/>

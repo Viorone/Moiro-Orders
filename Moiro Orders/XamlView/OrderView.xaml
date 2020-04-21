@@ -7,13 +7,13 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="MainFont">
-            <Setter Property="Control.FontFamily" Value="Segoe UI" />
             <Setter Property="Control.FontSize" Value="20" />
+            <Setter Property="Control.FontFamily" Value="Segoe UI Light"/>
         </Style>
         <Style x:Key="SubFont">
             <Setter Property="Control.FontSize" Value="18"/>
-            <Setter Property="Control.FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Control.Margin" Value="10 0 0 0"/>
+           
+            <Setter Property="Control.Margin" Value="5 0 0 0"/>
         </Style>
         <ControlTemplate x:Key="validationTemplate">
             <DockPanel>
@@ -66,6 +66,8 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
+    
+    <!-- Триггеры на события нажатия кнопок -->
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="addOrder">
             <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}"/>
@@ -89,6 +91,8 @@
             <BeginStoryboard Storyboard="{StaticResource OrderStatusClose}" />
         </EventTrigger>
     </UserControl.Triggers>
+    
+    
     <Grid >
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black"  MouseLeftButtonDown="OrdersList_MouseLeftButtonDown">
             <Grid.Background>
@@ -101,7 +105,7 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0">
-                    <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light"  FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
                     <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged" Language="ru">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">
@@ -339,6 +343,7 @@
                     <StackPanel Margin="10" >
                         <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" MaxLength="128" />
                         <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="description" MaxLength="300"/>
+                        <Label   x:Name="StatusSendOrder" FontSize="18" FontFamily="Segoe UI Light"/>
                         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                             <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click"/>
                             <Button Content="Отправить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click"/>
@@ -368,8 +373,8 @@
                                 <StackPanel Grid.Column="0">
                                     <Label Content="Дата отправки"           Style="{StaticResource MainFont}"/>
                                     <TextBlock x:Name="DateView"             Style="{StaticResource SubFont}"/>
-                                    <Label Content="Дата выполнения"           Style="{StaticResource MainFont}"/>
-                                    <TextBlock x:Name="UserView"             Style="{StaticResource SubFont}"/>
+                                    <Label Content="Полное имя пользователя"         Style="{StaticResource MainFont}"/>
+                                    <TextBlock x:Name="UserNameView"             Style="{StaticResource SubFont}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <Label Content="Логин пользователя"      Style="{StaticResource MainFont}"/>

@@ -59,7 +59,16 @@ namespace Moiro_Orders
                 }
             }
         }
-
+        private void Webinars_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (click)
+            {
+                click = false;
+                Task.Run(() => MainClickSaver());
+                PublicResources.ordersCts.Cancel();
+                SwitchScreen(new WebinarView()); 
+            }
+        }
         private void Events_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (click)
@@ -107,8 +116,8 @@ namespace Moiro_Orders
         async Task GetUser()
         {
             UsersController currentUser = new UsersController();
-            var user = await currentUser.GetUserAsync(Environment.UserName);
-            //var user = await currentUser.GetUserAsync("gybarev2");
+            //var user = await currentUser.GetUserAsync(Environment.UserName);
+            var user = await currentUser.GetUserAsync("ФилипповичЕВ"); // перепиши на gybarev2
             user.LastLogin = DateTime.Now;
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
@@ -175,6 +184,8 @@ namespace Moiro_Orders
             HeaderText.Text = null;
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
         }
+
+        
     }
 
 
@@ -184,16 +195,27 @@ namespace Moiro_Orders
 
     public static class PublicResources
     {
+        internal static User Im = new User();
+        internal static int sortCount = -1;
+        internal static string version = "0.26 beta";
+        internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
+
         public static HttpClient client = new HttpClient()
         {
             //BaseAddress = new Uri("http://localhost:55544/")
             BaseAddress = new Uri("http://10.10.0.34/")
         };
 
-        internal static User Im = new User();
-        internal static int sortCount = -1;
-        internal static string version = "0.26 beta";
-        internal static CancellationTokenSource ordersCts = new CancellationTokenSource();       
+        public static void ShowApp()
+        {
+            //if (this.WindowState == WindowState.Minimized)
+            //{
+                
+            //}
+        }
+
+
+
         static PublicResources()
         {
             client.DefaultRequestHeaders.Accept.Clear();

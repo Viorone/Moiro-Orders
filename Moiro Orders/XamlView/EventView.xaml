@@ -176,7 +176,7 @@
                 </StackPanel>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom"   Background="White"  >
                     <Button  Content="Назад" x:Name="BackToEvent"  Margin="10"  HorizontalAlignment="Left"/>
-                    <Button Content="Создать заявку" x:Name="SelectedDatesShow" Click="SelectedDatesShow_Click" Margin="10" HorizontalAlignment="Right"/>
+                    <Button Content="Сохранить" x:Name="SelectedDatesShow" Click="SelectedDatesShow_Click" Margin="10" HorizontalAlignment="Right"/>
                 </Grid>
             </Grid>
             <!-- Error Message Grid -->

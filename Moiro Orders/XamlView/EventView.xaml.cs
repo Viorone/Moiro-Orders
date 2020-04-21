@@ -15,6 +15,7 @@ namespace Moiro_Orders.XamlView
     public partial class EventView : UserControl
     {
         Event selectedEvent = new Event();
+        bool isProblem = true;
 
         public EventView()
         {
@@ -24,7 +25,7 @@ namespace Moiro_Orders.XamlView
 
         private void AddEvents_Click(object sender, RoutedEventArgs e)
         {
-            // при добавлении должен быть указан кабинет у пользователя!
+            isProblem = true;
             NameEvent.Text = null;
             DescriptionEvent.Text = null;
             PlaceEvent.Text = null;
@@ -80,32 +81,15 @@ namespace Moiro_Orders.XamlView
 
         private void ChangeEvent_Click(object sender, RoutedEventArgs e)
         {
-            if(ListEvents.SelectedIndex != -1)
+            if (ListEvents.SelectedIndex != -1)
             {
-                async Task SetEventsOfDate()
-                {
-                    NameEvent.Text = selectedEvent.NameEvent;
-                    DescriptionEvent.Text = selectedEvent.Description;
-                    PlaceEvent.Text = selectedEvent.Place;
-                    CalendarWithDate.SelectedDate = selectedEvent.DateStart;
-                    StartTime.SelectedTime = selectedEvent.DateStart;
-                    EndTime.SelectedTime = selectedEvent.DateEnd;
-
-
-                    //IUser user = new CurrentUser();
-                    //var status = await user.EditEvent(new Event
-                    //{
-                    //    Description = DescriptionEvent.Text,
-                    //    UserId = PublicResources.Im.Id,
-                    //    DateStart = startDate,
-                    //    DateEnd = endDate,
-                    //    NameEvent = NameEvent.Text,
-                    //    Place = PlaceEvent.Text,
-                    //    StatusId = 1
-                    //});
-                    //MessageBox.Show(status.ToString());
-                }
-                SetEventsOfDate().GetAwaiter();
+                isProblem = false;
+                NameEvent.Text = selectedEvent.NameEvent;
+                DescriptionEvent.Text = selectedEvent.Description;
+                PlaceEvent.Text = selectedEvent.Place;
+                CalendarWithDate.SelectedDate = selectedEvent.DateStart;
+                StartTime.SelectedTime = selectedEvent.DateStart;
+                EndTime.SelectedTime = selectedEvent.DateEnd;               
             }
         }
 
@@ -113,34 +97,13 @@ namespace Moiro_Orders.XamlView
         {
             if (CheckFields())
             {
-                var collections = CalendarWithDate.SelectedDates;
-                DateTime startDate, endDate;
-                foreach (var tmpDate in collections)
+                if (isProblem)
                 {
-                    async Task SetEventsOfDate()
-                    {
-                        
-                        startDate = tmpDate;
-                        startDate = startDate.AddHours(StartTime.SelectedTime.Value.Hour);
-                        startDate = startDate.AddMinutes(StartTime.SelectedTime.Value.Minute);
-                        endDate = tmpDate;
-                        endDate = startDate.AddHours(StartTime.SelectedTime.Value.Hour);
-                        endDate = startDate.AddMinutes(StartTime.SelectedTime.Value.Minute);
-                        IUser user = new CurrentUser();
-                        var status = await user.CreateEvent(new Event
-                        {
-                            Date = DateTime.Now,
-                            Description = DescriptionEvent.Text,
-                            UserId = PublicResources.Im.Id,
-                            DateStart = startDate,
-                            DateEnd = endDate,
-                            NameEvent = NameEvent.Text,
-                            Place = PlaceEvent.Text,
-                            StatusId = 1
-                        });
-                        MessageBox.Show(status.ToString());
-                    }
-                    SetEventsOfDate().GetAwaiter();
+                    CrateEvents().GetAwaiter();
+                }
+                else
+                {
+                    ChangeSelectedEvent().GetAwaiter();
                 }
             }
         }
@@ -187,9 +150,66 @@ namespace Moiro_Orders.XamlView
         {
             if (CalendarWithDate.SelectedDates.Count >= 31)
             {
-                MessageBox.Show("Выбрано слишком много дат!");
+                ShowErrorMessage("Ошибка", "Выбрано слишком много дат!");
+                CalendarWithDate.SelectedDates.RemoveAt(CalendarWithDate.SelectedDates.Count);
             }
         }
+
+
+
+
+
+        #region ASYNC metods
+
+        async Task CrateEvents()
+        {
+            var collections = CalendarWithDate.SelectedDates;
+            foreach (var tmpDate in collections)
+            {
+
+                DateTime startDate, endDate;
+                startDate = tmpDate;
+                startDate = startDate.AddHours(StartTime.SelectedTime.Value.Hour);
+                startDate = startDate.AddMinutes(StartTime.SelectedTime.Value.Minute);
+                endDate = tmpDate;
+                endDate = endDate.AddHours(EndTime.SelectedTime.Value.Hour);
+                endDate = endDate.AddMinutes(EndTime.SelectedTime.Value.Minute);
+
+
+                IUser user = new CurrentUser();
+                var status = await user.CreateEvent(new Event
+                {
+                    Date = DateTime.Now,
+                    Description = DescriptionEvent.Text,
+                    UserId = PublicResources.Im.Id,
+                    DateStart = startDate,
+                    DateEnd = endDate,
+                    NameEvent = NameEvent.Text,
+                    Place = PlaceEvent.Text,
+                    StatusId = 1
+                });
+                MessageBox.Show(status.ToString());
+            }
+        }
+
+        async Task ChangeSelectedEvent()
+        {
+
+            //IUser user = new CurrentUser();
+            //var status = await user.EditEvent(new Event
+            //{
+            //    Description = DescriptionEvent.Text,
+            //    UserId = PublicResources.Im.Id,
+            //    DateStart = startDate,
+            //    DateEnd = endDate,
+            //    NameEvent = NameEvent.Text,
+            //    Place = PlaceEvent.Text,
+            //    StatusId = 1
+            //});
+            //MessageBox.Show(status.ToString());
+        }
+
+        #endregion
 
 
     }

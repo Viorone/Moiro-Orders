@@ -248,7 +248,7 @@ namespace Moiro_Orders.XamlView
                 Task.Run(() => ClickSaver());
                 ProblemView.Text = selectedOrder.Problem;
                 DescriptionView.Text = selectedOrder.Description;
-                UserView.Text = selectedOrder.UserName;
+                UserNameView.Text = selectedOrder.UserName;
                 DateView.Text = selectedOrder.Date.ToString();
                 LoginView.Text = selectedOrder.UserLogin;
                 RoomView.Text = selectedOrder.Room.ToString();
@@ -462,6 +462,7 @@ namespace Moiro_Orders.XamlView
                             {
                                 var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                 listOrders.SelectedItem = tmp;
+                                
                             }
                         }
                         else
@@ -576,7 +577,7 @@ namespace Moiro_Orders.XamlView
 
 
     }
-
+    // вынести в отдельный класс!!!
     public class DBComparer : IEqualityComparer<Order>
     {
         public bool Equals(Order x, Order y)
