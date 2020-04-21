@@ -17,11 +17,13 @@ namespace Moiro_Orders
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool click = true;
+        bool click = true;   
+        bool check = true;
         public MainWindow()
         {
             InitializeComponent();
             GetUser().GetAwaiter();
+            Task.Run(() => Messenger());
         }
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
@@ -117,7 +119,7 @@ namespace Moiro_Orders
         {
             UsersController currentUser = new UsersController();
             //var user = await currentUser.GetUserAsync(Environment.UserName);
-            var user = await currentUser.GetUserAsync("ФилипповичЕВ"); // перепиши на gybarev2
+            var user = await currentUser.GetUserAsync("gybarev2"); 
             user.LastLogin = DateTime.Now;
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
@@ -135,6 +137,31 @@ namespace Moiro_Orders
             await Task.Delay(200);
             click = true;
         }
+
+        async void Messenger()
+        {
+            while(check)
+            {
+                if (PublicResources.messengerChecker == true)
+                {
+                    Action action = () => 
+                    {
+                        if (WindowState == WindowState.Minimized)
+                        {
+                            WindowState = WindowState.Normal;
+                        }
+                        Activate();
+                        Topmost = true;  
+                        Topmost = false; 
+                        Focus();
+                    };
+                    Dispatcher.Invoke(action);
+                    PublicResources.messengerChecker = false;
+                }
+                await Task.Delay(1000);               
+            }           
+        }
+
 
         #endregion
 
@@ -184,8 +211,6 @@ namespace Moiro_Orders
             HeaderText.Text = null;
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
         }
-
-        
     }
 
 
@@ -197,22 +222,17 @@ namespace Moiro_Orders
     {
         internal static User Im = new User();
         internal static int sortCount = -1;
-        internal static string version = "0.26 beta";
+        internal static string version = "0.29 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
+        internal static bool messengerChecker = false;
 
         public static HttpClient client = new HttpClient()
         {
-            //BaseAddress = new Uri("http://localhost:55544/")
-            BaseAddress = new Uri("http://10.10.0.34/")
+            BaseAddress = new Uri("http://localhost:55544/")
+            //BaseAddress = new Uri("http://10.10.0.34/")
         };
 
-        public static void ShowApp()
-        {
-            //if (this.WindowState == WindowState.Minimized)
-            //{
-                
-            //}
-        }
+
 
 
 
