@@ -37,7 +37,10 @@
     </UserControl.Resources>
 
     <UserControl.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="addAllEvents">
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="AddEvents">
+            <BeginStoryboard Storyboard="{StaticResource EventDetailsOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ChangeEvent">
             <BeginStoryboard Storyboard="{StaticResource EventDetailsOpen}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BackToEvent">
@@ -50,7 +53,7 @@
     </UserControl.Triggers>
     <!--  временное сообщение -->
     <Grid>
-        <Grid Background="White">
+        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
@@ -70,7 +73,7 @@
             <Grid Grid.Row="1">
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  ItemsSource="{Binding Orders}" 
-                     x:Name="listEvents" >
+                     x:Name="ListEvents" SelectionChanged="ListEvents_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border>
@@ -93,18 +96,25 @@
                                         <RowDefinition Height="10*"/>
                                         <RowDefinition Height="10*"/>
                                         <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80*"/>
                                         <ColumnDefinition Width="20*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="22" Text="{Binding Path=Problem}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                    <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
 
                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
                                     <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
                                     <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
                                     <TextBlock Text="{Binding Path=StatusId}" Grid.Row="3" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding Path=DateStart, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="4" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding Path=Place}" Grid.Row="6" Grid.Column="2"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -114,14 +124,14 @@
 
             <!-- Нижняя панель с кнопками на добавление заявки  -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Grid.Row="2" >
-                <Button Content="Отменить заявку"  Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"/>
-                <Button Content="Добавить заявку" x:Name="addAllEvents" Click="AddAllEvents_Click" Height="40" Margin="5"  Foreground="AliceBlue" BorderBrush="{x:Null}"/>
+                <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="5" BorderBrush="{x:Null}" Click="ChangeEvent_Click"/>
+                <Button x:Name="AddEvents" Content="Добавить заявку" Foreground="AliceBlue" Height="40" Margin="5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
 
             </StackPanel>
             <!-- Форма для добавления мероприятий -->
-            <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden">
+            <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" Panel.ZIndex="80">
                 <Grid.Background>
-                    <SolidColorBrush Color="Aqua" Opacity="0"/>
+                    <SolidColorBrush Color="White" Opacity="1"/>
                 </Grid.Background>
                 <Grid.Style>
                     <Style TargetType="Grid">
@@ -151,8 +161,11 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Выберите дату(даты) проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" HorizontalAlignment="Center"/>
-                        <Calendar x:Name="CalendarWhithDate" HorizontalAlignment="Center" FontFamily="Segoe UI Light" SelectionMode="MultipleRange" SelectedDatesChanged="CalendarWhithDate_SelectedDatesChanged"   Margin="10 0 10 15" Grid.Row="1" />
-
+                        <Grid Grid.Row="1" Margin="10 0 10 15" HorizontalAlignment="Center" >
+                            <Border BorderBrush="#FF3F51B5" BorderThickness="1">
+                                <Calendar x:Name="CalendarWithDate" Margin="2 0 2 2" FontFamily="Segoe UI Light" SelectionMode="MultipleRange" SelectedDatesChanged="CalendarWithDate_SelectedDatesChanged"/>
+                            </Border>
+                        </Grid>
                         <Label Content="Выберите время проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" x:Name="TimeRun" />
                         <StackPanel Grid.Row="1" Grid.Column="1" Width="{Binding ElementName=TimeRun, Path=ActualWidth}">
                             <materialDesign:TimePicker x:Name="StartTime" Language="ru"  Is24Hours="True"  materialDesign:HintAssist.Hint="Время начала"  FontSize="20"  Margin="0 30" />
@@ -176,7 +189,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1.9*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="1" Background="Indigo">
+                <Grid Grid.Row="1" Background="#FF3F51B5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="20*"/>

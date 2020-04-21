@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Moiro_Orders.XamlView
 {
@@ -13,19 +14,24 @@ namespace Moiro_Orders.XamlView
     /// </summary>
     public partial class EventView : UserControl
     {
+        Event selectedEvent = new Event();
+
         public EventView()
         {
             InitializeComponent();
             datePick.SelectedDate = DateTime.Now;
         }
 
-        private void AddAllEvents_Click(object sender, RoutedEventArgs e)
+        private void AddEvents_Click(object sender, RoutedEventArgs e)
         {
-            FormAddEvent.Visibility = Visibility.Visible;
             // при добавлении должен быть указан кабинет у пользователя!
+            NameEvent.Text = null;
+            DescriptionEvent.Text = null;
+            PlaceEvent.Text = null;
+            CalendarWithDate.SelectedDate = null;
+            StartTime.SelectedTime = null;
+            EndTime.SelectedTime = null;
             FormAddEvent.Visibility = Visibility.Visible;
-         
-           
         }
 
         private void DatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -46,15 +52,60 @@ namespace Moiro_Orders.XamlView
                 {
                     IUser user = new CurrentUser();
                     var events = await user.GetEventsListOfDate(PublicResources.Im.Id, selectDate);
-                    listEvents.ItemsSource = events;
+                    ListEvents.ItemsSource = events;
                 }
 
                 async Task GetEventsOfDateAdmin()
                 {
                     IAdmin admin = new CurrentUser();
                     var events = await admin.GetAllEventsToday(selectDate);
-                    listEvents.ItemsSource = events;
+                    ListEvents.ItemsSource = events;
                 }
+            }
+        }
+
+        private void ListEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0)
+            {
+                return;
+            }
+            selectedEvent = (Event)e.AddedItems[0];
+        }
+
+        private void EventsList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListEvents.SelectedIndex = -1;
+        }
+
+        private void ChangeEvent_Click(object sender, RoutedEventArgs e)
+        {
+            if(ListEvents.SelectedIndex != -1)
+            {
+                async Task SetEventsOfDate()
+                {
+                    NameEvent.Text = selectedEvent.NameEvent;
+                    DescriptionEvent.Text = selectedEvent.Description;
+                    PlaceEvent.Text = selectedEvent.Place;
+                    CalendarWithDate.SelectedDate = selectedEvent.DateStart;
+                    StartTime.SelectedTime = selectedEvent.DateStart;
+                    EndTime.SelectedTime = selectedEvent.DateEnd;
+
+
+                    //IUser user = new CurrentUser();
+                    //var status = await user.EditEvent(new Event
+                    //{
+                    //    Description = DescriptionEvent.Text,
+                    //    UserId = PublicResources.Im.Id,
+                    //    DateStart = startDate,
+                    //    DateEnd = endDate,
+                    //    NameEvent = NameEvent.Text,
+                    //    Place = PlaceEvent.Text,
+                    //    StatusId = 1
+                    //});
+                    //MessageBox.Show(status.ToString());
+                }
+                SetEventsOfDate().GetAwaiter();
             }
         }
 
@@ -62,12 +113,13 @@ namespace Moiro_Orders.XamlView
         {
             if (CheckFields())
             {
-                var collections = CalendarWhithDate.SelectedDates;
+                var collections = CalendarWithDate.SelectedDates;
+                DateTime startDate, endDate;
                 foreach (var tmpDate in collections)
                 {
                     async Task SetEventsOfDate()
                     {
-                        DateTime startDate, endDate;
+                        
                         startDate = tmpDate;
                         startDate = startDate.AddHours(StartTime.SelectedTime.Value.Hour);
                         startDate = startDate.AddMinutes(StartTime.SelectedTime.Value.Minute);
@@ -92,6 +144,7 @@ namespace Moiro_Orders.XamlView
                 }
             }
         }
+
         //проверка на заполненость полей для мероприятия
         private bool CheckFields()
         {
@@ -105,7 +158,7 @@ namespace Moiro_Orders.XamlView
                 ShowErrorMessage("Ошибка в месте проведения", "Введите место проведения предстоящего мероприятия");
                 return false;
             }
-            if (CalendarWhithDate.SelectedDates.Count == 0)
+            if (CalendarWithDate.SelectedDates.Count == 0)
             {
                 ShowErrorMessage("Ошибка в дате мероприятий", "Выберите дату или даты проведения данного мероприятия");
                 return false;
@@ -117,6 +170,7 @@ namespace Moiro_Orders.XamlView
             }
             return true;
         }
+
         // Сообщение об ошибке
         private void ShowErrorMessage(string header, string body)
         {
@@ -129,14 +183,14 @@ namespace Moiro_Orders.XamlView
             ErrorGrid.Visibility = Visibility.Hidden;
         }
 
-        private void CalendarWhithDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        private void CalendarWithDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CalendarWhithDate.SelectedDates.Count >= 31)
+            if (CalendarWithDate.SelectedDates.Count >= 31)
             {
                 MessageBox.Show("Выбрано слишком много дат!");
             }
         }
 
-       
+
     }
 }

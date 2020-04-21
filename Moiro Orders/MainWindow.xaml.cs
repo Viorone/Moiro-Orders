@@ -118,7 +118,6 @@ namespace Moiro_Orders
             if (PublicResources.Im.Admin == false)
             {
                 Admins.Visibility = Visibility.Hidden;
-
             }    
         }
 
