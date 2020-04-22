@@ -1,5 +1,6 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
+using Moiro_Orders.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -462,7 +463,7 @@ namespace Moiro_Orders.XamlView
                             {
                                 var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                 listOrders.SelectedItem = tmp;
-                                
+                                PublicResources.messengerChecker = true;
                             }
                         }
                         else
@@ -476,6 +477,7 @@ namespace Moiro_Orders.XamlView
                                 {
                                     var tmp = sortOrd.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                     listOrders.SelectedItem = tmp;
+                                    PublicResources.messengerChecker = true;
                                 }
                             }
                         }
@@ -510,6 +512,7 @@ namespace Moiro_Orders.XamlView
                             {
                                 var tmp = orders.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                 listOrders.SelectedItem = tmp;
+                                PublicResources.messengerChecker = true;
                             }
                         }
                         else
@@ -522,6 +525,7 @@ namespace Moiro_Orders.XamlView
                                 {
                                     var tmp = orders.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                     listOrders.SelectedItem = tmp;
+                                    PublicResources.messengerChecker = true;
                                 }
                             }
                         }
