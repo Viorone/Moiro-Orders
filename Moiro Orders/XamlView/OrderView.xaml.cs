@@ -3,12 +3,14 @@ using Moiro_Orders.Roles;
 using Moiro_Orders.ViewModel;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Moiro_Orders.XamlView
 {
@@ -166,23 +168,23 @@ namespace Moiro_Orders.XamlView
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e) //user
         {
-            if (click)
-            {
-                click = false;
-                Task.Run(() => ClickSaver());
-                if (isProblem)
+                if (click)
                 {
-                    UpdateOrderAsync().GetAwaiter();
+                    click = false;
+                    Task.Run(() => ClickSaver());
+                    if (isProblem)
+                    {
+                        UpdateOrderAsync().GetAwaiter();
+                    }
+                    else
+                    {
+                        CreateNewOrder().GetAwaiter();
+                    }
                 }
-                else
-                {
-                    CreateNewOrder().GetAwaiter();
-                }
-            }
-            OrderDetails.IsEnabled = false;
-            OrdersButtonPanel.IsEnabled = true;
-            datePick.IsEnabled = true;
-            listOrders.IsEnabled = true;
+                OrderDetails.IsEnabled = false;
+                OrdersButtonPanel.IsEnabled = true;
+                datePick.IsEnabled = true;
+                listOrders.IsEnabled = true;
         }
 
         private void AcceptCompleteOrder_Click(object sender, RoutedEventArgs e) //user
@@ -219,6 +221,18 @@ namespace Moiro_Orders.XamlView
             OrdersButtonPanel.IsEnabled = true;
             datePick.IsEnabled = true;
             listOrders.IsEnabled = true;
+        }
+
+        private void Problem_KeyUp(object sender, KeyEventArgs e) //user
+        {
+            if (problem.Text.Trim() != "")
+            {
+                SaveOrder.IsEnabled = true;
+            }
+            else
+            {
+                SaveOrder.IsEnabled = false;
+            }
         }
 
         private void OrdersList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //cancel (selected)
@@ -365,7 +379,8 @@ namespace Moiro_Orders.XamlView
             }
             catch
             {
-
+               
+                
             }
             problem.Text = null;
             description.Text = null;
@@ -434,9 +449,6 @@ namespace Moiro_Orders.XamlView
         }
 
         #endregion
-
-
-
 
 
         async void AutoUpdateOrdersListAdmin(CancellationToken cancellationToken, DateTime selectedDate)
@@ -579,7 +591,7 @@ namespace Moiro_Orders.XamlView
             return sortOrd;
         }
 
-
+        
     }
     // вынести в отдельный класс!!!
     public class DBComparer : IEqualityComparer<Order>

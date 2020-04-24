@@ -119,7 +119,7 @@ namespace Moiro_Orders
         {
             UsersController currentUser = new UsersController();
             var user = await currentUser.GetUserAsync(Environment.UserName);
-            //var user = await currentUser.GetUserAsync("gybarev2"); 
+            //  var user = await currentUser.GetUserAsync("gybarev2"); 
             user.LastLogin = DateTime.Now;
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
@@ -144,17 +144,17 @@ namespace Moiro_Orders
             {
                 if (PublicResources.messengerChecker == true)
                 {
-                    Action action = () => 
+                    void action()
                     {
                         if (WindowState == WindowState.Minimized)
                         {
                             WindowState = WindowState.Normal;
                         }
                         Activate();
-                        Topmost = true;  
-                        Topmost = false; 
+                        Topmost = true;
+                        Topmost = false;
                         Focus();
-                    };
+                    }
                     Dispatcher.Invoke(action);
                     PublicResources.messengerChecker = false;
                 }
@@ -169,7 +169,9 @@ namespace Moiro_Orders
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            //сворачиваем что бы не закрывали
+            WindowState = WindowState.Minimized;
+            //Close();
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -198,14 +200,6 @@ namespace Moiro_Orders
 
         #endregion
 
-        private void GridMenu_MouseLeave(object sender, MouseEventArgs e)
-        {
-            //if (GridMenu.Width == 200)
-            //{
-            //    CloseMenuButton_Click(sender,e);
-            //}
-        }
-
         public void UpdateUserNameHeader()
         {
             HeaderText.Text = null;
@@ -222,7 +216,7 @@ namespace Moiro_Orders
     {
         internal static User Im = new User();
         internal static int sortCount = -1;
-        internal static string version = "0.29 beta";
+        internal static string version = "0.30 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
         internal static bool messengerChecker = false;
 
@@ -231,9 +225,6 @@ namespace Moiro_Orders
             //BaseAddress = new Uri("http://localhost:55544/")
             BaseAddress = new Uri("http://10.10.0.34/")
         };
-
-
-
 
 
         static PublicResources()

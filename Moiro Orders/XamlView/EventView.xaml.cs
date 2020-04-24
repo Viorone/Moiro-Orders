@@ -103,7 +103,7 @@ namespace Moiro_Orders.XamlView
                 }
                 else
                 {
-                    ChangeSelectedEvent().GetAwaiter();
+                    //ChangeSelectedEvent().GetAwaiter();
                 }
             }
         }
@@ -192,22 +192,22 @@ namespace Moiro_Orders.XamlView
             }
         }
 
-        async Task ChangeSelectedEvent()
-        {
+        //async Task ChangeSelectedEvent()
+        //{
 
-            //IUser user = new CurrentUser();
-            //var status = await user.EditEvent(new Event
-            //{
-            //    Description = DescriptionEvent.Text,
-            //    UserId = PublicResources.Im.Id,
-            //    DateStart = startDate,
-            //    DateEnd = endDate,
-            //    NameEvent = NameEvent.Text,
-            //    Place = PlaceEvent.Text,
-            //    StatusId = 1
-            //});
-            //MessageBox.Show(status.ToString());
-        }
+        //    //IUser user = new CurrentUser();
+        //    //var status = await user.EditEvent(new Event
+        //    //{
+        //    //    Description = DescriptionEvent.Text,
+        //    //    UserId = PublicResources.Im.Id,
+        //    //    DateStart = startDate,
+        //    //    DateEnd = endDate,
+        //    //    NameEvent = NameEvent.Text,
+        //    //    Place = PlaceEvent.Text,
+        //    //    StatusId = 1
+        //    //});
+        //    //MessageBox.Show(status.ToString());
+        //}
 
         #endregion
 
