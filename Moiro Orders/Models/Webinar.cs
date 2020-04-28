@@ -15,7 +15,7 @@ namespace Moiro_Orders.Models
         public DateTime DateStart { get; set; } //вермя начала 
         public DateTime DateEnd { get; set; } //время конца
         public DateTime Date { get; set; } //время подачи заявки на вебинар
-        public int StatusId { get; set; } // статус : В ожидании, Отменено, Выполнено
+        public bool IsCanceled { get; set; }
         public int UserId { get; set; } // пользователь который создал заявку на вебинар
         public int PlatformId { get; set; } // платформа на которой будет проводиться вебинар
     }

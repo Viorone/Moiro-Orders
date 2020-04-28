@@ -101,7 +101,7 @@ namespace Moiro_Orders.XamlView
             }
         }
 
-        private void SelectedDatesShow_Click(object sender, RoutedEventArgs e)
+        private void SaveWebinars_Click(object sender, RoutedEventArgs e)
         {
             if (CheckFields())
             {
@@ -116,7 +116,7 @@ namespace Moiro_Orders.XamlView
             }
         }
 
-        //проверка на заполненость полей для мероприятия
+       
         private bool CheckFields()
         {
             if (NameWebinar.Text == "" || NameWebinar.Text == null)
@@ -194,7 +194,8 @@ namespace Moiro_Orders.XamlView
                     DateEnd = endDate,
                     NameWebinar = NameWebinar.Text,
                     Place = PlaceWebinar.Text,
-                    StatusId = 1
+                    IsCanceled = false,
+                    PlatformId = 1
                 });
                 MessageBox.Show(status.ToString());
             }
@@ -202,5 +203,7 @@ namespace Moiro_Orders.XamlView
 
 
         #endregion
+
+
     }
 }

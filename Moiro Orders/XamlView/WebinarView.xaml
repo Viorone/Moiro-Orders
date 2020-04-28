@@ -80,7 +80,7 @@
             </StackPanel>
             <Grid Grid.Row="1">
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Orders}" 
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Webinars}" 
                      x:Name="ListWebinars" SelectionChanged="ListWebinars_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -119,7 +119,7 @@
                                     <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
                                     <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
                                     <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
-                                    <TextBlock Text="{Binding Path=StatusId}" Grid.Row="3" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding Path=IsCanceled}" Grid.Row="3" Grid.Column="2"/>
                                     <TextBlock Text="{Binding Path=DateStart, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="4" Grid.Column="2"/>
                                     <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2"/>
                                     <TextBlock Text="{Binding Path=Place}" Grid.Row="6" Grid.Column="2"/>
@@ -183,11 +183,11 @@
                 </StackPanel>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom"   Background="White"  >
                     <Button  Content="Назад" x:Name="BackToWebinar"  Margin="10"  HorizontalAlignment="Left"/>
-                    <Button Content="Сохранить" x:Name="SelectedDatesShow" Click="SelectedDatesShow_Click" Margin="10" HorizontalAlignment="Right"/>
+                    <Button Content="Сохранить" x:Name="SaveWebinars" Click="SaveWebinars_Click" Margin="10" HorizontalAlignment="Right"/>
                 </Grid>
             </Grid>
             <!-- Error Message Grid -->
-            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid">
+            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid" Panel.ZIndex="100">
                 <Grid.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Grid.Background>

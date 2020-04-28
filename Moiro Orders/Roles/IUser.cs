@@ -14,7 +14,6 @@ namespace Moiro_Orders.Roles
         Task<HttpStatusCode> EditEvent(Event @event);                      
         Task<HttpStatusCode> DeleteEvent(int id);
 
-        Task<List<Webinar>> GetWebinarsList(int count, int id);
         Task<List<Webinar>> GetWebinarsListOfDate(int userId, DateTime date);
         Task<HttpStatusCode> CreateWebinar(Webinar webinar);
         Task<HttpStatusCode> EditWebinar(Webinar webinar);

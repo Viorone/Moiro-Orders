@@ -183,29 +183,33 @@ namespace Moiro_Orders.Roles
 
         #region Webinar
         //Webinar
-        public Task<List<Webinar>> GetWebinarsList(int count, int id)
+
+        public async Task<List<Webinar>> GetWebinarsListOfDate(int userId, DateTime date)
         {
-            throw new NotImplementedException();
+            WebinarsController webinarsController = new WebinarsController();
+            var webinars = await webinarsController.GetWebinarsListOfDateAsync(userId, date);
+            return webinars;
         }
 
-        public Task<List<Webinar>> GetWebinarsListOfDate(int userId, DateTime date)
+        public async Task<HttpStatusCode> CreateWebinar(Webinar webinar)
         {
-            throw new NotImplementedException();
+            WebinarsController webinarsController = new WebinarsController();
+            var status = await webinarsController.CreateWebinarAsync(webinar);
+            return status;
         }
 
-        public Task<HttpStatusCode> CreateWebinar(Webinar webinar)
+        public async Task<HttpStatusCode> EditWebinar(Webinar webinar)
         {
-            throw new NotImplementedException();
+            WebinarsController webinarsController = new WebinarsController();
+            var status = await webinarsController.UpdateWebinarAsync(webinar);
+            return status;
         }
 
-        public Task<HttpStatusCode> EditWebinar(Webinar webinar)
+        public async Task<List<Webinar>> GetAllWebinarsToday(DateTime date)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Webinar>> GetAllWebinarsToday(DateTime date)
-        {
-            throw new NotImplementedException();
+            WebinarsController webinarsController = new WebinarsController();
+            var webinars = await webinarsController.GetAllWebinarsTodayAsync(date);
+            return webinars;
         }
 
         #endregion
