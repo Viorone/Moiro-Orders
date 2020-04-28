@@ -53,7 +53,12 @@
     </UserControl.Triggers>
     <!--  временное сообщение -->
     <Grid>
-        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown">
+        <Grid Background="Gray" Visibility="Visible" Panel.ZIndex="100">
+            <TextBlock Text="Данный раздел находится на стадии разработки." FontSize="30" FontFamily="Segoe UI Light" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"/>
+        </Grid>
+        
+        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown" IsEnabled="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
@@ -126,7 +131,6 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Grid.Row="2" >
                 <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="5" BorderBrush="{x:Null}" Click="ChangeEvent_Click"/>
                 <Button x:Name="AddEvents" Content="Добавить заявку" Foreground="AliceBlue" Height="40" Margin="5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
-
             </StackPanel>
             <!-- Форма для добавления мероприятий -->
             <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" Panel.ZIndex="80">
