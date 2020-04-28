@@ -179,7 +179,35 @@ namespace Moiro_Orders.Roles
             return statuses;
         }
 
-        
+        #endregion
+
+        #region Webinar
+        //Webinar
+        public Task<List<Webinar>> GetWebinarsList(int count, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Webinar>> GetWebinarsListOfDate(int userId, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> CreateWebinar(Webinar webinar)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> EditWebinar(Webinar webinar)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Webinar>> GetAllWebinarsToday(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

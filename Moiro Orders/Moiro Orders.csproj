@@ -140,6 +140,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\ActiveDyrectoryController c.cs" />
     <Compile Include="Controller\StatusController.cs" />
+    <Compile Include="Controller\WebinarsController.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Webinar.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

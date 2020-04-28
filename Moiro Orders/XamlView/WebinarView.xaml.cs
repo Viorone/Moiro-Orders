@@ -60,15 +60,15 @@ namespace Moiro_Orders.XamlView
                 async Task GetWebinarsOfDateUser()
                 {
                     IUser user = new CurrentUser();
-                    //var events = await user.GetWebinarsListOfDate(PublicResources.Im.Id, selectDate);
-                    //ListWebinars.ItemsSource = events;
+                    var webinars = await user.GetWebinarsListOfDate(PublicResources.Im.Id, selectDate);
+                    ListWebinars.ItemsSource = webinars;
                 }
 
                 async Task GetWebinarsOfDateAdmin()
                 {
                     IAdmin admin = new CurrentUser();
-                    //var events = await admin.GetAllWebinarsToday(selectDate);
-                    //ListWebinars.ItemsSource = events;
+                    var webinars = await admin.GetAllWebinarsToday(selectDate);
+                    ListWebinars.ItemsSource = webinars;
                 }
             }
         }
@@ -184,19 +184,19 @@ namespace Moiro_Orders.XamlView
                 endDate = endDate.AddMinutes(EndTime.SelectedTime.Value.Minute);
 
 
-                //IUser user = new CurrentUser();
-                //var status = await user.CreateWebinar(new Webinar
-                //{
-                //    Date = DateTime.Now,
-                //    Description = DescriptionWebinar.Text,
-                //    UserId = PublicResources.Im.Id,
-                //    DateStart = startDate,
-                //    DateEnd = endDate,
-                //    NameWebinar = NameWebinar.Text,
-                //    Place = PlaceWebinar.Text,
-                //    StatusId = 1
-                //});
-               // MessageBox.Show(status.ToString());
+                IUser user = new CurrentUser();
+                var status = await user.CreateWebinar(new Webinar
+                {
+                    Date = DateTime.Now,
+                    Description = DescriptionWebinar.Text,
+                    UserId = PublicResources.Im.Id,
+                    DateStart = startDate,
+                    DateEnd = endDate,
+                    NameWebinar = NameWebinar.Text,
+                    Place = PlaceWebinar.Text,
+                    StatusId = 1
+                });
+                MessageBox.Show(status.ToString());
             }
         }
 
