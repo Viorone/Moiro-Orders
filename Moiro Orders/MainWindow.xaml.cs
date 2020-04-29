@@ -118,8 +118,8 @@ namespace Moiro_Orders
         async Task GetUser()
         {
             UsersController currentUser = new UsersController();
-            var user = await currentUser.GetUserAsync(Environment.UserName);
-            //  var user = await currentUser.GetUserAsync("gybarev2"); 
+            //var user = await currentUser.GetUserAsync(Environment.UserName);
+            var user = await currentUser.GetUserAsync("gybarev"); 
             user.LastLogin = DateTime.Now;
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
@@ -222,8 +222,8 @@ namespace Moiro_Orders
 
         public static HttpClient client = new HttpClient()
         {
-            //BaseAddress = new Uri("http://localhost:55544/")
-            BaseAddress = new Uri("http://10.10.0.34/")
+            BaseAddress = new Uri("http://localhost:55544/")
+            //BaseAddress = new Uri("http://10.10.0.34/")
         };
 
 

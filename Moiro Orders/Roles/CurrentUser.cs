@@ -179,7 +179,39 @@ namespace Moiro_Orders.Roles
             return statuses;
         }
 
-        
+        #endregion
+
+        #region Webinar
+        //Webinar
+
+        public async Task<List<Webinar>> GetWebinarsListOfDate(int userId, DateTime date)
+        {
+            WebinarsController webinarsController = new WebinarsController();
+            var webinars = await webinarsController.GetWebinarsListOfDateAsync(userId, date);
+            return webinars;
+        }
+
+        public async Task<HttpStatusCode> CreateWebinar(Webinar webinar)
+        {
+            WebinarsController webinarsController = new WebinarsController();
+            var status = await webinarsController.CreateWebinarAsync(webinar);
+            return status;
+        }
+
+        public async Task<HttpStatusCode> EditWebinar(Webinar webinar)
+        {
+            WebinarsController webinarsController = new WebinarsController();
+            var status = await webinarsController.UpdateWebinarAsync(webinar);
+            return status;
+        }
+
+        public async Task<List<Webinar>> GetAllWebinarsToday(DateTime date)
+        {
+            WebinarsController webinarsController = new WebinarsController();
+            var webinars = await webinarsController.GetAllWebinarsTodayAsync(date);
+            return webinars;
+        }
+
         #endregion
     }
 }
