@@ -3,13 +3,198 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
       mc:Ignorable="d" >
+    <UserControl.Resources>
 
-    <Grid Background="AliceBlue">
-        
-        <ListBox x:Name="logList">
-            
-        </ListBox>
-        <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Grid.Row="2" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
+    </UserControl.Resources>
+    <Grid Background="White">
+
+        <dragablz:TabablzControl FixedHeaderCount="3">
+            <TabItem Header="Статистика">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="175"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="240" />
+                                <ColumnDefinition MinWidth="240"  />
+                                <ColumnDefinition MinWidth="240"  />
+                                <ColumnDefinition MinWidth="240" />
+                                <ColumnDefinition MinWidth="240" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Первая карточка -->
+                            <materialDesign:Card Grid.Column="0" Margin="10" UniformCornerRadius="10" MinWidth="230" MaxWidth="300">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Иконка и значок -->
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#FFdb58" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="20" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                        </Grid.Effect>
+                                        <materialDesign:PackIcon Kind="NewBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                    </Grid>
+                                    <TextBlock Grid.Column="1" Text="Заявки в процессе обработки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"  FontSize="18"/>
+                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                    <!-- Нижняя панель -->
+                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
+                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
+                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+                            <!-- Вторая карточка -->
+                            <materialDesign:Card Grid.Column="1" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="9*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Иконка и значок -->
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#68A1DA" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="20" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                        </Grid.Effect>
+                                        <materialDesign:PackIcon Kind="Run" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                    </Grid>
+                                    <TextBlock Grid.Column="1" Text="Выполняемые заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+
+                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
+                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
+                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+                            <!-- Третья карточка  -->
+                            <materialDesign:Card Grid.Column="2" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="9*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Иконка и значок -->
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" 
+                                  Height="50" 
+                                  Background="#ff6800" 
+                                  HorizontalAlignment="Left" 
+                                  VerticalAlignment="Top" 
+                                  Margin="20 0 0 0">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="20" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                        </Grid.Effect>
+                                        <materialDesign:PackIcon Kind="Screwdriver" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                    </Grid>
+                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+
+                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
+                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
+                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+                            <!-- Четвёртая карточка -->
+                            <materialDesign:Card Grid.Column="3" Grid.Row="0" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="9*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Иконка и значок -->
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="5" Color="Red" RenderingBias="Quality" ShadowDepth="1"/>
+                                        </Grid.Effect>
+                                        <materialDesign:PackIcon Kind="Cancel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                    </Grid>
+                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+
+                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
+                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
+                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
+                                    </StackPanel>
+                                    <!-- написать событие на обновление -->
+                                    <materialDesign:PackIcon Kind="Refresh" Foreground="Gray" Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Grid.Row="3" Grid.Column="2" Margin="0 0 5 5" />
+                                </Grid>
+                            </materialDesign:Card>
+                            <!-- Пятая карточка -->
+                            <materialDesign:Card Grid.Column="4"  Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="9*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Иконка и значок -->
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#ff6800" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="20 0 0 0">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="5" Color="#ff6800" RenderingBias="Quality" ShadowDepth="1"/>
+                                        </Grid.Effect>
+                                        <materialDesign:PackIcon Kind="Screwdriver" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                    </Grid>
+                                    
+                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
+                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
+                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
+                                    </StackPanel>
+                                    
+                                    <!-- написать событие на обновление -->
+                                    <materialDesign:PackIcon Kind="Refresh" Foreground="Gray" Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Grid.Row="3" Grid.Column="2" Margin="0 0 5 5" />
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Власть Админа">
+                <Grid>
+                    <ListBox x:Name="logList"/>
+                    <TextBlock Text="Если вы не знаете что делает кнопка внизу - то просто НЕ НАЖИМАЙТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="22" TextWrapping="Wrap"/>
+                    <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header=""/>
+        </dragablz:TabablzControl>
     </Grid>
 </UserControl>
