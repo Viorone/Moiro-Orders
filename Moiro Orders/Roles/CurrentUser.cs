@@ -86,11 +86,18 @@ namespace Moiro_Orders.Roles
             return orders;
         }
 
-        public async Task<List<Order>> GetOrdersList(int count, int id)
+        public async Task<List<Order>> GetOrdersByStatus(int statusId, DateTime dateStart, DateTime dateEnd)
         {
             OrdersController ordersController = new OrdersController();
-            var orders = await ordersController.GetAllOrdersAsync(count, id);
+            var orders = await ordersController.GetOrdersByStatusAsync(statusId, dateStart, dateEnd);
             return orders;
+        }
+
+        public async Task<int> GetCountOrdersByStatus(int statusId)
+        {
+            OrdersController ordersController = new OrdersController();
+            var ordersCount = await ordersController.GetCountOrdersByStatusAsync(statusId);
+            return ordersCount;
         }
 
         public async Task<HttpStatusCode> DeleteOrder(int id)
@@ -210,7 +217,7 @@ namespace Moiro_Orders.Roles
             WebinarsController webinarsController = new WebinarsController();
             var webinars = await webinarsController.GetAllWebinarsTodayAsync(date);
             return webinars;
-        }
+        }       
 
         #endregion
     }
