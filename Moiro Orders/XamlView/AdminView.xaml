@@ -16,9 +16,11 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="175"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ScrollViewer Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" >
+                    <!-- Верхние катрочки -->
+                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="240" />
@@ -27,7 +29,7 @@
                                 <ColumnDefinition MinWidth="240" />
                                 <ColumnDefinition MinWidth="240" />
                             </Grid.ColumnDefinitions>
-                            <!-- Первая карточка -->
+                            <!-- Первая карточка, Заявки новопришедшие -->
                             <materialDesign:Card Grid.Column="0" Margin="10"  x:Name="CardOrdersNew" UniformCornerRadius="10" MinWidth="230" MaxWidth="300" MouseLeftButtonUp="CardOrdersNew_MouseLeftButtonUp">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -40,7 +42,6 @@
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Иконка и значок -->
-                                   
                                         <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#edc31c" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
                                             <Grid.Effect>
                                                 <DropShadowEffect BlurRadius="5" Color="#edc31c" RenderingBias="Quality" ShadowDepth="1"/>
@@ -48,7 +49,7 @@
                                             <materialDesign:PackIcon Kind="NewBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                         </Grid>
                                         <TextBlock Grid.Column="1" Text="Заявки в процессе обработки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"  FontSize="18"/>
-                                        <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                        <TextBlock x:Name="CountOrdersNew"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
                                   
                                     <!-- Нижняя панель -->
                                     <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" x:Name="RefreshOrdersNew" MouseLeftButtonUp="RefreshOrdersNew_MouseLeftButtonUp">
@@ -61,8 +62,8 @@
                                     </ListView>
                                 </Grid>
                             </materialDesign:Card>
-                            <!-- Вторая карточка -->
-                            <materialDesign:Card Grid.Column="1" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300">
+                            <!-- Вторая карточка, Заявки на выполнении -->
+                            <materialDesign:Card Grid.Column="1" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersInProgress" MouseLeftButtonUp="CardOrdersInProgress_MouseLeftButtonUp">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="60"/>
@@ -81,10 +82,10 @@
                                         <materialDesign:PackIcon Kind="Run" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
                                     <TextBlock Grid.Column="1" Text="Выполняемые заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
-                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                    <TextBlock x:Name="CountOrdersInProgress"   Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
 
                                     <!-- Нижняя панель -->
-                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch"  x:Name="RefreshOrdersinProgress" MouseLeftButtonUp="RefreshOrdersinProgress_MouseLeftButtonUp" >
                                         <ListViewItem>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
@@ -94,8 +95,8 @@
                                     </ListView>
                                 </Grid>
                             </materialDesign:Card>
-                            <!-- Третья карточка  -->
-                            <materialDesign:Card Grid.Column="2" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" >
+                            <!-- Третья карточка, Заявки требующие ремонта или закупки  -->
+                            <materialDesign:Card Grid.Column="2" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersNeedRepair" MouseLeftButtonUp="CardOrdersNeedRepair_MouseLeftButtonUp" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="60"/>
@@ -114,10 +115,10 @@
                                         <materialDesign:PackIcon Kind="Screwdriver" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
                                     <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
-                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                    <TextBlock x:Name="CountOrdersNeedRepair"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
 
                                     <!-- Нижняя панель -->
-                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch"  x:Name="RefreshOrdersNeedRepair" MouseLeftButtonUp="RefreshOrdersNeedRepair_MouseLeftButtonUp"  >
                                         <ListViewItem>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
@@ -127,8 +128,8 @@
                                     </ListView>
                                 </Grid>
                             </materialDesign:Card>
-                            <!-- Четвёртая карточка -->
-                            <materialDesign:Card Grid.Column="3" Grid.Row="0" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300">
+                            <!-- Четвёртая карточка, Отменённые заявки -->
+                            <materialDesign:Card Grid.Column="3" Grid.Row="0" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersCancel" MouseLeftButtonUp="CardOrdersCancel_MouseLeftButtonUp">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="60"/>
@@ -147,10 +148,10 @@
                                         <materialDesign:PackIcon Kind="Cancel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
                                     <TextBlock Grid.Column="1" Text="Отменённые заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
-                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                    <TextBlock  x:Name="CountOrdersCancel"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
 
                                     <!-- Нижняя панель -->
-                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch"  x:Name="RefreshOrdersCancel" MouseLeftButtonUp="RefreshOrdersCancel_MouseLeftButtonUp">
                                         <ListViewItem>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
@@ -160,8 +161,8 @@
                                     </ListView>
                                 </Grid>
                             </materialDesign:Card>
-                            <!-- Пятая карточка -->
-                            <materialDesign:Card Grid.Column="4"  Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300">
+                            <!-- Пятая карточка, Завершённые заявки-->
+                            <materialDesign:Card Grid.Column="4"  Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersComplete" MouseLeftButtonUp="CardOrdersComplete_MouseLeftButtonUp">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="60"/>
@@ -181,9 +182,9 @@
                                     </Grid>
                                     
                                     <TextBlock Grid.Column="1" Text="Выполненные заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
-                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                    <TextBlock  x:Name="CountOrdersComplete"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
                                     <!-- Нижняя панель -->
-                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" x:Name="RefreshOrdersComplete" MouseLeftButtonUp="RefreshOrdersComplete_MouseLeftButtonUp">
                                         <ListViewItem>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                                 <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
@@ -195,6 +196,43 @@
                             </materialDesign:Card>
                         </Grid>
                     </ScrollViewer>
+                    <!-- Нижний список -->
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <TextBlock Text="Выберите промежуток"/>
+                        <DatePicker x:Name="dateStart" Margin="5 0 0 5"/>
+                        <DatePicker x:Name="dateEnd" Margin="5 0 0 5"/>
+                    </StackPanel>
+                    <ListView Grid.Row="2" x:Name="ListGettingOrders">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Card Background="{Binding ElementName=ClickMe, Path=Background}">
+                                    <Grid HorizontalAlignment="Stretch" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+
+                                        </Grid.RowDefinitions>
+
+
+                                        <Grid Background="Yellow" x:Name="ColorCard"/>
+                                        <StackPanel Margin="10" Grid.Column="1" Grid.ColumnSpan="2">
+                                            <TextBlock Text="{Binding Path=Problem}"   FontSize="18" Foreground="White"/>
+                                            <TextBlock Text="{Binding Path=Description}" FontSize="14" Foreground="White"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="3">
+                                            <TextBlock Text="{Binding Path=UserName}"/>
+                                            <TextBlock Text="{Binding Path=UserLogin}"/>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </materialDesign:Card>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListView>
                 </Grid>
             </TabItem>
             <TabItem Header="Власть Админа" FontSize="18">
