@@ -17,7 +17,8 @@ namespace Moiro_Orders.Roles
         Task<List<Webinar>> GetAllWebinarsToday(DateTime date);
         Task<List<Webinar>> GetWebinarsListOfDate(int userId, DateTime date); 
 
-        Task<List<Order>> GetOrdersList(int count, int id); //Get Orders list by current user
+        Task<List<Order>> GetOrdersByStatus(int statusId, DateTime dateStart, DateTime dateEnd); //Get orders by status
+        Task<int> GetCountOrdersByStatus(int statusId); //Get count orders by status
         Task<Order> GetOrderById(int id);
         Task<List<Order>> GetAllOrdersToday(DateTime date);
         Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date); //Get Orders list by current date

@@ -23,7 +23,7 @@ namespace Moiro_Orders
         {
             InitializeComponent();
             GetUser().GetAwaiter();
-            Task.Run(() => Messenger());
+            Task.Run(() => Messenger());           
         }
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)

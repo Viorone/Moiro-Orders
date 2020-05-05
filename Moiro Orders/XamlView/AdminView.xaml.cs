@@ -16,6 +16,8 @@ namespace Moiro_Orders.XamlView
         public AdminView()
         {
             InitializeComponent();
+            IAdmin admin = new CurrentUser();
+            admin.GetCountOrdersByStatus(1).GetAwaiter();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
