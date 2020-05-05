@@ -42,5 +42,26 @@ namespace Moiro_Orders.XamlView
             }
             UpdateUsersDb().GetAwaiter();
         }
+        bool refresh = false;
+        private void CardOrdersNew_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!refresh)
+            {
+                //main code
+                MessageBox.Show("Card");
+            }
+            else
+            {
+                refresh = false;
+            }
+        }
+
+        private void RefreshOrdersNew_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            refresh = true;
+            //code to refresh
+            MessageBox.Show("refresh");
+
+        }
     }
 }

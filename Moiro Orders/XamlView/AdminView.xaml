@@ -12,18 +12,12 @@
     <Grid Background="White">
 
         <dragablz:TabablzControl FixedHeaderCount="3">
-            <TabItem Header="Статистика">
+            <TabItem Header="Статистика" FontSize="18">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="175"/>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
                     <ScrollViewer Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" >
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -34,7 +28,7 @@
                                 <ColumnDefinition MinWidth="240" />
                             </Grid.ColumnDefinitions>
                             <!-- Первая карточка -->
-                            <materialDesign:Card Grid.Column="0" Margin="10" UniformCornerRadius="10" MinWidth="230" MaxWidth="300">
+                            <materialDesign:Card Grid.Column="0" Margin="10"  x:Name="CardOrdersNew" UniformCornerRadius="10" MinWidth="230" MaxWidth="300" MouseLeftButtonUp="CardOrdersNew_MouseLeftButtonUp">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="60"/>
@@ -46,19 +40,25 @@
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Иконка и значок -->
-                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#FFdb58" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
-                                        <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="20" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                        </Grid.Effect>
-                                        <materialDesign:PackIcon Kind="NewBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
-                                    </Grid>
-                                    <TextBlock Grid.Column="1" Text="Заявки в процессе обработки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"  FontSize="18"/>
-                                    <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                   
+                                        <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#edc31c" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
+                                            <Grid.Effect>
+                                                <DropShadowEffect BlurRadius="5" Color="#edc31c" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Grid.Effect>
+                                            <materialDesign:PackIcon Kind="NewBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                        </Grid>
+                                        <TextBlock Grid.Column="1" Text="Заявки в процессе обработки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"  FontSize="18"/>
+                                        <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                  
                                     <!-- Нижняя панель -->
-                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
-                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
-                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
-                                    </StackPanel>
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" x:Name="RefreshOrdersNew" MouseLeftButtonUp="RefreshOrdersNew_MouseLeftButtonUp">
+                                        <ListViewItem>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
+                                                <TextBlock Text="Обновить" FontSize="16" Foreground="Gray" Margin="0 -4 0 0"/>
+                                            </StackPanel>
+                                        </ListViewItem>
+                                    </ListView>
                                 </Grid>
                             </materialDesign:Card>
                             <!-- Вторая карточка -->
@@ -76,17 +76,22 @@
                                     <!-- Иконка и значок -->
                                     <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#68A1DA" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="20" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="5" Color="#68A1DA" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Run" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="Выполняемые заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Выполняемые заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
                                     <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
 
-                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
-                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
-                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
-                                    </StackPanel>
+                                    <!-- Нижняя панель -->
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                        <ListViewItem>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
+                                                <TextBlock Text="Обновить" FontSize="16" Foreground="Gray" Margin="0 -4 0 0"/>
+                                            </StackPanel>
+                                        </ListViewItem>
+                                    </ListView>
                                 </Grid>
                             </materialDesign:Card>
                             <!-- Третья карточка  -->
@@ -102,24 +107,24 @@
                                         <ColumnDefinition Width="9*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Иконка и значок -->
-                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" 
-                                  Height="50" 
-                                  Background="#ff6800" 
-                                  HorizontalAlignment="Left" 
-                                  VerticalAlignment="Top" 
-                                  Margin="20 0 0 0">
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#ff6800" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="20" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="5" Color="#ff6800" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Screwdriver" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
                                     <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
 
-                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
-                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
-                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
-                                    </StackPanel>
+                                    <!-- Нижняя панель -->
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                        <ListViewItem>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
+                                                <TextBlock Text="Обновить" FontSize="16" Foreground="Gray" Margin="0 -4 0 0"/>
+                                            </StackPanel>
+                                        </ListViewItem>
+                                    </ListView>
                                 </Grid>
                             </materialDesign:Card>
                             <!-- Четвёртая карточка -->
@@ -135,21 +140,24 @@
                                         <ColumnDefinition Width="9*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Иконка и значок -->
-                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#e01d1d" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="Red" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="5" Color="#e01d1d" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Cancel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Отменённые заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
                                     <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
 
-                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
-                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
-                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
-                                    </StackPanel>
-                                    <!-- написать событие на обновление -->
-                                    <materialDesign:PackIcon Kind="Refresh" Foreground="Gray" Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Grid.Row="3" Grid.Column="2" Margin="0 0 5 5" />
+                                    <!-- Нижняя панель -->
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                        <ListViewItem>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
+                                                <TextBlock Text="Обновить" FontSize="16" Foreground="Gray" Margin="0 -4 0 0"/>
+                                            </StackPanel>
+                                        </ListViewItem>
+                                    </ListView>
                                 </Grid>
                             </materialDesign:Card>
                             <!-- Пятая карточка -->
@@ -165,29 +173,31 @@
                                         <ColumnDefinition Width="9*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Иконка и значок -->
-                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#ff6800" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="20 0 0 0">
+                                    <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#56A423" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="20 0 0 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#ff6800" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="5" Color="#56A423" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
-                                        <materialDesign:PackIcon Kind="Screwdriver" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
+                                        <materialDesign:PackIcon Kind="Done" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                     </Grid>
                                     
-                                    <TextBlock Grid.Column="1" Text="Заявки на ремонт или закупку" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Выполненные заявки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"   FontSize="18"/>
                                     <TextBlock Text="4999"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
-                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Stretch" >
-                                        <materialDesign:PackIcon Kind="About" Foreground="RosyBrown" Width="18" Height="18" VerticalAlignment="Center" Margin="10 0 10 5"/>
-                                        <TextBlock Text="За всё время" FontSize="16" Foreground="Gray"/>
-                                    </StackPanel>
-                                    
-                                    <!-- написать событие на обновление -->
-                                    <materialDesign:PackIcon Kind="Refresh" Foreground="Gray" Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Grid.Row="3" Grid.Column="2" Margin="0 0 5 5" />
+                                    <!-- Нижняя панель -->
+                                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" >
+                                        <ListViewItem>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                                <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
+                                                <TextBlock Text="Обновить" FontSize="16" Foreground="Gray" Margin="0 -4 0 0"/>
+                                            </StackPanel>
+                                        </ListViewItem>
+                                    </ListView>
                                 </Grid>
                             </materialDesign:Card>
                         </Grid>
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Власть Админа">
+            <TabItem Header="Власть Админа" FontSize="18">
                 <Grid>
                     <ListBox x:Name="logList"/>
                     <TextBlock Text="Если вы не знаете что делает кнопка внизу - то просто НЕ НАЖИМАЙТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="22" TextWrapping="Wrap"/>
