@@ -18,7 +18,6 @@ namespace Moiro_Orders.Roles
         Task<HttpStatusCode> CreateWebinar(Webinar webinar);
         Task<HttpStatusCode> EditWebinar(Webinar webinar);
 
-        Task<List<Order>> GetOrdersList(int count, int id);
         Task<Order> GetOrderById(int id);
         Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date);  //Get Orders list by current date
         Task<HttpStatusCode> CreateOrder(Order order);
