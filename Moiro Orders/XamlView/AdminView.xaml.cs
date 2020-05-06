@@ -21,8 +21,12 @@ namespace Moiro_Orders.XamlView
             {
                 GetCountOrders(i).GetAwaiter();
             }
+            DateTime dTime = DateTime.Now;
+            dTime = dTime.AddMonths(-1);
+            dateStart.SelectedDate = dTime;
+            dateEnd.SelectedDate = DateTime.Now.Date;
         }
-        
+
         private void Button_Click(object sender, RoutedEventArgs e) //Гигантская кнопка
         {
             async Task UpdateUsersDb()
@@ -67,19 +71,19 @@ namespace Moiro_Orders.XamlView
         {
             if (!refresh)
             {
-                GetOrdersByStatus(2, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
+              
+                GetOrdersByStatus(5, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
             }
             else
             {
                 refresh = false;
             }
         }
-        private void CardOrdersComplete_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void CardOrdersComplete_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)  
         {
             if (!refresh)
             {
-                //main code
-                MessageBox.Show("CardComplete");
+                GetOrdersByStatus(3, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
             }
             else
             {
@@ -90,8 +94,7 @@ namespace Moiro_Orders.XamlView
         {
             if (!refresh)
             {
-                //main code
-                MessageBox.Show("CardNeedRepair");
+                GetOrdersByStatus(4, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
             }
             else
             {
@@ -102,8 +105,7 @@ namespace Moiro_Orders.XamlView
         {
             if (!refresh)
             {
-                //main code
-                MessageBox.Show("CardШтЗкщпкуыы");
+                GetOrdersByStatus(2, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
             }
             else
             {
@@ -140,6 +142,7 @@ namespace Moiro_Orders.XamlView
         }
         #endregion
 
+       
         #endregion
 
         #region ASYNC metods
@@ -175,6 +178,7 @@ namespace Moiro_Orders.XamlView
             var orders = await admin.GetOrdersByStatus(statusId, dateStart, dateEnd);
             ListGettingOrders.ItemsSource = orders;
         }
+
 
         #endregion
 

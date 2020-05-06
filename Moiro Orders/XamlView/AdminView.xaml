@@ -13,24 +13,45 @@
 
         <dragablz:TabablzControl FixedHeaderCount="3">
             <TabItem Header="Статистика" FontSize="18">
+                
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="175"/>
+                        <RowDefinition Height="205"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <!-- Верхние катрочки -->
-                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" >
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top">
+                        <TextBlock Text="Временной период с:" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22"/>
+                        <DatePicker x:Name="dateStart" Margin="5 0 5 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                            <DatePicker.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                        <TextBlock Text="по:" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22"/>
+                        <DatePicker x:Name="dateEnd" Margin="5 0 0 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                            <DatePicker.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                    </StackPanel>
+                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Margin="0 30 0 0" >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="240" />
+                                <ColumnDefinition MinWidth="12" />
                                 <ColumnDefinition MinWidth="240"  />
                                 <ColumnDefinition MinWidth="240"  />
                                 <ColumnDefinition MinWidth="240" />
                                 <ColumnDefinition MinWidth="240" />
                             </Grid.ColumnDefinitions>
                             <!-- Первая карточка, Заявки новопришедшие -->
-                            <materialDesign:Card Grid.Column="0" Margin="10"  x:Name="CardOrdersNew" UniformCornerRadius="10" MinWidth="230" MaxWidth="300" MouseLeftButtonUp="CardOrdersNew_MouseLeftButtonUp">
+                            <materialDesign:Card Grid.Column="0" Margin="10"  x:Name="CardOrdersNew" UniformCornerRadius="10" Width="77" MouseLeftButtonUp="CardOrdersNew_MouseLeftButtonUp">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="60"/>
@@ -42,22 +63,25 @@
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Иконка и значок -->
-                                        <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#edc31c" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0 0 0">
+                                    <ListView Grid.Row="0" Grid.ColumnSpan="2">
+                                        <ListViewItem>
+                                            <Grid Width="35" Grid.Row="0" Grid.RowSpan="2" Height="50" Background="#edc31c" Margin="14 0 0 0" VerticalAlignment="Top" >
                                             <Grid.Effect>
                                                 <DropShadowEffect BlurRadius="5" Color="#edc31c" RenderingBias="Quality" ShadowDepth="1"/>
                                             </Grid.Effect>
                                             <materialDesign:PackIcon Kind="NewBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
-                                        </Grid>
-                                        <TextBlock Grid.Column="1" Text="Заявки в процессе обработки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"  FontSize="18"/>
-                                        <TextBlock x:Name="CountOrdersNew"  Grid.Row="1" Grid.Column="1" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="50" Margin="0 0 10 0"/>
+                                        </Grid> 
+                                            
+                                        </ListViewItem>
+                                    </ListView>
+                                      
+                                        <TextBlock Grid.Column="1" Text="Заявки в процессе обработки" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="7 0"   VerticalAlignment="Top" Foreground="Gray"  FontSize="18" Visibility="Hidden"/>
+                                        <TextBlock x:Name="CountOrdersNew" Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="0" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray" FontSize="50" />
                                   
                                     <!-- Нижняя панель -->
                                     <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Stretch" x:Name="RefreshOrdersNew" MouseLeftButtonUp="RefreshOrdersNew_MouseLeftButtonUp">
                                         <ListViewItem>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center" Margin="10 -3 7 0"/>
-                                                <TextBlock Text="Обновить" FontSize="16" Foreground="Gray" Margin="0 -4 0 0"/>
-                                            </StackPanel>
+                                            <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="20" Height="20" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="19 0 0 0"/>
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
@@ -197,39 +221,177 @@
                         </Grid>
                     </ScrollViewer>
                     <!-- Нижний список -->
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <TextBlock Text="Выберите промежуток"/>
-                        <DatePicker x:Name="dateStart" Margin="5 0 0 5"/>
-                        <DatePicker x:Name="dateEnd" Margin="5 0 0 5"/>
-                    </StackPanel>
+                  
                     <ListView Grid.Row="2" x:Name="ListGettingOrders">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <materialDesign:Card Background="{Binding ElementName=ClickMe, Path=Background}">
-                                    <Grid HorizontalAlignment="Stretch" Margin="5">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="20"/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-
-                                        </Grid.RowDefinitions>
-
-
-                                        <Grid Background="Yellow" x:Name="ColorCard"/>
-                                        <StackPanel Margin="10" Grid.Column="1" Grid.ColumnSpan="2">
-                                            <TextBlock Text="{Binding Path=Problem}"   FontSize="18" Foreground="White"/>
-                                            <TextBlock Text="{Binding Path=Description}" FontSize="14" Foreground="White"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="3">
-                                            <TextBlock Text="{Binding Path=UserName}"/>
-                                            <TextBlock Text="{Binding Path=UserLogin}"/>
-                                        </StackPanel>
-
-                                    </Grid>
-                                </materialDesign:Card>
+                                <Border>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderThickness" Value="3" />
+                                            <Setter Property="BorderBrush" Value="Transparent" />
+                                            <Setter Property="CornerRadius" Value="12"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Margin" Value="10 0"/>
+                                            <Style.Triggers>
+                                                <!-- Тригерры для изменения цвета и выделения выбранного элемента -->
+                                                <DataTrigger Binding="{Binding Path=StatusId}"  Value="5">
+                                                    <Setter Property="Background" Value="#FF5151" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=StatusId}"  Value="3">
+                                                    <Setter Property="Background" Value="#56A423" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=StatusId}"  Value="4">
+                                                    <Setter Property="Background" Value="#ff6800" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=StatusId}"  Value="2">
+                                                    <Setter Property="Background" Value="#68A1DA" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=StatusId}"  Value="1">
+                                                    <Setter Property="Background" Value="#FFFFaa" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                 Value="True">
+                                                    <Setter Property="BorderBrush" Value="#FF3F51B5" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <!-- Шаблон для добавления элементов -->
+                                    <StackPanel>
+                                        <Border CornerRadius="10" Margin="4 4 4 0" Background="White" BorderThickness="3" BorderBrush="LightGray">
+                                            <StackPanel>
+                                                <Grid Margin="5" Background="White" >
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <!-- ниже визуально сформировал отображение заявителя с кабинетом и заголовок проблемы у пользователя -->
+                                                    <Grid  x:Name="userOrder" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" >
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="6*" />
+                                                            <ColumnDefinition Width="4*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Path=Problem}" FontSize="24" FontFamily="Calibri"  TextWrapping="Wrap" Grid.Column="0" HorizontalAlignment="Left" />
+                                                        <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="{Binding ElementName=Customer, Path=ActualWidth}"/>
+                                                                <ColumnDefinition Width="10*" MinWidth="100"/>
+                                                                <ColumnDefinition Width="1*" MinWidth="25"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock x:Name="Customer" Text="Заявитель:  " HorizontalAlignment="Stretch" FontSize="14" >
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding ElementName=UserName, Path=Text}" Value="">
+                                                                                <Setter Property="Width" Value="0"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                            <TextBlock x:Name="UserName" Text="{Binding Path=UserName}" TextWrapping="Wrap" FontStyle="Italic" FontSize="14" Grid.Column="1" HorizontalAlignment="Center" />
+                                                            <TextBlock x:Name="Room" Text="{Binding Path=Room}"  FontSize="14" Grid.Column="2"  HorizontalAlignment="Right" />
+                                                        </Grid>
+                                                    </Grid>
+                                                    <TextBlock Text="{Binding Path=Description}"  TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" />
+                                                    <!-- данные по исполнителю конкретной заявки -->
+                                                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  HorizontalAlignment="Right" Width="{Binding ElementName=userOrder, Path=ActualWidth}" >
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="6*" />
+                                                                <ColumnDefinition Width="4*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="{Binding ElementName=owner, Path=ActualWidth}"/>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock x:Name="owner" Text="Исполнитель:  " FontSize="14" Grid.Column="0"  HorizontalAlignment="Left">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding ElementName=AdminName, Path=Text}" Value="">
+                                                                                    <Setter Property="Width" Value="0"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                                <TextBlock  Grid.Column="1" x:Name="AdminName" Text="{Binding Path=AdminName}"  TextWrapping="Wrap" HorizontalAlignment="Center"  FontSize="14" FontStyle="Italic" />
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <!-- Динамическое отображение состояния завки и, при необходимости, даты -->
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0">
+                                                        <Label Content="Отправлено : " FontSize="14" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" FontSize="14" VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" >
+                                                        <TextBlock Text="{Binding Path=StatusName}" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                        <Label x:Name="lblDot" Content=": " FontSize="14" VerticalAlignment="Center">
+                                                            <Label.Style>
+                                                                <Style TargetType="Label">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding ElementName=CompletionDate, Path=Text}" Value="">
+                                                                            <Setter Property="Width" Value="0"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Label.Style>
+                                                        </Label>
+                                                        <TextBlock x:Name="CompletionDate" Text="{Binding Path=CompletionDate, StringFormat='{}{0:f}', ConverterCulture='ru'}" FontSize="14" VerticalAlignment="Center">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding ElementName=CompletionDate, Path=Text}" Value="">
+                                                                            <Setter Property="Width" Value="0" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- Комментарий администратора  -->
+                                        <Grid Margin="13 0"  Background="Transparent">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="7*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border  Margin="0 0 0 8" BorderThickness="1 0 1 1" BorderBrush="LightGray" Grid.Column="1" CornerRadius="0 0 10 10" Background="LightYellow" Padding="10 0">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=AdminComment, Path=Text}" Value="">
+                                                                <Setter Property="Height" Value="0" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <Grid HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="{Binding ElementName=ContentComment, Path=ActualWidth}"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label x:Name="ContentComment" Content="// " FontSize="18" VerticalAlignment ="Top" Grid.Column="0" HorizontalAlignment="Left" />
+                                                    <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontSize="18" Grid.Column="1"  />
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListView>

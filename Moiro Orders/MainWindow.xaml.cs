@@ -47,6 +47,16 @@ namespace Moiro_Orders
                 SwitchScreen(new OrderView());
             }
         }
+        //для перехода с формы AdminView
+        public void Orders_FromAdmin()
+        {
+            if (click)
+            {
+                click = false;
+                Task.Run(() => MainClickSaver());
+                SwitchScreen(new OrderView());
+            }
+        }
 
         private void Admins_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -114,6 +124,19 @@ namespace Moiro_Orders
                 mainView.Children.Add(clicl);
             }
         }
+
+        internal void SwitchScreen(OrderView sender,DateTime date, int sortId)
+        {
+            if (sender != null)
+            {
+                UpdateUserNameHeader();
+                mainView.Children.Clear();
+                mainView.Children.Add(sender);
+                sender.datePick.SelectedDate = date;
+                sender.OrderSortBox.SelectedIndex = sortId;
+            }
+        }
+
         #region ASYNC metods
         async Task GetUser()
         {
