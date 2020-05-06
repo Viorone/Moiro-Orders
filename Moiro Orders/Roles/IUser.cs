@@ -22,7 +22,9 @@ namespace Moiro_Orders.Roles
         Task<List<Order>> GetOrdersListOfDate(int userId, DateTime date);  //Get Orders list by current date
         Task<HttpStatusCode> CreateOrder(Order order);
         Task<HttpStatusCode> EditOrder(Order order);                      
-        Task<HttpStatusCode> DeleteOrder(int id);                          
+        Task<HttpStatusCode> DeleteOrder(int id);       
+        Task<List<Order>> GetNotConfirmedOrdersList(int userId, int statusId);
+        Task<int> GetCountNotConfirmedOrders(int statusId, int userId); 
 
         Task<List<PublicChat>> GetPublicChatMessagesList(int count, int id);
         Task<HttpStatusCode> CreatePublicChatMessage(PublicChat publicChat);
