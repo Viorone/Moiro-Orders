@@ -31,6 +31,17 @@ namespace Moiro_Orders.Controller
             return orders;
         }
 
+        public async Task<List<Order>> GetNotConfirmedOrdersListAsync(int userId, int statusId)
+        {
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?userId={userId}&statusId={statusId}");
+            List<Order> orders = null;
+            if (response.IsSuccessStatusCode)
+            {
+                orders = await response.Content.ReadAsAsync<List<Order>>();
+            }
+            return orders;
+        }
+
         public async Task<List<Order>> GetOrdersByStatusAsync(int statusId, DateTime tmpDateStart, DateTime tmpDateEnd)
         {
             string dateStart = tmpDateStart.ToString();
@@ -59,6 +70,17 @@ namespace Moiro_Orders.Controller
         public async Task<int> GetCountOrdersByStatusAsync(int statusId)
         {
             HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?statusId={statusId}");
+            int status = 0;
+            if (response.IsSuccessStatusCode)
+            {
+                status = await response.Content.ReadAsAsync<int>();
+            }
+            return status;
+        }
+
+        public async Task<int> GetCountNotConfirmedOrdersAsync(int statusId, int userId)
+        {
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?statusId={statusId}&userId={userId}");
             int status = 0;
             if (response.IsSuccessStatusCode)
             {

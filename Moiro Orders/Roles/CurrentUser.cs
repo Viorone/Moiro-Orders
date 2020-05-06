@@ -113,6 +113,21 @@ namespace Moiro_Orders.Roles
             var status = await ordersController.UpdateOrderAsync(order);
             return status;
         }
+
+        public async Task<List<Order>> GetNotConfirmedOrdersList(int userId, int statusId)
+        {
+            OrdersController ordersController = new OrdersController();
+            var orders = await ordersController.GetNotConfirmedOrdersListAsync(userId, statusId);
+            return orders;
+        }
+
+        public async Task<int> GetCountNotConfirmedOrders(int statusId, int userId)
+        {
+            OrdersController ordersController = new OrdersController();
+            var ordersCount = await ordersController.GetCountNotConfirmedOrdersAsync(statusId, userId);
+            return ordersCount;
+        }
+
         #endregion
 
         #region PublicChat
@@ -217,7 +232,7 @@ namespace Moiro_Orders.Roles
             WebinarsController webinarsController = new WebinarsController();
             var webinars = await webinarsController.GetAllWebinarsTodayAsync(date);
             return webinars;
-        }       
+        }
 
         #endregion
     }
