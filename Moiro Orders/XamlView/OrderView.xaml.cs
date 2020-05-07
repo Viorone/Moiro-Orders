@@ -530,7 +530,15 @@ namespace Moiro_Orders.XamlView
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectedDate);
+                    List<Order> orders = new List<Order>();
+                    try
+                    {
+                        orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectedDate);
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("Идите нахрен, я ушел в ребут))))");
+                    }
                     ordersTmp = orders;
                     Action action = () =>
                     {
