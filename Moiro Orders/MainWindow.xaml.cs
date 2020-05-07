@@ -235,11 +235,12 @@ namespace Moiro_Orders
 
 
 
+
     public static class PublicResources
     {
         internal static User Im = new User();
         internal static int sortCount = -1;
-        internal static string version = "0.30 beta";
+        internal static string version = "0.35 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
         internal static bool messengerChecker = false;
 

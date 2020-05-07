@@ -1,10 +1,11 @@
 ﻿using Moiro_Orders.Models;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 
 namespace Moiro_Orders
 {
-    class ActiveDyrectoryController
+    class ActiveDyrectoryController :IDisposable
     {
         public ActiveDyrectoryController() { }
 
@@ -56,5 +57,12 @@ namespace Moiro_Orders
             }
             return allUsers;
         }
+
+        public void Dispose()
+        {
+            allUsers = null;
+            searchRoot.Dispose();
+        }
     }
+    
 }

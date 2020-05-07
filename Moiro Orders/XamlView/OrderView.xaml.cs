@@ -28,8 +28,10 @@ namespace Moiro_Orders.XamlView
         {
             InitializeComponent();
             datePick.SelectedDate = DateTime.Now.Date;
+            CountNotConfirmedOrders().GetAwaiter();
             if (PublicResources.Im.Admin)
-            {         
+            {
+                NotConfirmBorder.Visibility = Visibility.Hidden;
                 addOrder.Visibility = Visibility.Hidden;
                 List<string> sortList = new List<string>
                 {
@@ -223,6 +225,13 @@ namespace Moiro_Orders.XamlView
             listOrders.IsEnabled = true;
         }
 
+        private void NotConfirmBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) //user
+        {
+            PublicResources.ordersCts.Cancel();
+            NotConfirmedOrders().GetAwaiter();
+
+        }
+
         private void Problem_KeyUp(object sender, KeyEventArgs e) //user
         {
             if (problem.Text.Trim() != "")
@@ -314,7 +323,6 @@ namespace Moiro_Orders.XamlView
             AcceptOrder.Visibility = Visibility.Hidden;
             UpdateOrdersListAdmin();
         }
-
 
 
         #region Update metods
@@ -412,6 +420,20 @@ namespace Moiro_Orders.XamlView
             //MessageBox.Show(status.ToString());
         }
 
+        async Task NotConfirmedOrders()
+        {
+            IUser user = new CurrentUser();
+            var orders = await user.GetNotConfirmedOrdersList(PublicResources.Im.Id, 2);
+            listOrders.ItemsSource = orders;
+            //PublicResources.ordersCts.Cancel();
+        }
+
+        async Task CountNotConfirmedOrders()
+        {
+            IUser user = new CurrentUser();
+            int count = await user.GetCountNotConfirmedOrders(2, PublicResources.Im.Id);
+            CountNotConfirmed.Text = count.ToString();
+        }
 
         //Admin Metods
 
@@ -593,7 +615,7 @@ namespace Moiro_Orders.XamlView
 
         
     }
-    // вынести в отдельный класс!!!
+
     public class DBComparer : IEqualityComparer<Order>
     {
         public bool Equals(Order x, Order y)
