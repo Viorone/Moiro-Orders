@@ -116,7 +116,7 @@
                     </DatePicker>
                 </StackPanel>
                 <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White" IsEditable="False"/>
-                <materialDesign:Card x:Name="NotConfirmBorder" Visibility="Visible" HorizontalAlignment="Right" Grid.Column="1"  UniformCornerRadius="20"  Margin="5 5 -15 5" Background="#e01d1d" MouseLeftButtonUp="NotConfirmBorder_MouseLeftButtonUp" >
+                <materialDesign:Card x:Name="NotConfirmBorder" Visibility="Visible" HorizontalAlignment="Right" Grid.Column="1"  UniformCornerRadius="10"  Margin="5 5 -15 5" Background="#e01d1d" MouseLeftButtonUp="NotConfirmBorder_MouseLeftButtonUp" >
                     <ListView>
                         <ListViewItem>
                             <Grid Margin="-5" Width="215" x:Name="CardWidth" >

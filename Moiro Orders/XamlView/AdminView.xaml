@@ -79,7 +79,7 @@
                                         </Grid>
                                     </ListViewItem>
                                     <!-- Нижняя панель -->
-                                    <ListViewItem Height="33" x:Name="RefreshOrdersNew" MouseLeftButtonUp="RefreshOrdersNew_MouseLeftButtonUp">
+                                    <ListViewItem Height="32" x:Name="RefreshOrdersNew" MouseLeftButtonUp="RefreshOrdersNew_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
@@ -113,7 +113,7 @@
                                         </Grid>
                                     </ListViewItem>
                                     <!-- Нижняя панель -->
-                                    <ListViewItem Height="33" x:Name="RefreshOrdersinProgress" MouseLeftButtonUp="RefreshOrdersinProgress_MouseLeftButtonUp">
+                                    <ListViewItem Height="32" x:Name="RefreshOrdersinProgress" MouseLeftButtonUp="RefreshOrdersinProgress_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
@@ -147,7 +147,7 @@
                                         </Grid>
                                     </ListViewItem>
                                     <!-- Нижняя панель -->
-                                    <ListViewItem Height="33"  x:Name="RefreshOrdersNeedRepair" MouseLeftButtonUp="RefreshOrdersNeedRepair_MouseLeftButtonUp">
+                                    <ListViewItem Height="32"  x:Name="RefreshOrdersNeedRepair" MouseLeftButtonUp="RefreshOrdersNeedRepair_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
@@ -182,7 +182,7 @@
                                         </Grid>
                                     </ListViewItem>
                                     <!-- Нижняя панель -->
-                                    <ListViewItem Height="33" x:Name="RefreshOrdersCancel" MouseLeftButtonUp="RefreshOrdersCancel_MouseLeftButtonUp">
+                                    <ListViewItem Height="32" x:Name="RefreshOrdersCancel" MouseLeftButtonUp="RefreshOrdersCancel_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
@@ -217,7 +217,7 @@
                                         </Grid>
                                     </ListViewItem>
                                     <!-- Нижняя панель -->
-                                    <ListViewItem Height="33" x:Name="RefreshOrdersComplete" MouseLeftButtonUp="RefreshOrdersComplete_MouseLeftButtonUp">
+                                    <ListViewItem Height="32" x:Name="RefreshOrdersComplete" MouseLeftButtonUp="RefreshOrdersComplete_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
