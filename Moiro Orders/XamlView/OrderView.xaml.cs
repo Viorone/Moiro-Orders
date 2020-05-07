@@ -227,9 +227,11 @@ namespace Moiro_Orders.XamlView
 
         private void NotConfirmBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) //user
         {
-            PublicResources.ordersCts.Cancel();
-            NotConfirmedOrders().GetAwaiter();
-
+            if (CountNotConfirmed.Text != "0")
+            {
+                PublicResources.ordersCts.Cancel();
+                NotConfirmedOrders().GetAwaiter();
+            }
         }
 
         private void Problem_KeyUp(object sender, KeyEventArgs e) //user
@@ -433,6 +435,21 @@ namespace Moiro_Orders.XamlView
             IUser user = new CurrentUser();
             int count = await user.GetCountNotConfirmedOrders(2, PublicResources.Im.Id);
             CountNotConfirmed.Text = count.ToString();
+            if (count > 0)
+            {
+                var converter = new BrushConverter();
+                NotConfirmBorder.Background = (Brush)converter.ConvertFromString("#e01d1d");
+                CardWidth.Width = 215;
+            }
+            else
+            {
+                if (count == 0)
+                {
+                    var converter = new BrushConverter();
+                    NotConfirmBorder.Background = (Brush)converter.ConvertFromString("#55ab44");
+                    CardWidth.Width = 50;
+                }
+            }
         }
 
         //Admin Metods

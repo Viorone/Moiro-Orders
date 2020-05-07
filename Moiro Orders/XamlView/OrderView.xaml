@@ -117,19 +117,16 @@
                 </StackPanel>
                 <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged" FontSize="18" HorizontalAlignment="Center"  Background="White" IsEditable="False"/>
                 <materialDesign:Card x:Name="NotConfirmBorder" Visibility="Visible" HorizontalAlignment="Right" Grid.Column="1"  UniformCornerRadius="20"  Margin="5 5 -15 5" Background="#e01d1d" MouseLeftButtonUp="NotConfirmBorder_MouseLeftButtonUp" >
-                    <!--<Border.Effect>
-                        <DropShadowEffect BlurRadius="10" Color="{Binding ElementName=NotConfirmBorder, Path=Background}" RenderingBias="Quality" ShadowDepth="1"/>
-                    </Border.Effect>-->
                     <ListView>
                         <ListViewItem>
-                            <Grid Margin="-5" Width="215" >
+                            <Grid Margin="-5" Width="215" x:Name="CardWidth" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="35"/>
                                     <ColumnDefinition Width="170"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="0" x:Name="CountNotConfirmed" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="AliceBlue"  />
                                 <Grid Background="AliceBlue" HorizontalAlignment="Right" Width="1" Margin="0 2" Opacity="0.6" />
-                                <TextBlock  Text="Неподтверждённые заявки" TextWrapping="Wrap" HorizontalAlignment="Center"  Grid.Column="1" FontSize="15" VerticalAlignment="Center"  TextAlignment="Center" Foreground="AliceBlue" Margin="0 0 5 0"/>
+                                <TextBlock  Text="Неподтверждённые заявки" Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Center"   FontSize="15" VerticalAlignment="Center"  TextAlignment="Center" Foreground="AliceBlue" Margin="0 0 5 0"/>
                             </Grid>
                         </ListViewItem>
                     </ListView>
