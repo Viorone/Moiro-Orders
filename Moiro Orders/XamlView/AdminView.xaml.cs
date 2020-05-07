@@ -55,94 +55,54 @@ namespace Moiro_Orders.XamlView
         #region Для вкладки "Статистика"
 
         #region Обработчики событий на карточки
-        bool refresh = false; //нужно для измежания нажатия на карточку в которую входит обновление цифр
+
         private void CardOrdersNew_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!refresh)
-            {
-                GetOrdersByStatus(1, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
-            }
-            else
-            {
-                refresh = false;
-            }
-        }
-        private void CardOrdersCancel_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (!refresh)
-            {
-              
-                GetOrdersByStatus(5, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
-            }
-            else
-            {
-                refresh = false;
-            }
-        }
-        private void CardOrdersComplete_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)  
-        {
-            if (!refresh)
-            {
-                GetOrdersByStatus(3, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
-            }
-            else
-            {
-                refresh = false;
-            }
-        }
-        private void CardOrdersNeedRepair_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (!refresh)
-            {
-                GetOrdersByStatus(4, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
-            }
-            else
-            {
-                refresh = false;
-            }
+            Task.Run(() => GetOrdersByStatus(1));
         }
         private void CardOrdersInProgress_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!refresh)
-            {
-                GetOrdersByStatus(2, dateStart.SelectedDate.Value, dateEnd.SelectedDate.Value).GetAwaiter();
-            }
-            else
-            {
-                refresh = false;
-            }
+            Task.Run(() => GetOrdersByStatus(2));
         }
+        private void CardOrdersComplete_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Task.Run(() => GetOrdersByStatus(3));
+        }
+        private void CardOrdersNeedRepair_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Task.Run(() => GetOrdersByStatus(4));
+        }
+        private void CardOrdersCancel_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Task.Run(() => GetOrdersByStatus(5));
+        }
+
         #endregion
 
         #region Обработчики событий на обновление карточки
         private void RefreshOrdersNew_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            refresh = true;
             GetCountOrders(1).GetAwaiter();
         }
         private void RefreshOrdersinProgress_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            refresh = true;
             GetCountOrders(2).GetAwaiter();
         }
         private void RefreshOrdersComplete_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            refresh = true;
             GetCountOrders(3).GetAwaiter();
         }
         private void RefreshOrdersNeedRepair_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            refresh = true;
             GetCountOrders(4).GetAwaiter();
         }
         private void RefreshOrdersCancel_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            refresh = true;
+        { 
             GetCountOrders(5).GetAwaiter();
         }
         #endregion
 
-       
+
         #endregion
 
         #region ASYNC metods
@@ -167,21 +127,32 @@ namespace Moiro_Orders.XamlView
                 case 5:
                     CountOrdersCancel.Text = count.ToString();
                     break;
-               
+
             }
             return count;
         }
 
-        async Task GetOrdersByStatus(int statusId, DateTime dateStart, DateTime dateEnd)
+        async void GetOrdersByStatus(int statusId)
         {
+            List<Order> orders = new List<Order>();
+            DateTime tmpDateEnd = DateTime.Now;
+            DateTime tmpDateStart = DateTime.Now;
+
+            Action action = () =>
+            {
+                tmpDateStart = dateStart.SelectedDate.Value;
+                tmpDateEnd = dateEnd.SelectedDate.Value;
+            };
+            Action action1 = () =>
+            {
+                ListGettingOrders.ItemsSource = orders;
+            };
+            await dateStart.Dispatcher.BeginInvoke(action);
+
             IAdmin admin = new CurrentUser();
-            var orders = await admin.GetOrdersByStatus(statusId, dateStart, dateEnd);
-            ListGettingOrders.ItemsSource = orders;
+            orders = await admin.GetOrdersByStatus(statusId, tmpDateStart, tmpDateEnd);
+            await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
-
-
         #endregion
-
-       
     }
 }

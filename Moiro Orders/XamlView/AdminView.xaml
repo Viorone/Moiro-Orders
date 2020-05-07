@@ -13,15 +13,14 @@
 
         <dragablz:TabablzControl FixedHeaderCount="3">
             <TabItem Header="Статистика" FontSize="18">
-                
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="205"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="175"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                 
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top">
+                    <!-- Временной период -->
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="Временной период с:" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22"/>
                         <DatePicker x:Name="dateStart" Margin="5 0 5 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
                             <DatePicker.Resources>
@@ -42,7 +41,7 @@
                         </DatePicker>
                     </StackPanel>
                     <!-- Верхние катрочки -->
-                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Margin="0 30 0 0" >
+                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Grid.Row="1" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="240" />
@@ -52,9 +51,9 @@
                                 <ColumnDefinition MinWidth="240" />
                             </Grid.ColumnDefinitions>
                             <!-- Первая карточка, Заявки новопришедшие -->
-                            <materialDesign:Card Grid.Column="0" Margin="10"  x:Name="CardOrdersNew" UniformCornerRadius="10" Width="240" MouseLeftButtonUp="CardOrdersNew_MouseLeftButtonUp">
-                                <ListView  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
-                                    <ListViewItem Height="105">
+                            <materialDesign:Card Grid.Column="0" Margin="10"   UniformCornerRadius="10" Width="240">
+                                <ListView  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"  >
+                                    <ListViewItem Height="105"  x:Name="CardOrdersNew" MouseLeftButtonUp="CardOrdersNew_MouseLeftButtonUp">
                                         <Grid Margin="-8">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="55"/>
@@ -79,16 +78,16 @@
                                     <!-- Нижняя панель -->
                                     <ListViewItem Height="33" x:Name="RefreshOrdersNew" MouseLeftButtonUp="RefreshOrdersNew_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
+                                            <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
                                         </StackPanel>
                                     </ListViewItem>
                                 </ListView>
                             </materialDesign:Card>
                             <!-- Вторая карточка, Заявки на выполнении -->
-                            <materialDesign:Card Grid.Column="1" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersInProgress" MouseLeftButtonUp="CardOrdersInProgress_MouseLeftButtonUp">
-                                <ListView  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
-                                    <ListViewItem Height="105">
+                            <materialDesign:Card Grid.Column="1" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" >
+                                <ListView  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"  >
+                                    <ListViewItem Height="105" x:Name="CardOrdersInProgress" MouseLeftButtonUp="CardOrdersInProgress_MouseLeftButtonUp">
                                         <Grid Margin="-8">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="55"/>
@@ -120,9 +119,9 @@
                                 </ListView>
                             </materialDesign:Card>
                             <!-- Третья карточка, Заявки требующие ремонта или закупки  -->
-                            <materialDesign:Card Grid.Column="2" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersNeedRepair" MouseLeftButtonUp="CardOrdersNeedRepair_MouseLeftButtonUp" >
+                            <materialDesign:Card Grid.Column="2" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300"  >
                                 <ListView  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
-                                    <ListViewItem Height="105">
+                                    <ListViewItem Height="105" x:Name="CardOrdersNeedRepair" MouseLeftButtonUp="CardOrdersNeedRepair_MouseLeftButtonUp">
                                         <Grid Margin="-8">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="55"/>
@@ -145,19 +144,19 @@
                                         </Grid>
                                     </ListViewItem>
                                     <!-- Нижняя панель -->
-                        <ListViewItem Height="33"  x:Name="RefreshOrdersNeedRepair" MouseLeftButtonUp="RefreshOrdersNeedRepair_MouseLeftButtonUp">
+                                    <ListViewItem Height="33"  x:Name="RefreshOrdersNeedRepair" MouseLeftButtonUp="RefreshOrdersNeedRepair_MouseLeftButtonUp">
                                         <StackPanel Margin="-8" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Refresh"  Foreground="Gray" Width="25" Height="25" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="18 0 0 0"/>
                                             <TextBlock Text="Обновить" FontSize="18" Foreground="Gray" Margin="19 0 0 0"/>
                                         </StackPanel>
                                     </ListViewItem>
                                 </ListView>
-                             
+
                             </materialDesign:Card>
                             <!-- Четвёртая карточка, Отменённые заявки -->
-                            <materialDesign:Card Grid.Column="3" Grid.Row="0" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersCancel" MouseLeftButtonUp="CardOrdersCancel_MouseLeftButtonUp">
+                            <materialDesign:Card Grid.Column="3" Grid.Row="0" Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" >
                                 <ListView  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
-                                    <ListViewItem Height="105">
+                                    <ListViewItem Height="105" x:Name="CardOrdersCancel" MouseLeftButtonUp="CardOrdersCancel_MouseLeftButtonUp">
                                         <Grid Margin="-8">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="55"/>
@@ -187,12 +186,12 @@
                                         </StackPanel>
                                     </ListViewItem>
                                 </ListView>
-                               
+
                             </materialDesign:Card>
                             <!-- Пятая карточка, Завершённые заявки-->
-                            <materialDesign:Card Grid.Column="4"  Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" x:Name="CardOrdersComplete" MouseLeftButtonUp="CardOrdersComplete_MouseLeftButtonUp">
+                            <materialDesign:Card Grid.Column="4"  Margin="10" UniformCornerRadius="10"  MinWidth="230" MaxWidth="300" >
                                 <ListView  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
-                                    <ListViewItem Height="105">
+                                    <ListViewItem Height="105" x:Name="CardOrdersComplete" MouseLeftButtonUp="CardOrdersComplete_MouseLeftButtonUp">
                                         <Grid Margin="-8">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="55"/>
@@ -210,7 +209,7 @@
                                                 <materialDesign:PackIcon Kind="Done" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="25" Height="25"/>
                                             </Grid>
 
-                                            <TextBlock Grid.Column="1" Text="Заявки отмененные пользователями" TextWrapping="Wrap" HorizontalAlignment="Left"  Margin="7 0"   Foreground="Gray"  FontSize="18" />
+                                            <TextBlock Grid.Column="1" Text="Выполненные заявки" TextWrapping="Wrap" HorizontalAlignment="Left"  Margin="7 0"   Foreground="Gray"  FontSize="18" />
                                             <TextBlock x:Name="CountOrdersComplete"  Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 15 0" Foreground="Gray" FontSize="50" />
                                         </Grid>
                                     </ListViewItem>
@@ -225,19 +224,31 @@
                             </materialDesign:Card>
                         </Grid>
                     </ScrollViewer>
-                    <!-- Нижний список -->
-                  
-                    <ListView Grid.Row="2" x:Name="ListGettingOrders">
+
+
+                    <!-- Выходной список -->
+                    <ListBox  x:Name="ListGettingOrders" ScrollViewer.CanContentScroll="False"  HorizontalAlignment="Stretch" Grid.Row="2" >
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border>
+                            <DataTemplate >
+                                <Border >
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="BorderThickness" Value="3" />
                                             <Setter Property="BorderBrush" Value="Transparent" />
                                             <Setter Property="CornerRadius" Value="12"/>
                                             <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Margin" Value="10 0"/>
+                                            <Setter Property="Margin" Value="10 3"/>
                                             <Style.Triggers>
                                                 <!-- Тригерры для изменения цвета и выделения выбранного элемента -->
                                                 <DataTrigger Binding="{Binding Path=StatusId}"  Value="5">
@@ -396,10 +407,11 @@
                                         </Grid>
                                     </StackPanel>
                                 </Border>
-                
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                    </ListView>
+                    </ListBox>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Власть Админа" FontSize="18">
