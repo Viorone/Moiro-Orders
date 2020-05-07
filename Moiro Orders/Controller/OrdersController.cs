@@ -78,9 +78,9 @@ namespace Moiro_Orders.Controller
             return status;
         }
 
-        public async Task<int> GetCountNotConfirmedOrdersAsync(int statusId, int userId)
+        public async Task<int> GetCountNotConfirmedOrdersAsync(int stId, int usId)
         {
-            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?statusId={statusId}&userId={userId}");
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/OrdersAPI?stId={stId}&usId={usId}");
             int status = 0;
             if (response.IsSuccessStatusCode)
             {
