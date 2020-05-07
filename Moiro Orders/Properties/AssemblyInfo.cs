@@ -8,9 +8,9 @@ using System.Windows;
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("Moiro Orders")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Заявки МОИРО")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Минский областной институт развития образования")]
 [assembly: AssemblyProduct("Moiro Orders")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
