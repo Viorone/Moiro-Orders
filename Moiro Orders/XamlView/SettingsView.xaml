@@ -43,12 +43,12 @@
             <TextBox x:Name="UserRoom" materialDesign:HintAssist.HelperText ="Укажите кабинет"  FontFamily="Segoe UI" FontSize="18" 
                      PreviewTextInput="NumberValidationTextBox" MaxLength="3" Margin="5,0,0,25"  />
 
+            <Label Content="Подразделение в котором состоите : " FontFamily="Segoe UI Light" FontSize="20"/>
+            <TextBox x:Name="UserOrganizationalUnit" materialDesign:HintAssist.HelperText ="Укажите подразделение" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,25"   />
+            
             <Label Content="Ваш логин : " FontFamily="Segoe UI Light" FontSize="20"/>
             <TextBlock x:Name="UserLogin" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,15" />
-
-            <Label Content="Подразделение в котором состоите : " FontFamily="Segoe UI Light" FontSize="20"/>
-            <TextBlock x:Name="UserOrganizationalUnit" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,15"   />
-            
+               
             <Label Content="Время последнего входа в программу : " FontFamily="Segoe UI Light" FontSize="20"/>
             <TextBlock x:Name="UserLastLogin" FontFamily="Segoe UI" FontSize="18" Margin="5,0,0,15" />
         

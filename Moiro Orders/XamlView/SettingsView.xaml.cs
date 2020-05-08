@@ -29,40 +29,37 @@ namespace Moiro_Orders.XamlView
         {
             StatusChange.Opacity = 1;
             StatusChange.Content = "";
+            UserOrganizationalUnit.Text.Trim(' ');
             try
             {
                 int room = Convert.ToInt32(UserRoom.Text);
                 if (room > 500 || room <= 0)
                 {
-                    throw new Exception();
+                    throw new Exception("Ошибка в номере кабинета");
                 }
-                if (UserName.Text.Length > 100)
+                if (UserName.Text.Length > 100 || UserName.Text == "")
                 {
-                    throw new Exception();
+                    throw new Exception("Ошибка в ФИО пользователя");
+                }
+                if (UserOrganizationalUnit.Text.Length > 150 || UserOrganizationalUnit.Text.Length < 5 || UserOrganizationalUnit.Text =="")
+                {
+                    throw new Exception("Ошибка в поле подразделения");
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                StatusChange.Content = "Пользователь не был изменён!\nОшибка в номере кабинета";
+                StatusChange.Content = "Пользователь не был изменён!\n"+ex.Message;
                 StatusChange.Foreground = Brushes.Red;
                 return;
             }
-            if (PublicResources.Im.FullName.Equals(UserName.Text) && PublicResources.Im.Room.ToString().Equals(UserRoom.Text))
+            if (PublicResources.Im.FullName.Equals(UserName.Text) && PublicResources.Im.Room.ToString().Equals(UserRoom.Text) && PublicResources.Im.OrganizationalUnit.Equals(UserOrganizationalUnit.Text))
             {
                 StatusChange.Content = "Пользователь не был изменён!";
                 StatusChange.Foreground = Brushes.Red;
             }
             else
             {
-                if (UserName.Text == "" || UserRoom.Text == "")
-                {
-                    StatusChange.Content = "Пользователь не был изменён!";
-                    StatusChange.Foreground = Brushes.Gray;
-                }
-                else
-                {
-                    SetUser().GetAwaiter();
-                }
+                SetUser().GetAwaiter();
             }
         }
 
@@ -80,6 +77,7 @@ namespace Moiro_Orders.XamlView
             currentUser = PublicResources.Im;
             currentUser.Room = Convert.ToInt32(UserRoom.Text);
             currentUser.FullName = UserName.Text;
+            currentUser.OrganizationalUnit = UserOrganizationalUnit.Text;
 
             var status = await user.UpdateUser(currentUser);
             if (status == System.Net.HttpStatusCode.NoContent)
