@@ -31,6 +31,8 @@ namespace Moiro_Orders.XamlView
             CountNotConfirmedOrders().GetAwaiter();
             if (PublicResources.Im.Admin)
             {
+                AdminButtons.IsEnabled = true;
+                UserButtons.IsEnabled = false;
                 NotConfirmBorder.Visibility = Visibility.Hidden;
                 addOrder.Visibility = Visibility.Hidden;
                 List<string> sortList = new List<string>
@@ -199,7 +201,11 @@ namespace Moiro_Orders.XamlView
                 listOrders.SelectedIndex = -1;
                 DeleteOrder.Visibility = Visibility.Hidden;
                 changeOrder.Visibility = Visibility.Hidden;
-                AcceptCompleteOrder.Visibility = Visibility.Hidden;               
+                AcceptCompleteOrder.Visibility = Visibility.Hidden;
+                CloseNotConfirmOrders.Visibility = Visibility.Collapsed;
+                addOrder.Visibility = Visibility.Visible;
+                datePick.Visibility = Visibility.Visible;
+                DateText.Visibility = Visibility.Visible;
             }
         }
 
@@ -234,8 +240,30 @@ namespace Moiro_Orders.XamlView
             if (CountNotConfirmed.Text != "0")
             {
                 PublicResources.ordersCts.Cancel();
-                NotConfirmedOrders().GetAwaiter();
+                NotConfirmedOrders().GetAwaiter();               
+                CloseNotConfirmOrders.Visibility = Visibility.Visible;
+                addOrder.Visibility = Visibility.Hidden;
+                datePick.Visibility = Visibility.Hidden;
+                DateText.Visibility = Visibility.Hidden;
+                listOrders.SelectedIndex = -1;
+                DeleteOrder.Visibility = Visibility.Hidden;
+                changeOrder.Visibility = Visibility.Hidden;
+                AcceptCompleteOrder.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void CloseNotConfirmOrders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DateSelectOrdersPanel.Visibility = Visibility.Visible;
+            UpdateOrdersListUser();
+            CloseNotConfirmOrders.Visibility = Visibility.Collapsed;
+            addOrder.Visibility = Visibility.Visible;
+            datePick.Visibility = Visibility.Visible;
+            DateText.Visibility = Visibility.Visible;
+            listOrders.SelectedIndex = -1;
+            DeleteOrder.Visibility = Visibility.Hidden;
+            changeOrder.Visibility = Visibility.Hidden;
+            AcceptCompleteOrder.Visibility = Visibility.Hidden;
         }
 
         private void Problem_KeyUp(object sender, KeyEventArgs e) //user
