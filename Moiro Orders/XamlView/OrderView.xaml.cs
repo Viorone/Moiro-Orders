@@ -196,6 +196,10 @@ namespace Moiro_Orders.XamlView
                 click = false;
                 Task.Run(() => ClickSaver());
                 CompleteSelectedOrder().GetAwaiter();
+                listOrders.SelectedIndex = -1;
+                DeleteOrder.Visibility = Visibility.Hidden;
+                changeOrder.Visibility = Visibility.Hidden;
+                AcceptCompleteOrder.Visibility = Visibility.Hidden;               
             }
         }
 
@@ -361,10 +365,7 @@ namespace Moiro_Orders.XamlView
                 order.Problem = problem.Text;
                 order.Description = description.Text;
             }
-            catch
-            {
-
-            }
+            catch { }
             var status = await user.EditOrder(order);
             problem.Text = null;
             description.Text = null;
@@ -387,16 +388,11 @@ namespace Moiro_Orders.XamlView
                     StatusId = 1
                 });
             }
-            catch
-            {
-               
-                
-            }
+            catch { }
             problem.Text = null;
             description.Text = null;
             datePick.SelectedDate = DateTime.Now;
             UpdateOrdersListUser();
-            //MessageBox.Show(status.ToString());
         }
 
         async Task DeleteSelectedOrder()
@@ -407,7 +403,6 @@ namespace Moiro_Orders.XamlView
             ordersTmp.Remove(selectedOrder);
             listOrders.ItemsSource = ordersTmp;
             UpdateOrdersListUser();
-            //MessageBox.Show(status.ToString());
         }
 
         async Task CompleteSelectedOrder()
@@ -418,8 +413,8 @@ namespace Moiro_Orders.XamlView
             var status = await user.EditOrder(selectedOrder);
             ordersTmp.Remove(selectedOrder);
             listOrders.ItemsSource = ordersTmp;
+            CountNotConfirmedOrders().GetAwaiter();
             UpdateOrdersListUser();
-            //MessageBox.Show(status.ToString());
         }
 
         async Task NotConfirmedOrders()
@@ -427,7 +422,6 @@ namespace Moiro_Orders.XamlView
             IUser user = new CurrentUser();
             var orders = await user.GetNotConfirmedOrdersList(PublicResources.Im.Id, 2);
             listOrders.ItemsSource = orders;
-            //PublicResources.ordersCts.Cancel();
         }
 
         async Task CountNotConfirmedOrders()
@@ -443,12 +437,9 @@ namespace Moiro_Orders.XamlView
             }
             else
             {
-                if (count == 0)
-                {
-                    var converter = new BrushConverter();
-                    NotConfirmBorder.Background = (Brush)converter.ConvertFromString("#55ab44");
-                    CardWidth.Width = 50;
-                }
+                var converter = new BrushConverter();
+                NotConfirmBorder.Background = (Brush)converter.ConvertFromString("#55ab44");
+                CardWidth.Width = 50;
             }
         }
 
@@ -476,10 +467,7 @@ namespace Moiro_Orders.XamlView
                     order.AdminComment = AdminDescription.Text;
                     order.AdminId = PublicResources.Im.Id;
                 }
-                catch
-                {
-
-                }                              
+                catch { }                              
                 var status = await admin.EditOrder(order);
                 ordersTmp.Remove(selectedOrder);
                 listOrders.ItemsSource = ordersTmp;
@@ -497,7 +485,15 @@ namespace Moiro_Orders.XamlView
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var orders = await admin.GetAllOrdersToday(selectedDate);
+                    List<Order> orders = new List<Order>();
+                    try
+                    {
+                        orders = await admin.GetAllOrdersToday(selectedDate);
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("я ушел в ребут");
+                    }
                     ordersTmp = orders;
                     Action action = () =>
                     {
@@ -554,7 +550,7 @@ namespace Moiro_Orders.XamlView
                     }
                     catch
                     {
-                        //MessageBox.Show("Идите нахрен, я ушел в ребут))))");
+                        //MessageBox.Show("я ушел в ребут");
                     }
                     ordersTmp = orders;
                     Action action = () =>
@@ -572,6 +568,7 @@ namespace Moiro_Orders.XamlView
                                 var tmp = orders.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                 listOrders.SelectedItem = tmp;
                                 PublicResources.messengerChecker = true;
+                                CountNotConfirmedOrders().GetAwaiter();
                             }
                         }
                         else
@@ -585,6 +582,7 @@ namespace Moiro_Orders.XamlView
                                     var tmp = orders.FirstOrDefault(a => a.Id == selectedOrder.Id);
                                     listOrders.SelectedItem = tmp;
                                     PublicResources.messengerChecker = true;
+                                    CountNotConfirmedOrders().GetAwaiter();
                                 }
                             }
                         }

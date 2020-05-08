@@ -142,7 +142,7 @@ namespace Moiro_Orders
         {
             UsersController currentUser = new UsersController();
             var user = await currentUser.GetUserAsync(Environment.UserName);
-            //var user = await currentUser.GetUserAsync("gybarev"); 
+            //var user = await currentUser.GetUserAsync("gybarev2"); 
             user.LastLogin = DateTime.Now;
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
@@ -240,7 +240,7 @@ namespace Moiro_Orders
     {
         internal static User Im = new User();
         internal static int sortCount = -1;
-        internal static string version = "0.35 beta";
+        internal static string version = "0.36 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
         internal static bool messengerChecker = false;
 
