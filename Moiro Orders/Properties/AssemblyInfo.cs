@@ -7,8 +7,8 @@ using System.Windows;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Moiro Orders")]
-[assembly: AssemblyDescription("Заявки МОИРО")]
+[assembly: AssemblyTitle("МОИРО.Заявки")]
+[assembly: AssemblyDescription("Приложение написанное для использования в учреждении образования МОИРО")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Минский областной институт развития образования")]
 [assembly: AssemblyProduct("Moiro Orders")]

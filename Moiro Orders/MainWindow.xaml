@@ -9,6 +9,7 @@
         xmlns:ViewModel="clr-namespace:Moiro_Orders.ViewModel"  
         Height="600" 
         Width="850"  
+    Title="МОИРО.Заявки"
         WindowStartupLocation="CenterScreen"  
         Icon="Resources/moiro.ico" 
         WindowStyle="None" 
