@@ -44,7 +44,7 @@ namespace Moiro_Orders
                     int endIndexCN = ulongData.IndexOf(",", startIndexCN);
                     var group = ulongData.Substring((startIndex), (endIndex - startIndex));
                     var name = ulongData.Substring(startIndexCN, endIndexCN - startIndexCN).Trim('=');
-                    if (name[0] >= 0x0400 && name[0] <= 0x04FF)
+                    if (name[0] >= 0x0400 && name[0] <= 0x04FF && group != "Уволенные сотрудники")
                     {
                         allUsers.Add(new User
                         {

@@ -427,7 +427,6 @@
                     <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
                 </Grid>
             </TabItem>
-            <TabItem Header=""/>
         </dragablz:TabablzControl>
     </Grid>
 </UserControl>

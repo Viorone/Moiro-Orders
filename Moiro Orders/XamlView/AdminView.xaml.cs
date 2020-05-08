@@ -31,11 +31,10 @@ namespace Moiro_Orders.XamlView
         {
             async Task UpdateUsersDb()
             {
+                logList.Items.Clear();
                 IAdmin admin = new CurrentUser();
-
                 var tmp1 = admin.GetNewADUsersList();
                 var tmp2 = await admin.GetAllUserName();
-
                 var result = tmp1.Join(tmp2, ok => ok.Login, ik => ik.Login, (one, two) => new { one, two }).ToList();
                 tmp1.RemoveAll(x => result.Any(r => x == r.one));
                 tmp2.RemoveAll(x => result.Any(r => x == r.two));
@@ -46,7 +45,7 @@ namespace Moiro_Orders.XamlView
                 {
                     var response = await admin.UpdateUsersDb(var1);
                     responses.Add(response.ToString());
-                    logList.Items.Add(response.ToString());
+                    logList.Items.Add(var1.FullName +" - "+ response.ToString());
                 }
             }
             UpdateUsersDb().GetAwaiter();
