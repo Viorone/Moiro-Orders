@@ -53,20 +53,21 @@
     </UserControl.Triggers>
     <!--  временное сообщение -->
     <Grid>
-        <Grid Background="Gray" Visibility="Visible" Panel.ZIndex="100">
+        <!--<Grid Background="Gray" Visibility="Visible" Panel.ZIndex="100">
             <TextBlock Text="Данный раздел находится на стадии разработки." FontSize="30" FontFamily="Segoe UI Light" 
                    HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"/>
-        </Grid>
+        </Grid>-->
         
-        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown" IsEnabled="False">
+        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0">
-                <TextBlock Text="Выберите дату: "  FontSize="20" FontFamily="Roboto"  VerticalAlignment="Center"/>
-                <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Меропрития" FontFamily="Segoe UI LIght" FontSize="28" Margin="10 5 0 0"/>
+            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0" >
+                <TextBlock Text="Выберите дату: "  FontSize="20" FontFamily="Segoe UI LIght"   VerticalAlignment="Center"/>
+                <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Segoe UI LIght"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
                     <DatePicker.Resources>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="MinHeight" Value="35"  />
@@ -77,7 +78,7 @@
             </StackPanel>
             <Grid Grid.Row="1">
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False"  ItemsSource="{Binding Orders}" 
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Orders}" 
                      x:Name="ListEvents" SelectionChanged="ListEvents_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -86,6 +87,7 @@
                                     <Style TargetType="Border">
                                         <Setter Property="BorderThickness" Value="2" />
                                         <Setter Property="BorderBrush" Value="Transparent" />
+                                        <Setter Property="CornerRadius" Value="10"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                                  Value="True">
@@ -94,33 +96,63 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
+                                <materialDesign:Card UniformCornerRadius="10">
+                                    <Grid Margin="15 5"  Background="Transparent" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="9*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                <Grid Margin="5"  Background="Transparent" >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="10*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80*"/>
-                                        <ColumnDefinition Width="20*"/>
-                                    </Grid.ColumnDefinitions>
+                                        <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                        <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
+                                        <TextBlock Text="Отменено" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0" FontSize="15" Foreground="Red" Visibility="Visible" x:Name="StatusEvent"/>
+                                        
+                                        
+                                        <!--<TextBlock Text="{Binding Path=StatusId}" Grid.Row="2" Grid.Column="2" Visibility="Hidden">
+                                            --><!-- Написать логику на бул --><!--
+                                        </TextBlock>-->
 
-                                    <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0">
+                                            <TextBlock Text="Время проведения:" FontSize="15" HorizontalAlignment="Right" />
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <TextBlock Text="c " FontSize="15"/>
+                                                <TextBlock Text="{Binding Path=DateStart, StringFormat='{}{0:t}', ConverterCulture='ru'}" FontSize="15"/>
+                                                <TextBlock Text="  по " FontSize="15" />
+                                                <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:t}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2" FontSize="15" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                        
+                                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0 5">
+                                            <TextBlock Text="Место проведения : " FontSize="15"/>
+                                            <TextBlock Text="{Binding Path=Place}" FontSize="15"/>
+                                        </StackPanel> 
+                                       
+                                        
+                                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15 5 0">
+                                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                                                <TextBlock Text="Отправлено: "   FontSize="15"/>
+                                                <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}"   FontSize="15" />
+                                            </StackPanel>
+                                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <TextBlock Text="Заявитель: "   FontSize="15"/>
+                                                <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2"  FontSize="15"  />
+                                            </StackPanel>
+                                        </Grid>
 
-                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="0" Grid.Column="1" FontWeight="Bold"   FontSize="14" />
-                                    <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" FontSize="14"  />
-                                    <TextBlock Text="{Binding Path=StatusId}" Grid.Row="3" Grid.Column="2"/>
-                                    <TextBlock Text="{Binding Path=DateStart, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="4" Grid.Column="2"/>
-                                    <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:f}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2"/>
-                                    <TextBlock Text="{Binding Path=Place}" Grid.Row="6" Grid.Column="2"/>
-                                </Grid>
+
+                                       
+                                      
+                                       
+                                       
+                                    </Grid>
+                                </materialDesign:Card>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -128,9 +160,10 @@
             </Grid>
 
             <!-- Нижняя панель с кнопками на добавление заявки  -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Grid.Row="2" >
-                <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="5" BorderBrush="{x:Null}" Click="ChangeEvent_Click"/>
-                <Button x:Name="AddEvents" Content="Добавить заявку" Foreground="AliceBlue" Height="40" Margin="5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Grid.Row="2" >
+                <Button x:Name="AddEvents" Content="Добавить мероприятие" Foreground="AliceBlue" Height="40" Margin="15 5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
+                <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="ChangeEvent_Click"/>
+                <Button x:Name="CancelEvent" Content="Отменить" Foreground="Red" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click=""/>
             </StackPanel>
             <!-- Форма для добавления мероприятий -->
             <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" Panel.ZIndex="80">
@@ -184,7 +217,7 @@
                 </Grid>
             </Grid>
             <!-- Error Message Grid -->
-            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid">
+            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid" Panel.ZIndex="100">
                 <Grid.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Grid.Background>

@@ -56,12 +56,12 @@
     
     <Grid>
         <!--  временное сообщение -->
-        <Grid Background="Gray" Visibility="Visible">
+        <!--<Grid Background="Gray" Visibility="Visible">
             <TextBlock Text="Данный раздел находится на стадии разработки." FontSize="30" FontFamily="Segoe UI Light" 
                    HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"/>
-        </Grid>
+        </Grid>-->
         
-        <Grid x:Name="WebinarsList" Opacity="0" OpacityMask="Black" IsEnabled="False" MouseLeftButtonDown="WebinarsList_MouseLeftButtonDown">
+        <Grid x:Name="WebinarsList" Opacity="1" OpacityMask="Black" IsEnabled="True" MouseLeftButtonDown="WebinarsList_MouseLeftButtonDown">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
@@ -156,8 +156,8 @@
                         <TextBox x:Name="NameWebinar" materialDesign:HintAssist.Hint="Название вебинара, мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light"  Margin="5 0 5 15">
 
                         </TextBox>
-                        <Label Content="Желаемое место проведения" FontSize="22" FontFamily="Segoe UI Light"/>
-                        <TextBox x:Name="PlaceWebinar" materialDesign:HintAssist.Hint="Кабинет, сторонняя организация или город" FontSize="18" FontFamily="Segoe UI Light"  Margin="5,0,5,15"/>
+                        <Label Content="Ответсвенный за проведение вебинара" FontSize="22" FontFamily="Segoe UI Light"/>
+                        <TextBox x:Name="PlaceWebinar" materialDesign:HintAssist.Hint="Сотрудник, от имени которого будет проводится вебинар" FontSize="18" FontFamily="Segoe UI Light"  Margin="5,0,5,15"/>
                         <Label Content="Дополнительное описание" FontSize="22" FontFamily="Segoe UI Light"/>
                         <TextBox x:Name="DescriptionWebinar" materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" Margin="5 0 5 15"/>
                         <Label Content="Выберите платформу" FontSize="22" FontFamily="Segoe UI Light"/>

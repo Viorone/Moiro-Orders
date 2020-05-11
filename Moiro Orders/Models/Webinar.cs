@@ -18,5 +18,6 @@ namespace Moiro_Orders.Models
         public bool IsCanceled { get; set; }
         public int UserId { get; set; } // пользователь который создал заявку на вебинар
         public int PlatformId { get; set; } // платформа на которой будет проводиться вебинар
+        public string PlatformName { get; set; }
     }
 }
