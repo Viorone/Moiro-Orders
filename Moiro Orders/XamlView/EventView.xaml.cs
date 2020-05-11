@@ -192,6 +192,7 @@ namespace Moiro_Orders.XamlView
             }
         }
 
+
         //async Task ChangeSelectedEvent()
         //{
 
@@ -211,6 +212,9 @@ namespace Moiro_Orders.XamlView
 
         #endregion
 
+        private void CancelEvent_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }
