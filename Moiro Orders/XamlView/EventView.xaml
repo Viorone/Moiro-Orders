@@ -162,8 +162,8 @@
             <!-- Нижняя панель с кнопками на добавление заявки  -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Grid.Row="2" >
                 <Button x:Name="AddEvents" Content="Добавить мероприятие" Foreground="AliceBlue" Height="40" Margin="15 5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
-                <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="ChangeEvent_Click"/>
-                <Button x:Name="CancelEvent" Content="Отменить" Foreground="Red" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click=""/>
+                <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="ChangeEvent_Click" Visibility="Hidden"/>
+                <Button x:Name="CancelEvent" Content="Отменить" Foreground="Red" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="CancelEvent_Click" Visibility="Hidden"/>
             </StackPanel>
             <!-- Форма для добавления мероприятий -->
             <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" Panel.ZIndex="80">
