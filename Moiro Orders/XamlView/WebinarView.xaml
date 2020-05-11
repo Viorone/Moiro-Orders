@@ -68,8 +68,8 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0">
-                <TextBlock Text="Выберите дату: "  FontSize="20" FontFamily="Roboto"  VerticalAlignment="Center"/>
-                <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Arial" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
+                <TextBlock Text="Выберите дату: "  FontSize="20"  VerticalAlignment="Center" FontFamily="Segoe UI Light"/>
+                <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Segoe UI Light" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
                     <DatePicker.Resources>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="MinHeight" Value="35"  />
@@ -193,7 +193,7 @@
                 </Grid>
             </Grid>
             <!-- Error Message Grid -->
-            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid" Panel.ZIndex="100">
+            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid" >
                 <Grid.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Grid.Background>

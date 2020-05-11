@@ -28,6 +28,7 @@
         </Storyboard>
         
         <Storyboard x:Key="HiddenError">
+            <!-- Отключенная анимация -->
             <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorGrid"
                         Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Hidden}"/>
@@ -46,25 +47,29 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BackToEvent">
             <BeginStoryboard Storyboard="{StaticResource EventDetailsClose}"/>
         </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="SelectedDatesShow">
+            <BeginStoryboard Storyboard="{StaticResource EventDetailsClose}"/>
+        </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ErrorOk">
             <BeginStoryboard Storyboard="{StaticResource HiddenError}"/>
         </EventTrigger>
+       
 
     </UserControl.Triggers>
     <!--  временное сообщение -->
-    <Grid>
-        <!--<Grid Background="Gray" Visibility="Visible" Panel.ZIndex="100">
+    <Grid >
+        <!--<Grid Background="Gray" Visibility="Visible" >
             <TextBlock Text="Данный раздел находится на стадии разработки." FontSize="30" FontFamily="Segoe UI Light" 
                    HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"/>
         </Grid>-->
-        
-        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown" >
+
+        <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Меропрития" FontFamily="Segoe UI LIght" FontSize="28" Margin="10 5 0 0"/>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Меропрития" FontFamily="Segoe UI LIght" FontSize="28" Margin="25 5 0 0"/>
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0" >
                 <TextBlock Text="Выберите дату: "  FontSize="20" FontFamily="Segoe UI LIght"   VerticalAlignment="Center"/>
                 <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Segoe UI LIght"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
@@ -111,12 +116,21 @@
 
                                         <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
                                         <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                        <TextBlock Text="Отменено" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0" FontSize="15" Foreground="Red" Visibility="Visible" x:Name="StatusEvent"/>
-                                        
-                                        
-                                        <!--<TextBlock Text="{Binding Path=StatusId}" Grid.Row="2" Grid.Column="2" Visibility="Hidden">
-                                            --><!-- Написать логику на бул --><!--
-                                        </TextBlock>-->
+                                        <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 -5" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=IsCanceled}" FontSize="15" Foreground="Red" Width="0"  x:Name="StatusEvent"/>
+
+                                            <TextBlock Text="Отменено" Foreground="Red" FontSize="15">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=StatusEvent, Path=Text}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
 
                                         <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0">
                                             <TextBlock Text="Время проведения:" FontSize="15" HorizontalAlignment="Right" />
@@ -132,9 +146,9 @@
                                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0 5">
                                             <TextBlock Text="Место проведения : " FontSize="15"/>
                                             <TextBlock Text="{Binding Path=Place}" FontSize="15"/>
-                                        </StackPanel> 
-                                       
-                                        
+                                        </StackPanel>
+
+
                                         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15 5 0">
                                             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
                                                 <TextBlock Text="Отправлено: "   FontSize="15"/>
@@ -145,12 +159,6 @@
                                                 <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2"  FontSize="15"  />
                                             </StackPanel>
                                         </Grid>
-
-
-                                       
-                                      
-                                       
-                                       
                                     </Grid>
                                 </materialDesign:Card>
                             </Border>
@@ -159,7 +167,7 @@
                 </ListBox>
             </Grid>
 
-            <!-- Нижняя панель с кнопками на добавление заявки  -->
+            <!-- Нижняя панель с кнопками на добавление и изменение мероприятия  -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Grid.Row="2" >
                 <Button x:Name="AddEvents" Content="Добавить мероприятие" Foreground="AliceBlue" Height="40" Margin="15 5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
 
@@ -167,8 +175,8 @@
                 <Button x:Name="CancelEvent" Content="Отменить" Foreground="Red" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="CancelEvent_Click" Visibility="Hidden"/>
 
             </StackPanel>
-            <!-- Форма для добавления мероприятий -->
-            <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" Panel.ZIndex="80">
+            <!-- Форма для добавления  и редактирования мероприятий -->
+            <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" >
                 <Grid.Background>
                     <SolidColorBrush Color="White" Opacity="1"/>
                 </Grid.Background>
@@ -221,7 +229,7 @@
                 </Grid>
             </Grid>
             <!-- Error Message Grid -->
-            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid" Panel.ZIndex="100">
+            <Grid Grid.RowSpan="3" Visibility="Hidden" x:Name="ErrorGrid" >
                 <Grid.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Grid.Background>

@@ -46,15 +46,18 @@ namespace Moiro_Orders.XamlView
 
         private void ListEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             if (e.AddedItems.Count == 0)
             {
                 return;
             }
+            ChangeEvent.Visibility = Visibility.Hidden;
+            CancelEvent.Visibility = Visibility.Hidden;
             selectedEvent = (Event)e.AddedItems[0];
             var nowTime = DateTime.Now;
             var changeTime = nowTime - selectedEvent.Date;
             DateTime time = Convert.ToDateTime("23:59:59");
-            if (selectedEvent.UserId == PublicResources.Im.Id && changeTime < time.TimeOfDay)
+            if (selectedEvent.UserId == PublicResources.Im.Id && changeTime < time.TimeOfDay && !selectedEvent.IsCanceled)
             {
                 ChangeEvent.Visibility = Visibility.Visible;
                 CancelEvent.Visibility = Visibility.Visible;
@@ -63,6 +66,14 @@ namespace Moiro_Orders.XamlView
 
         private void EventsList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ListEvents.SelectedIndex = -1;
+            ChangeEvent.Visibility = Visibility.Hidden;
+            CancelEvent.Visibility = Visibility.Hidden;
+        }
+
+        private void CancelEvent_Click(object sender, RoutedEventArgs e)
+        {
+            CancelSelectedEvent().GetAwaiter();
             ListEvents.SelectedIndex = -1;
             ChangeEvent.Visibility = Visibility.Hidden;
             CancelEvent.Visibility = Visibility.Hidden;
@@ -144,10 +155,7 @@ namespace Moiro_Orders.XamlView
             }
         }
 
-        private void CancelEvent_Click(object sender, RoutedEventArgs e)
-        {
-            CancelSelectedEvent().GetAwaiter();
-        }
+       
 
 
 
@@ -207,33 +215,32 @@ namespace Moiro_Orders.XamlView
             IUser user = new CurrentUser();
             var status = await user.EditEvent(new Event
             {
+                Id = selectedEvent.Id,
                 Description = DescriptionEvent.Text,
-                UserId = PublicResources.Im.Id,
+                UserId = selectedEvent.UserId,
                 DateStart = startDate,
                 DateEnd = endDate,
                 NameEvent = NameEvent.Text,
                 Place = PlaceEvent.Text,
                 IsCanceled = false
             });
+            await GetEventsOfDate();
             MessageBox.Show(status.ToString());
         }
 
         async Task CancelSelectedEvent()
         {
             IUser user = new CurrentUser();
-            var status = await user.EditEvent(new Event
-            {
-                IsCanceled = false
-            });
+            Event @event = new Event();
+            @event = selectedEvent;
+            @event.IsCanceled = true;
+            var status = await user.EditEvent(@event);
+            await GetEventsOfDate();
+            //а надо ли это мессадж бокс?
             MessageBox.Show(status.ToString());
         }
 
 
         #endregion
-
-        private void CancelEvent_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
