@@ -9,9 +9,8 @@ namespace Moiro_Orders.Roles
     interface IAdmin
     {
         Task<List<Event>> GetEventsList(int count, int id);  //Get Events list by current user
-        Task<HttpStatusCode> EditEvent(Event @event); //Change Event Status
         Task<List<Event>> GetAllEventsToday(DateTime date);
-        Task<List<Event>> GetEventsListOfDate(int userId, DateTime date); 
+        Task<HttpStatusCode> EditEvent(Event @event); //Change Event Status       
 
         Task<HttpStatusCode> EditWebinar(Webinar webinar); 
         Task<List<Webinar>> GetAllWebinarsToday(DateTime date);

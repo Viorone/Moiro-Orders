@@ -9,7 +9,7 @@ namespace Moiro_Orders.Roles
     interface IUser
     {
         Task<List<Event>> GetEventsList(int count, int id);
-        Task<List<Event>> GetEventsListOfDate(int userId, DateTime date);
+        Task<List<Event>> GetAllEventsToday(DateTime date);
         Task<HttpStatusCode> CreateEvent(Event @event);
         Task<HttpStatusCode> EditEvent(Event @event);                      
         Task<HttpStatusCode> DeleteEvent(int id);

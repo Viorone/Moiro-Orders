@@ -39,29 +39,8 @@ namespace Moiro_Orders.XamlView
         {
             DateTime? selectedDate = datePick.SelectedDate;
             if (selectedDate != null)
-            {
-                var selectDate = selectedDate.Value.Date;
-                if (PublicResources.Im.Admin)
-                {
-                    GetEventsOfDateAdmin().GetAwaiter();
-                }
-                else
-                {
-                    GetEventsOfDateUser().GetAwaiter();
-                }
-                async Task GetEventsOfDateUser()
-                {
-                    IUser user = new CurrentUser();
-                    var events = await user.GetEventsListOfDate(PublicResources.Im.Id, selectDate);
-                    ListEvents.ItemsSource = events;
-                }
-
-                async Task GetEventsOfDateAdmin()
-                {
-                    IAdmin admin = new CurrentUser();
-                    var events = await admin.GetAllEventsToday(selectDate);
-                    ListEvents.ItemsSource = events;
-                }
+            {              
+                GetEventsOfDate().GetAwaiter();
             }
         }
 
@@ -72,11 +51,21 @@ namespace Moiro_Orders.XamlView
                 return;
             }
             selectedEvent = (Event)e.AddedItems[0];
+            var nowTime = DateTime.Now;
+            var changeTime = nowTime - selectedEvent.Date;
+            DateTime time = Convert.ToDateTime("23:59:59");
+            if (selectedEvent.UserId == PublicResources.Im.Id && changeTime < time.TimeOfDay)
+            {
+                ChangeEvent.Visibility = Visibility.Visible;
+                CancelEvent.Visibility = Visibility.Visible;
+            }
         }
 
         private void EventsList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListEvents.SelectedIndex = -1;
+            ChangeEvent.Visibility = Visibility.Hidden;
+            CancelEvent.Visibility = Visibility.Hidden;
         }
 
         private void ChangeEvent_Click(object sender, RoutedEventArgs e)
@@ -103,7 +92,7 @@ namespace Moiro_Orders.XamlView
                 }
                 else
                 {
-                    //ChangeSelectedEvent().GetAwaiter();
+                    ChangeSelectedEvent().GetAwaiter();
                 }
             }
         }
@@ -155,11 +144,22 @@ namespace Moiro_Orders.XamlView
             }
         }
 
-
+        private void CancelEvent_Click(object sender, RoutedEventArgs e)
+        {
+            CancelSelectedEvent().GetAwaiter();
+        }
 
 
 
         #region ASYNC metods
+
+        async Task GetEventsOfDate()
+        {
+            DateTime selectDate = datePick.SelectedDate.Value.Date;
+            IAdmin admin = new CurrentUser();
+            var events = await admin.GetAllEventsToday(selectDate);
+            ListEvents.ItemsSource = events;
+        }
 
         async Task CrateEvents()
         {
@@ -186,29 +186,48 @@ namespace Moiro_Orders.XamlView
                     DateEnd = endDate,
                     NameEvent = NameEvent.Text,
                     Place = PlaceEvent.Text,
-                    StatusId = 1
+                    IsCanceled = false
                 });
                 MessageBox.Show(status.ToString());
             }
         }
 
 
-        //async Task ChangeSelectedEvent()
-        //{
+        async Task ChangeSelectedEvent()
+        {
+            var tmpDate = CalendarWithDate.SelectedDate.Value;
+            DateTime startDate, endDate;
+            startDate = tmpDate;
+            startDate = startDate.AddHours(StartTime.SelectedTime.Value.Hour);
+            startDate = startDate.AddMinutes(StartTime.SelectedTime.Value.Minute);
+            endDate = tmpDate;
+            endDate = endDate.AddHours(EndTime.SelectedTime.Value.Hour);
+            endDate = endDate.AddMinutes(EndTime.SelectedTime.Value.Minute);
 
-        //    //IUser user = new CurrentUser();
-        //    //var status = await user.EditEvent(new Event
-        //    //{
-        //    //    Description = DescriptionEvent.Text,
-        //    //    UserId = PublicResources.Im.Id,
-        //    //    DateStart = startDate,
-        //    //    DateEnd = endDate,
-        //    //    NameEvent = NameEvent.Text,
-        //    //    Place = PlaceEvent.Text,
-        //    //    StatusId = 1
-        //    //});
-        //    //MessageBox.Show(status.ToString());
-        //}
+            IUser user = new CurrentUser();
+            var status = await user.EditEvent(new Event
+            {
+                Description = DescriptionEvent.Text,
+                UserId = PublicResources.Im.Id,
+                DateStart = startDate,
+                DateEnd = endDate,
+                NameEvent = NameEvent.Text,
+                Place = PlaceEvent.Text,
+                IsCanceled = false
+            });
+            MessageBox.Show(status.ToString());
+        }
+
+        async Task CancelSelectedEvent()
+        {
+            IUser user = new CurrentUser();
+            var status = await user.EditEvent(new Event
+            {
+                IsCanceled = false
+            });
+            MessageBox.Show(status.ToString());
+        }
+
 
         #endregion
 

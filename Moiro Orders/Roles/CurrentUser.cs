@@ -26,13 +26,12 @@ namespace Moiro_Orders.Roles
             var events = await eventsController.GetAllEventsAsync(count, id);
             return events;
         }
-
-        public async Task<List<Event>> GetEventsListOfDate(int userId, DateTime date)
-        {
-            EventsController eventsController = new EventsController();
-            var events = await eventsController.GetEventsListOfDateAsync(userId, date);
-            return events;
-        }
+        //public async Task<List<Event>> GetEventsListOfDate(int userId, DateTime date)
+        //{
+        //    EventsController eventsController = new EventsController();
+        //    var events = await eventsController.GetEventsListOfDateAsync(userId, date);
+        //    return events;
+        //}
 
         public async Task<List<Event>> GetAllEventsToday(DateTime date)
         {
