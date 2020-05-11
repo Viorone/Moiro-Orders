@@ -346,12 +346,12 @@
                 </ListBox>
             </Grid>
             <!-- Нижняя панель с отображением кнопок и их логикой -->
-            <Grid x:Name="OrdersButtonPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="0,0,0,5">
+            <Grid x:Name="OrdersButtonPanel" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Margin="0,0,0,5">
                 <StackPanel x:Name="AdminButtons" Orientation="Horizontal"  HorizontalAlignment="Right" IsEnabled="False">
-                    <Button x:Name="AcceptOrder"  Content="Принять заявку" IsDefault="True" Margin="5 0"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
+                    <Button x:Name="AcceptOrder"  Content="Принять заявку" IsDefault="True" Margin="20 0"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40" Visibility="Hidden" Click="AcceptOrder_Click"/>
                 </StackPanel>
                 <StackPanel x:Name="UserButtons" Orientation="Horizontal" IsEnabled="True">
-                    <Button x:Name="addOrder"  IsDefault="True" Content="Добавить заявку" Height="40" Margin="5 0"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
+                    <Button x:Name="addOrder"  IsDefault="True" Content="Добавить заявку" Height="40" Margin="20 0 0 5"  Foreground="AliceBlue" BorderBrush="{x:Null}" Click="AddOrder_Click"/>
                     <Button x:Name="changeOrder" Content="Изменить заявку" IsDefault="True" Margin="5 0"  Foreground="AliceBlue" BorderBrush="{x:Null}" Height="40"    Visibility="Hidden" Click="ChangeOrder_Click"/>
                     <Button x:Name="DeleteOrder"  Content="Отменить заявку"  Margin="5 0"  Foreground="OrangeRed" BorderBrush="{x:Null}" Height="40"                    Visibility="Hidden" Click="DeleteOrder_Click"/>
                     <Button x:Name="AcceptCompleteOrder" Grid.Row="2" Content="Подтвердить выполнение"  Margin="5 0"  Foreground="LawnGreen" BorderBrush="{x:Null}" Height="40"     Visibility="Hidden" Click="AcceptCompleteOrder_Click"/>
@@ -361,7 +361,7 @@
         <!-- Блок добавления заявок пользователем -->
         <Grid x:Name="OrderDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" Visibility="Hidden" Background="White">
             <StackPanel VerticalAlignment="Stretch" x:Name="CreateOrderStack">
-                <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
+                <Border BorderThickness="3" BorderBrush="DimGray" Background="White" CornerRadius="10" Margin="10">
                     <Grid>
                         <StackPanel Margin="10" >
                             <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" MaxLength="128"  KeyUp="Problem_KeyUp"/>
