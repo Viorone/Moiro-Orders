@@ -162,8 +162,10 @@
             <!-- Нижняя панель с кнопками на добавление заявки  -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Grid.Row="2" >
                 <Button x:Name="AddEvents" Content="Добавить мероприятие" Foreground="AliceBlue" Height="40" Margin="15 5" BorderBrush="{x:Null}" Click="AddEvents_Click"/>
+
                 <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="ChangeEvent_Click" Visibility="Hidden"/>
                 <Button x:Name="CancelEvent" Content="Отменить" Foreground="Red" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="CancelEvent_Click" Visibility="Hidden"/>
+
             </StackPanel>
             <!-- Форма для добавления мероприятий -->
             <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" Panel.ZIndex="80">
@@ -179,39 +181,41 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <StackPanel>
-                    <Label Content="Название мероприятия" FontSize="22" FontFamily="Segoe UI Light"/>
-                    <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название вебинара, мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light"  Margin="5 0 5 15">
-                        
-                    </TextBox>
-                    <Label Content="Место проведения" FontSize="22" FontFamily="Segoe UI Light"/>
-                    <TextBox x:Name="PlaceEvent" materialDesign:HintAssist.Hint="Кабинет, сторонняя организация или город" FontSize="18" FontFamily="Segoe UI Light"  Margin="5,0,5,15"/>
-                    <Label Content="Дополнительное описание" FontSize="22" FontFamily="Segoe UI Light"/>
-                    <TextBox x:Name="DescriptionEvent" materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" Margin="5 0 5 15"/>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Выберите дату(даты) проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" HorizontalAlignment="Center"/>
-                        <Grid Grid.Row="1" Margin="10 0 10 15" HorizontalAlignment="Center" >
-                            <Border BorderBrush="#FF3F51B5" BorderThickness="1">
-                                <Calendar x:Name="CalendarWithDate" Margin="2 0 2 2" FontFamily="Segoe UI Light" SelectionMode="MultipleRange" SelectedDatesChanged="CalendarWithDate_SelectedDatesChanged"/>
-                            </Border>
+                <ScrollViewer Margin="0 0 0 50">
+                    <StackPanel Margin="10">
+                        <Label Content="Название мероприятия" FontSize="22" FontFamily="Segoe UI Light"/>
+                        <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название вебинара, мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light"  Margin="5 0 5 15">
+
+                        </TextBox>
+                        <Label Content="Место проведения" FontSize="22" FontFamily="Segoe UI Light"/>
+                        <TextBox x:Name="PlaceEvent" materialDesign:HintAssist.Hint="Кабинет, сторонняя организация или город" FontSize="18" FontFamily="Segoe UI Light"  Margin="5,0,5,15"/>
+                        <Label Content="Дополнительное описание" FontSize="22" FontFamily="Segoe UI Light"/>
+                        <TextBox x:Name="DescriptionEvent" materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" Margin="5 0 5 15"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Выберите дату(даты) проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" HorizontalAlignment="Center"/>
+                            <Grid Grid.Row="1" Margin="10 0 10 15" HorizontalAlignment="Center" >
+                                <Border BorderBrush="#FF3F51B5" BorderThickness="1">
+                                    <Calendar x:Name="CalendarWithDate" Margin="2 0 2 2" FontFamily="Segoe UI Light" SelectionMode="MultipleRange" SelectedDatesChanged="CalendarWithDate_SelectedDatesChanged"/>
+                                </Border>
+                            </Grid>
+                            <Label Content="Выберите время проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" x:Name="TimeRun" />
+                            <StackPanel Grid.Row="1" Grid.Column="1" Width="{Binding ElementName=TimeRun, Path=ActualWidth}">
+                                <materialDesign:TimePicker x:Name="StartTime" Language="ru"  Is24Hours="True"  materialDesign:HintAssist.Hint="Время начала"  FontSize="20"  Margin="0 30" />
+                                <materialDesign:TimePicker x:Name="EndTime" Language="ru"  Is24Hours="True" materialDesign:HintAssist.Hint="Время окончания"  FontSize="20"  />
+                            </StackPanel>
                         </Grid>
-                        <Label Content="Выберите время проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" x:Name="TimeRun" />
-                        <StackPanel Grid.Row="1" Grid.Column="1" Width="{Binding ElementName=TimeRun, Path=ActualWidth}">
-                            <materialDesign:TimePicker x:Name="StartTime" Language="ru"  Is24Hours="True"  materialDesign:HintAssist.Hint="Время начала"  FontSize="20"  Margin="0 30" />
-                            <materialDesign:TimePicker x:Name="EndTime" Language="ru"  Is24Hours="True" materialDesign:HintAssist.Hint="Время окончания"  FontSize="20"  />
-                        </StackPanel>
-                        
-                    </Grid>
-                </StackPanel>
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom"   Background="White"  >
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom"   Background="White"  Margin="15 0" >
                     <Button  Content="Назад" x:Name="BackToEvent"  Margin="10"  HorizontalAlignment="Left"/>
                     <Button Content="Сохранить" x:Name="SelectedDatesShow" Click="SelectedDatesShow_Click" Margin="10" HorizontalAlignment="Right"/>
                 </Grid>

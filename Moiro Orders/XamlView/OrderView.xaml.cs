@@ -523,6 +523,10 @@ namespace Moiro_Orders.XamlView
                         //MessageBox.Show("я ушел в ребут");
                     }
                     ordersTmp = orders;
+                    if (orders == null)
+                    {
+                        return;
+                    }
                     Action action = () =>
                     {
                         var ordersChange = orders;
@@ -575,6 +579,7 @@ namespace Moiro_Orders.XamlView
                     try
                     {
                         orders = await user.GetOrdersListOfDate(PublicResources.Im.Id, selectedDate);
+                         
                     }
                     catch
                     {
@@ -587,7 +592,10 @@ namespace Moiro_Orders.XamlView
                         List<Order> tmpList = new List<Order>();
                         var tmp1 = listOrders.Items.Cast<Order>();
                         tmpList.AddRange(tmp1);
-
+                        if (orders == null)
+                        {
+                            return;
+                        }
                         if (tmpList.Count != orders.Count)
                         {
                             listOrders.ItemsSource = orders;
@@ -615,8 +623,8 @@ namespace Moiro_Orders.XamlView
                             }
                         }
                     };
-                    await listOrders.Dispatcher.BeginInvoke(action);
-                    await Task.Delay(10000, cancellationToken);
+                   await listOrders.Dispatcher.BeginInvoke(action);
+                    await Task.Delay(15000, cancellationToken);
                 }
             }
             catch (OperationCanceledException) { }

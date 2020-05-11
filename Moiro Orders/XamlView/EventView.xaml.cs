@@ -192,6 +192,7 @@ namespace Moiro_Orders.XamlView
             }
         }
 
+
         async Task ChangeSelectedEvent()
         {
             var tmpDate = CalendarWithDate.SelectedDate.Value;
@@ -227,8 +228,12 @@ namespace Moiro_Orders.XamlView
             MessageBox.Show(status.ToString());
         }
 
+
         #endregion
 
+        private void CancelEvent_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }
