@@ -214,7 +214,7 @@
                             <Label Content="Выберите дату(даты) проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" HorizontalAlignment="Center"/>
                             <Grid Grid.Row="1" Margin="10 0 10 15" HorizontalAlignment="Center" >
                                 <Border BorderBrush="#FF3F51B5" BorderThickness="1">
-                                    <Calendar x:Name="CalendarWithDate"  Margin="2 0 2 2" FontFamily="Segoe UI Light" Focusable="False" SelectionMode="MultipleRange" MouseEnter="CalendarWithDate_MouseEnter"  MouseLeftButtonDown="CalendarWithDate_MouseLeftButtonDown"/>
+                                    <Calendar x:Name="CalendarWithDate"  Margin="2 0 2 2" FontFamily="Segoe UI Light" Focusable="False" SelectionMode="MultipleRange" MouseMove="CalendarWithDate_MouseMove"/>
                                 </Border>
                             </Grid>
                             <Label Content="Выберите время проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" x:Name="TimeRun" />
