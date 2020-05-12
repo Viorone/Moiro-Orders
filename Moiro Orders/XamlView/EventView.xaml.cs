@@ -32,7 +32,31 @@ namespace Moiro_Orders.XamlView
             CalendarWithDate.SelectedDate = null;
             StartTime.SelectedTime = null;
             EndTime.SelectedTime = null;
+            CalendarWithDate.SelectionMode = CalendarSelectionMode.MultipleRange;
             FormAddEvent.Visibility = Visibility.Visible;
+        }
+
+        private void CancelEvent_Click(object sender, RoutedEventArgs e)
+        {
+            CancelSelectedEvent().GetAwaiter();
+            ListEvents.SelectedIndex = -1;
+            ChangeEvent.Visibility = Visibility.Hidden;
+            CancelEvent.Visibility = Visibility.Hidden;
+        }
+
+        private void ChangeEvent_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListEvents.SelectedIndex != -1)
+            {
+                isProblem = false;
+                NameEvent.Text = selectedEvent.NameEvent;
+                DescriptionEvent.Text = selectedEvent.Description;
+                PlaceEvent.Text = selectedEvent.Place;
+                CalendarWithDate.SelectedDate = selectedEvent.DateStart;
+                CalendarWithDate.SelectionMode = CalendarSelectionMode.SingleDate;
+                StartTime.SelectedTime = selectedEvent.DateStart;
+                EndTime.SelectedTime = selectedEvent.DateEnd;
+            }
         }
 
         private void DatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -71,27 +95,7 @@ namespace Moiro_Orders.XamlView
             CancelEvent.Visibility = Visibility.Hidden;
         }
 
-        private void CancelEvent_Click(object sender, RoutedEventArgs e)
-        {
-            CancelSelectedEvent().GetAwaiter();
-            ListEvents.SelectedIndex = -1;
-            ChangeEvent.Visibility = Visibility.Hidden;
-            CancelEvent.Visibility = Visibility.Hidden;
-        }
-
-        private void ChangeEvent_Click(object sender, RoutedEventArgs e)
-        {
-            if (ListEvents.SelectedIndex != -1)
-            {
-                isProblem = false;
-                NameEvent.Text = selectedEvent.NameEvent;
-                DescriptionEvent.Text = selectedEvent.Description;
-                PlaceEvent.Text = selectedEvent.Place;
-                CalendarWithDate.SelectedDate = selectedEvent.DateStart;
-                StartTime.SelectedTime = selectedEvent.DateStart;
-                EndTime.SelectedTime = selectedEvent.DateEnd;               
-            }
-        }
+        
 
         private void SelectedDatesShow_Click(object sender, RoutedEventArgs e)
         {
@@ -99,6 +103,7 @@ namespace Moiro_Orders.XamlView
             {
                 if (isProblem)
                 {
+                    
                     CrateEvents().GetAwaiter();
                 }
                 else
@@ -131,6 +136,21 @@ namespace Moiro_Orders.XamlView
                 ShowErrorMessage("Ошибка во времени проведения", "Выберите время начала и окончания проведения данного мероприятия");
                 return false;
             }
+            if (CalendarWithDate.SelectedDates.Count >= 31)
+            {
+                ShowErrorMessage("Ошибка", "Выбрано слишком много дат!");
+                CalendarWithDate.SelectedDates.RemoveAt(30);
+                return false;
+            }
+            foreach (var date in CalendarWithDate.SelectedDates)
+            {
+                var tmbSub = date - DateTime.Now.Date;
+                if (tmbSub.Days < 0)
+                {
+                    ShowErrorMessage("Ошибка в дате (датах) проведения", "Неверная дата "+ tmbSub.ToString() +"\nНельзя выберать дату или даты мероприятия раньше текущего дня");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -146,16 +166,26 @@ namespace Moiro_Orders.XamlView
             ErrorGrid.Visibility = Visibility.Hidden;
         }
 
-        private void CalendarWithDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+       bool CheckDates(DateTime startDate, DateTime endDate)
         {
-            if (CalendarWithDate.SelectedDates.Count >= 31)
+            if (startDate > endDate)
             {
-                ShowErrorMessage("Ошибка", "Выбрано слишком много дат!");
-                CalendarWithDate.SelectedDates.RemoveAt(CalendarWithDate.SelectedDates.Count);
+                ShowErrorMessage("Ошибка", "Дата начала не может быть больше даты окончания");
+                return false;
             }
+            if(startDate < DateTime.Now)
+            {
+                ShowErrorMessage("Ошибка", "Вы не можете выбирать прошедшие даты и время");
+                return false;
+            }
+            if(endDate < DateTime.Now)
+            {
+                ShowErrorMessage("Ошибка", "Вы не можете выбирать прошедшие даты и время");
+                return false;
+            }
+            
+            return true;
         }
-
-       
 
 
 
@@ -173,8 +203,7 @@ namespace Moiro_Orders.XamlView
         {
             var collections = CalendarWithDate.SelectedDates;
             foreach (var tmpDate in collections)
-            {
-
+            {               
                 DateTime startDate, endDate;
                 startDate = tmpDate;
                 startDate = startDate.AddHours(StartTime.SelectedTime.Value.Hour);
@@ -182,21 +211,23 @@ namespace Moiro_Orders.XamlView
                 endDate = tmpDate;
                 endDate = endDate.AddHours(EndTime.SelectedTime.Value.Hour);
                 endDate = endDate.AddMinutes(EndTime.SelectedTime.Value.Minute);
-
-
-                IUser user = new CurrentUser();
-                var status = await user.CreateEvent(new Event
+                var tmpCheck = CheckDates(startDate, endDate);
+                if (tmpCheck)
                 {
-                    Date = DateTime.Now,
-                    Description = DescriptionEvent.Text,
-                    UserId = PublicResources.Im.Id,
-                    DateStart = startDate,
-                    DateEnd = endDate,
-                    NameEvent = NameEvent.Text,
-                    Place = PlaceEvent.Text,
-                    IsCanceled = false
-                });
-                MessageBox.Show(status.ToString());
+                    IUser user = new CurrentUser();
+                    var status = await user.CreateEvent(new Event
+                    {
+                        Date = DateTime.Now,
+                        Description = DescriptionEvent.Text,
+                        UserId = PublicResources.Im.Id,
+                        DateStart = startDate,
+                        DateEnd = endDate,
+                        NameEvent = NameEvent.Text,
+                        Place = PlaceEvent.Text,
+                        IsCanceled = false
+                    });
+                }
+                await GetEventsOfDate();
             }
         }
 
@@ -212,20 +243,23 @@ namespace Moiro_Orders.XamlView
             endDate = endDate.AddHours(EndTime.SelectedTime.Value.Hour);
             endDate = endDate.AddMinutes(EndTime.SelectedTime.Value.Minute);
 
-            IUser user = new CurrentUser();
-            var status = await user.EditEvent(new Event
+            var tmpCheck = CheckDates(startDate, endDate);
+            if (tmpCheck)
             {
-                Id = selectedEvent.Id,
-                Description = DescriptionEvent.Text,
-                UserId = selectedEvent.UserId,
-                DateStart = startDate,
-                DateEnd = endDate,
-                NameEvent = NameEvent.Text,
-                Place = PlaceEvent.Text,
-                IsCanceled = false
-            });
+                IUser user = new CurrentUser();
+                var status = await user.EditEvent(new Event
+                {
+                    Id = selectedEvent.Id,
+                    Description = DescriptionEvent.Text,
+                    UserId = selectedEvent.UserId,
+                    DateStart = startDate,
+                    DateEnd = endDate,
+                    NameEvent = NameEvent.Text,
+                    Place = PlaceEvent.Text,
+                    IsCanceled = false
+                });
+            }
             await GetEventsOfDate();
-            MessageBox.Show(status.ToString());
         }
 
         async Task CancelSelectedEvent()
@@ -236,11 +270,48 @@ namespace Moiro_Orders.XamlView
             @event.IsCanceled = true;
             var status = await user.EditEvent(@event);
             await GetEventsOfDate();
-            //а надо ли это мессадж бокс?
-            MessageBox.Show(status.ToString());
         }
 
 
         #endregion
+
+        private void CalendarWithDate_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //Control.MouseRightButtonDownEvent;
+            //var tmp = new MouseButtonEventArgs(e.MouseDevice, 0, MouseButton.Left);
+            //CalendarWithDate_MouseLeftButtonDown(sender, tmp);
+            //someButton.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+            //LeftMouseClick(0, 0); вызов этой треклятой функции
+
+
+        }
+
+
+        private void CalendarWithDate_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        // магия которая не работает
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool SetCursorPos(int x, int y);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern void Mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+         public const int MOUSEEVENTF_RIGHTUP = 0x10;
+        //const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        //const int MOUSEEVENTF_LEFTUP = 0x04;
+
+        //This simulates a left mouse click
+       
+        public static void LeftMouseClick(int xpos, int ypos)
+        {
+            SetCursorPos(xpos, ypos);
+            Mouse_event(MOUSEEVENTF_RIGHTDOWN, xpos, ypos, 0, 0);
+            Mouse_event(MOUSEEVENTF_RIGHTUP, xpos, ypos, 0, 0);
+        }
+
     }
 }
