@@ -93,9 +93,7 @@ namespace Moiro_Orders.XamlView
             ListEvents.SelectedIndex = -1;
             ChangeEvent.Visibility = Visibility.Hidden;
             CancelEvent.Visibility = Visibility.Hidden;
-        }
-
-        
+        }        
 
         private void SelectedDatesShow_Click(object sender, RoutedEventArgs e)
         {
@@ -187,7 +185,10 @@ namespace Moiro_Orders.XamlView
             return true;
         }
 
-
+        private void CalendarWithDate_MouseMove(object sender, MouseEventArgs e)
+        {
+            Mouse.Capture(null);
+        }
 
         #region ASYNC metods
 
@@ -274,44 +275,6 @@ namespace Moiro_Orders.XamlView
 
 
         #endregion
-
-        private void CalendarWithDate_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //Control.MouseRightButtonDownEvent;
-            //var tmp = new MouseButtonEventArgs(e.MouseDevice, 0, MouseButton.Left);
-            //CalendarWithDate_MouseLeftButtonDown(sender, tmp);
-            //someButton.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
-            //LeftMouseClick(0, 0); вызов этой треклятой функции
-
-
-        }
-
-
-        private void CalendarWithDate_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        // магия которая не работает
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        static extern bool SetCursorPos(int x, int y);
-
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern void Mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
-
-        public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
-         public const int MOUSEEVENTF_RIGHTUP = 0x10;
-        //const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        //const int MOUSEEVENTF_LEFTUP = 0x04;
-
-        //This simulates a left mouse click
-       
-        public static void LeftMouseClick(int xpos, int ypos)
-        {
-            SetCursorPos(xpos, ypos);
-            Mouse_event(MOUSEEVENTF_RIGHTDOWN, xpos, ypos, 0, 0);
-            Mouse_event(MOUSEEVENTF_RIGHTUP, xpos, ypos, 0, 0);
-        }
 
     }
 }
