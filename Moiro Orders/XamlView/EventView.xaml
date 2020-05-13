@@ -47,9 +47,6 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BackToEvent">
             <BeginStoryboard Storyboard="{StaticResource EventDetailsClose}"/>
         </EventTrigger>
-        <!--<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="SelectedDatesShow">
-            <BeginStoryboard Storyboard="{StaticResource EventDetailsClose}"/>
-        </EventTrigger>-->
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ErrorOk">
             <BeginStoryboard Storyboard="{StaticResource HiddenError}"/>
         </EventTrigger>
@@ -72,9 +69,9 @@
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Меропрития" FontFamily="Segoe UI LIght" FontSize="28" Margin="25 5 0 0"/>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Мероприятия" FontFamily="Segoe UI LIght" FontSize="28" Margin="25 5 0 0" VerticalAlignment="Top"/>
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0" >
-                <TextBlock Text="Выберите дату: "  FontSize="20" FontFamily="Segoe UI LIght"   VerticalAlignment="Center"/>
+                <TextBlock Text="Выбранная дата: "  FontSize="20" FontFamily="Segoe UI LIght"  Margin="40 3 0 0" VerticalAlignment="Center"/>
                 <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Segoe UI LIght"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">
                     <DatePicker.Resources>
                         <Style TargetType="{x:Type Button}">
@@ -176,7 +173,6 @@
 
                 <Button x:Name="ChangeEvent" Content="Изменить" Foreground="AliceBlue" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="ChangeEvent_Click" Visibility="Hidden"/>
                 <Button x:Name="CancelEvent" Content="Отменить" Foreground="Red" Height="40" Margin="15 0" BorderBrush="{x:Null}" Click="CancelEvent_Click" Visibility="Hidden"/>
-
             </StackPanel>
             <!-- Форма для добавления  и редактирования мероприятий -->
             <Grid x:Name="FormAddEvent" Grid.RowSpan="3" Visibility="Hidden" >
@@ -195,13 +191,12 @@
                 <ScrollViewer Margin="0 0 0 50">
                     <StackPanel Margin="10">
                         <Label Content="Название мероприятия" FontSize="22" FontFamily="Segoe UI Light"/>
-                        <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название вебинара, мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light"  Margin="5 0 5 15">
+                        <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light" MaxLength="128"  Margin="5 0 5 15"/>
 
-                        </TextBox>
                         <Label Content="Место проведения" FontSize="22" FontFamily="Segoe UI Light"/>
-                        <TextBox x:Name="PlaceEvent" materialDesign:HintAssist.Hint="Кабинет, сторонняя организация или город" FontSize="18" FontFamily="Segoe UI Light"  Margin="5,0,5,15"/>
+                        <TextBox x:Name="PlaceEvent" materialDesign:HintAssist.Hint="Город, сторонняя организация, аудитория" FontSize="18" FontFamily="Segoe UI Light" MaxLength="256"  Margin="5,0,5,15" />
                         <Label Content="Дополнительное описание" FontSize="22" FontFamily="Segoe UI Light"/>
-                        <TextBox x:Name="DescriptionEvent" materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" Margin="5 0 5 15"/>
+                        <TextBox x:Name="DescriptionEvent" materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" MaxLength="256" Margin="5 0 5 15"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -214,14 +209,13 @@
                             <Label Content="Выберите дату(даты) проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" HorizontalAlignment="Center"/>
                             <Grid Grid.Row="1" Margin="10 0 10 15" HorizontalAlignment="Center" >
                                 <Border BorderBrush="#FF3F51B5" BorderThickness="1">
-                                    <Calendar x:Name="CalendarWithDate"  Margin="2 0 2 2" FontFamily="Segoe UI Light" Focusable="False" SelectionMode="MultipleRange" MouseMove="CalendarWithDate_MouseMove"/>
+                                    <Calendar x:Name="CalendarWithDate"  Margin="2 0 2 2" FontFamily="Segoe UI Light" Focusable="False" SelectionMode="MultipleRange" MouseMove="CalendarWithDate_MouseMove" />
                                 </Border>
                             </Grid>
                             <Label Content="Выберите время проведения" FontSize="22" FontFamily="Segoe UI Light" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" x:Name="TimeRun" />
                             <StackPanel Grid.Row="1" Grid.Column="1" Width="{Binding ElementName=TimeRun, Path=ActualWidth}">
                                 <materialDesign:TimePicker x:Name="StartTime" Language="ru"  Is24Hours="True"  materialDesign:HintAssist.Hint="Время начала"  FontSize="20"  Margin="0 30" />
                                 <materialDesign:TimePicker x:Name="EndTime" Language="ru"  Is24Hours="True" materialDesign:HintAssist.Hint="Время окончания"  FontSize="20"  />
-                                <Button x:Name="someButton"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -238,23 +232,24 @@
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Grid.Background>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1.9*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1.9*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="1" Background="#FF3F51B5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="1" Margin="20">
-                        <TextBlock x:Name="ErrorEventHeader" FontSize="28" FontFamily="Segoe UI Light" Foreground="White"  TextWrapping="Wrap" Text="Перевести на MVVM" />
-                        <TextBlock x:Name="ErrorEventBody" Margin="0 10" FontSize="20" FontFamily="Segoe UI Light" Foreground="White"
+                    <StackPanel Grid.Column="1" Margin="0" x:Name="stackErrorsFields">
+                        <TextBlock x:Name="ErrorEventHeader" FontSize="28" FontFamily="Segoe UI Light" Foreground="White" Margin="10 20 10 0" TextWrapping="Wrap" Text="Перевести на MVVM" />
+                        <TextBlock x:Name="ErrorEventBody"  FontSize="20" FontFamily="Segoe UI Light" Foreground="White" Margin="10 20 10 0"
                                    TextWrapping="Wrap"
                                    Text="Было бы тоже хорошим стилем переписать валидацию на текстовые поля а не вот это сообщение."/>
+                       
                     </StackPanel>
-                    <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Понятно" Margin="10" x:Name="ErrorOk" Click="ErrorOk_Click"/>
+                     <Button  HorizontalAlignment="Right" Grid.Row="1"  Grid.Column="1" VerticalAlignment="Bottom" Content="Понятно" Margin="20 20" x:Name="ErrorOk" Click="ErrorOk_Click"/>
 
                 </Grid>
 

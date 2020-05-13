@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace Moiro_Orders.XamlView
 {
@@ -52,11 +53,16 @@ namespace Moiro_Orders.XamlView
                 NameEvent.Text = selectedEvent.NameEvent;
                 DescriptionEvent.Text = selectedEvent.Description;
                 PlaceEvent.Text = selectedEvent.Place;
-                CalendarWithDate.SelectedDate = selectedEvent.DateStart;
                 CalendarWithDate.SelectionMode = CalendarSelectionMode.SingleDate;
+                CalendarWithDate.SelectedDate = selectedEvent.DateStart.Date;              
                 StartTime.SelectedTime = selectedEvent.DateStart;
                 EndTime.SelectedTime = selectedEvent.DateEnd;
             }
+        }
+
+        private void CalendarWithDate_MouseMove(object sender, MouseEventArgs e)
+        {
+            Mouse.Capture(null);
         }
 
         private void DatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -106,8 +112,10 @@ namespace Moiro_Orders.XamlView
                 }
                 else
                 {
-                    ChangeSelectedEvent().GetAwaiter();
+                    ChangeSelectedEvent().GetAwaiter(); 
                 }
+                ChangeEvent.Visibility = Visibility.Hidden;
+                CancelEvent.Visibility = Visibility.Hidden;
             }
         }
 
@@ -145,12 +153,34 @@ namespace Moiro_Orders.XamlView
                 var tmbSub = date - DateTime.Now.Date;
                 if (tmbSub.Days < 0)
                 {
-                    ShowErrorMessage("Ошибка в дате (датах) проведения", "Неверная дата "+ tmbSub.ToString() +"\nНельзя выберать дату или даты мероприятия раньше текущего дня");
+                    ShowErrorMessage("Ошибка в дате (датах) проведения", "Нельзя выбирать дату или даты мероприятия раньше текущего дня");
                     return false;
                 }
             }
             return true;
         }
+
+        bool CheckDates(DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+            {
+                ShowErrorMessage("Ошибка", "Дата начала не может быть больше даты окончания");
+                return false;
+            }
+            if (startDate < DateTime.Now)
+            {
+                ShowErrorMessage("Ошибка", "Вы не можете выбирать прошедшие даты и время");
+                return false;
+            }
+            if (endDate < DateTime.Now)
+            {
+                ShowErrorMessage("Ошибка", "Вы не можете выбирать прошедшие даты и время");
+                return false;
+            }
+
+            return true;
+        }
+
 
         // Сообщение об ошибке
         private void ShowErrorMessage(string header, string body)
@@ -164,31 +194,8 @@ namespace Moiro_Orders.XamlView
             ErrorGrid.Visibility = Visibility.Hidden;
         }
 
-       bool CheckDates(DateTime startDate, DateTime endDate)
-        {
-            if (startDate > endDate)
-            {
-                ShowErrorMessage("Ошибка", "Дата начала не может быть больше даты окончания");
-                return false;
-            }
-            if(startDate < DateTime.Now)
-            {
-                ShowErrorMessage("Ошибка", "Вы не можете выбирать прошедшие даты и время");
-                return false;
-            }
-            if(endDate < DateTime.Now)
-            {
-                ShowErrorMessage("Ошибка", "Вы не можете выбирать прошедшие даты и время");
-                return false;
-            }
-            
-            return true;
-        }
-
-        private void CalendarWithDate_MouseMove(object sender, MouseEventArgs e)
-        {
-            Mouse.Capture(null);
-        }
+     
+     
 
         #region ASYNC metods
 
@@ -227,6 +234,7 @@ namespace Moiro_Orders.XamlView
                         Place = PlaceEvent.Text,
                         IsCanceled = false
                     });
+                    if (FindResource("EventDetailsClose") is Storyboard sb) { BeginStoryboard(sb); }
                 }
                 await GetEventsOfDate();
             }
@@ -259,6 +267,7 @@ namespace Moiro_Orders.XamlView
                     Place = PlaceEvent.Text,
                     IsCanceled = false
                 });
+                if (FindResource("EventDetailsClose") is Storyboard sb) { BeginStoryboard(sb); }
             }
             await GetEventsOfDate();
         }

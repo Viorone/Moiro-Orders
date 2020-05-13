@@ -62,11 +62,15 @@
         </Grid>-->
         
         <Grid x:Name="WebinarsList" Opacity="1" OpacityMask="Black" IsEnabled="True" MouseLeftButtonDown="WebinarsList_MouseLeftButtonDown">
+            <Grid.Background>
+                <SolidColorBrush x:Name="fon" Color="White" Opacity="1" />
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Вебинары" Margin="25 2 0 0" FontFamily="Segoe UI LIght" FontSize="28"/>
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0">
                 <TextBlock Text="Выберите дату: "  FontSize="20"  VerticalAlignment="Center" FontFamily="Segoe UI Light"/>
                 <DatePicker  x:Name="datePick" Width="200"  FontSize="18" FontFamily="Segoe UI Light" SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePick_SelectedDateChanged" Language="ru">

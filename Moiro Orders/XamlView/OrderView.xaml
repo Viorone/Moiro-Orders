@@ -102,11 +102,11 @@
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Panel.ZIndex="98" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="30 10 0 0" Grid.Column="0" Visibility="Visible" x:Name="DateSelectOrdersPanel">
                     <TextBlock x:Name="DateText" Text="Выбранная дата:   " Height="auto" FontSize="20" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
-                    <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged" Language="ru">
+                    <DatePicker x:Name="datePick" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" SelectedDateChanged="DatePicker_SelectedDatesChanged" Language="ru" >
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="MinHeight" Value="35"  />
@@ -123,7 +123,7 @@
                     </ListView>
                   
                 </materialDesign:Card>
-                <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged"   FontSize="18" HorizontalAlignment="Center"  Background="White" IsEditable="False"/>
+                <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged"   FontSize="18" HorizontalAlignment="Right" Margin="0 0 30 0" Background="White" IsEditable="False"  FontFamily="Segoe UI Light" />
                 <materialDesign:Card x:Name="NotConfirmBorder" Visibility="Visible" HorizontalAlignment="Right" Grid.Column="1"  UniformCornerRadius="10" Margin="5 5 -15 5"  Background="#e01d1d" MouseLeftButtonUp="NotConfirmBorder_MouseLeftButtonUp" >
                     <ListView>
                         <ListViewItem>

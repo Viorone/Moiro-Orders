@@ -18,14 +18,21 @@
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="{Binding ElementName=Title, Path=Height}"/>
                         <RowDefinition Height="175"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <!-- Временной период -->
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Временной период   с:" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22"/>
-                        <DatePicker x:Name="dateStart" Margin="5 0 5 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                    <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch"  x:Name="Title" Margin="0 10 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="240"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Выберите временной период и нажмите на категорию :" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
+                        
+                        <TextBlock Text="c: " Grid.Column="1" FontFamily="Segoe UI Light"  VerticalAlignment="Center" FontSize="22" Margin="0 5 0 0"/>
+                        <DatePicker Grid.Column="1" x:Name="dateStart" Margin="10 0 5 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
                             <DatePicker.Resources>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="MinHeight" Value="35"  />
@@ -33,8 +40,8 @@
                                 </Style>
                             </DatePicker.Resources>
                         </DatePicker>
-                        <TextBlock Text="по:" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22"/>
-                        <DatePicker x:Name="dateEnd" Margin="5 0 0 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                        <TextBlock Text="по: " Grid.Column="2" FontFamily="Segoe UI Light" VerticalAlignment="Center" FontSize="22" Margin="0 5 0 0" />
+                        <DatePicker x:Name="dateEnd" Grid.Column="2" Margin="10 0 0 5" Width="180" Height="auto" FontSize="18" FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
                             <DatePicker.Resources>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="MinHeight" Value="35"  />
@@ -42,7 +49,7 @@
                                 </Style>
                             </DatePicker.Resources>
                         </DatePicker>
-                    </StackPanel>
+                    </Grid>
                     <!-- Верхние катрочки -->
                     <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Grid.Row="1" >
                         <Grid>
