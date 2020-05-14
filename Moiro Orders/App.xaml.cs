@@ -16,9 +16,8 @@ namespace Moiro_Orders
         System.Threading.Mutex mut;
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            bool createdNew;
             string mutName = "МОИРО.Заявки";
-            mut = new System.Threading.Mutex(true, mutName, out createdNew);
+            mut = new System.Threading.Mutex(true, mutName, out bool createdNew);
             if (!createdNew)
             {
                 Shutdown();
