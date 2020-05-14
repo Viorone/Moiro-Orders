@@ -13,5 +13,16 @@ namespace Moiro_Orders
     /// </summary>
     public partial class App : Application
     {
+        System.Threading.Mutex mut;
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            bool createdNew;
+            string mutName = "МОИРО.Заявки";
+            mut = new System.Threading.Mutex(true, mutName, out createdNew);
+            if (!createdNew)
+            {
+                Shutdown();
+            }           
+        }
     }
 }
