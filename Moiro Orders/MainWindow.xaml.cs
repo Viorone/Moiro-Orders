@@ -240,7 +240,7 @@ namespace Moiro_Orders
     {
         internal static User Im = new User();
         internal static int sortCount = -1;
-        internal static string version = "0.39 beta";
+        internal static string version = "0.41 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
         internal static bool messengerChecker = false;
 
