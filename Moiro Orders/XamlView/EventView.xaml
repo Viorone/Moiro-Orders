@@ -54,12 +54,7 @@
 
     </UserControl.Triggers>
     <!--  временное сообщение -->
-    <Grid >
-        <!--<Grid Background="Gray" Visibility="Visible" >
-            <TextBlock Text="Данный раздел находится на стадии разработки." FontSize="30" FontFamily="Segoe UI Light" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"/>
-        </Grid>-->
-
+    <Grid>
         <Grid x:Name="EventsList" Opacity="1" OpacityMask="Black" MouseLeftButtonDown="EventsList_MouseLeftButtonDown">
             <Grid.Background>
                 <SolidColorBrush x:Name="fon" Color="White" Opacity="1" />
