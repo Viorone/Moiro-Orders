@@ -14,7 +14,7 @@
         <dragablz:TabablzControl FixedHeaderCount="3">
             <TabItem >
                 <TabItem.Header>
-                    <TextBlock Text="Статистика" Foreground="White" FontSize="16" />
+                    <TextBlock Text="Статистика заявок" Foreground="White" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -426,12 +426,53 @@
             </TabItem>
             <TabItem>
                 <TabItem.Header>
+                    <TextBlock Text="Мероприятия" Foreground="White" FontSize="16" />
+                </TabItem.Header>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="40" Height="{Binding ElementName=Title, Path=Height}" />
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Выберите диапазон мероприятий :" FontFamily="Segoe UI Light" Margin="20 10 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
+                        <DatePicker  Grid.Column="1" Margin="10 0 0 0" FontSize="18"  FontFamily="Segoe UI Light">
+                            <DatePicker.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                        <DatePicker Grid.Column="2" Margin="10 0 10 0" FontSize="18" FontFamily="Segoe UI Light" >
+                            <DatePicker.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                        <Button Grid.Column="3" Content="Вывести" FontSize="16" x:Name="EventOutput"  Margin="10" Click="EventOutput_Click"/>
+                    </Grid>
+                    <ListView Grid.Row="1" x:Name="ListViewEvent">
+                        
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
                     <TextBlock Text="Власть Админа" Foreground="White" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
                     <ListBox x:Name="logList"/>
                     <TextBlock Text="Если вы не знаете что делает кнопка внизу - то просто НЕ НАЖИМАЙТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="22" TextWrapping="Wrap"/>
                     <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
+                    <Button   Content="Подтверждение заявок за предыдущий месяц" Margin="10" Click="CompletePastOrders_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Left"  x:Name="CompletePastOrders"/>
                 </Grid>
             </TabItem>
         </dragablz:TabablzControl>

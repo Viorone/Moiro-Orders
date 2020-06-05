@@ -50,6 +50,18 @@ namespace Moiro_Orders.XamlView
             }
             UpdateUsersDb().GetAwaiter();
         }
+        // Дописатть получение всех событий (Для саши) и логику подтверждения всех заявок за прошлый месяц
+        private void CompletePastOrders_Click(object sender, RoutedEventArgs e)
+        {
+            //событие на подтверждение всех неподверждённых заявок за прошлый месяц и более
+        }
+        // для мероприятий
+        private void EventOutput_Click(object sender, RoutedEventArgs e)
+        {
+            //async Task GetEvents()
+            //{ }
+            //await GetAllEvents
+        }
 
         #region Для вкладки "Статистика"
 
@@ -152,6 +164,32 @@ namespace Moiro_Orders.XamlView
             orders = await admin.GetOrdersByStatus(statusId, tmpDateStart, tmpDateEnd);
             await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
+
+        async void GetEventsAll()
+        {
+            List<Order> events = new List<Order>();
+            DateTime tmpDateEnd = DateTime.Now;
+            DateTime tmpDateStart = DateTime.Now;
+
+            Action action = () =>
+            {
+                tmpDateStart = dateStart.SelectedDate.Value;
+                tmpDateEnd = dateEnd.SelectedDate.Value;
+            };
+            Action action1 = () =>
+            {
+                ListGettingOrders.ItemsSource = events;
+            };
+            await dateStart.Dispatcher.BeginInvoke(action);
+
+            IAdmin admin = new CurrentUser();
+            //реализовать в контроллере событие на чтение мероприятий по двум датам
+            //events = await admin.GetAllEventsToday(tmpDateEnd);
+            await ListGettingOrders.Dispatcher.BeginInvoke(action1);
+        }
+
         #endregion
+
+
     }
 }

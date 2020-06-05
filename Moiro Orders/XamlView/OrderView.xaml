@@ -12,7 +12,6 @@
         </Style>
         <Style x:Key="SubFont">
             <Setter Property="Control.FontSize" Value="18"/>
-           
             <Setter Property="Control.Margin" Value="5 0 0 0"/>
         </Style>
         <ControlTemplate x:Key="validationTemplate">
@@ -24,7 +23,7 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
-      
+
         <!-- Анимация открытия окна для Пользователя -->
         <Storyboard x:Key="OrderDetailsOpen" >
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OrderDetails" Storyboard.TargetProperty="Visibility">
@@ -48,29 +47,47 @@
         </Storyboard>
         <!-- Анимация открытия окна для Администратора -->
         <Storyboard x:Key="OrderStatusOpen" >
-            <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="OrderStatus"
+
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OrderStatus" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrderStatus" >
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <!-- Хорошая анимация на разворачивание правда лагучая  -->
+            <!--<DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="OrderStatus"
                                          Duration="0:0:0.3"
                                          From="0" To="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualHeight}"/>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Brush.Opacity)" Storyboard.TargetName="fon" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.3"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="OrderStatusClose">
-            <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" 
+            </DoubleAnimationUsingKeyFrames>-->
+            <!--<DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" 
                              Storyboard.TargetName="OrderStatus"
                              Duration="0:0:0.2" To="0"/>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Brush.Opacity)" Storyboard.TargetName="fon" >
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>-->
+        </Storyboard>
+        <Storyboard x:Key="OrderStatusClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Opacity)"  Storyboard.TargetName="OrderStatus">
+                <EasingDoubleKeyFrame  KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OrderStatus"
+                        Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.33" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+
         </Storyboard>
     </UserControl.Resources>
-    
+
     <!-- Триггеры на события нажатия кнопок -->
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="addOrder">
-            <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}"/>
+            <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}" />
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="changeOrder">
             <BeginStoryboard Storyboard="{StaticResource OrderDetailsOpen}" />
@@ -91,7 +108,6 @@
             <BeginStoryboard Storyboard="{StaticResource OrderStatusClose}" />
         </EventTrigger>
     </UserControl.Triggers>
-
 
     <Grid>
         <Grid x:Name="OrdersList" Opacity="1" OpacityMask="Black"   MouseLeftButtonDown="OrdersList_MouseLeftButtonDown">
@@ -121,7 +137,7 @@
                             <materialDesign:PackIcon Kind="Close" Margin="-4 0 0 0"  Width="30" Height="30" Foreground="White" />
                         </ListViewItem>
                     </ListView>
-                  
+
                 </materialDesign:Card>
                 <ComboBox x:Name="OrderSortBox" Visibility="Hidden" Grid.Column="1" SelectionChanged="OrderSortBox_SelectionChanged"   FontSize="18" HorizontalAlignment="Right" Margin="0 0 30 0" Background="White" IsEditable="False"  FontFamily="Segoe UI Light" />
                 <materialDesign:Card x:Name="NotConfirmBorder" Visibility="Visible" HorizontalAlignment="Right" Grid.Column="1"  UniformCornerRadius="10" Margin="5 5 -15 5"  Background="#e01d1d" MouseLeftButtonUp="NotConfirmBorder_MouseLeftButtonUp" >
@@ -215,7 +231,7 @@
                                                         <ColumnDefinition Width="6*" />
                                                         <ColumnDefinition Width="4*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Path=Problem}" FontSize="24" FontFamily="Calibri"  TextWrapping="Wrap" Grid.Column="0" HorizontalAlignment="Left" />
+                                                    <TextBlock Text="{Binding Path=Problem}" FontSize="24" FontFamily="Calibri"  TextWrapping="Wrap" Grid.Column="0" HorizontalAlignment="Left" x:Name="prob"/>
                                                     <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="{Binding ElementName=Customer, Path=ActualWidth}"/>
@@ -237,7 +253,17 @@
                                                         <TextBlock x:Name="Room" Text="{Binding Path=Room}"  FontSize="14" Grid.Column="2"  HorizontalAlignment="Right" />
                                                     </Grid>
                                                 </Grid>
-                                                <TextBlock Text="{Binding Path=Description}"  TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" />
+                                                <TextBox Text="{Binding Path=Description}" x:Name="DescriptionInOrder" Foreground="{Binding ElementName=prob, Path=Foreground}" HorizontalAlignment="Left" Width="auto" TextWrapping="Wrap" FontSize="18" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True"  Background="Transparent" BorderThickness="0">
+                                                    <TextBox.Style>
+                                                        <Style TargetType="TextBox">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=DescriptionInOrder, Path=Text}" Value="">
+                                                                    <Setter Property="Width" Value="0"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBox.Style>
+                                                </TextBox>
                                                 <!-- данные по исполнителю конкретной заявки -->
                                                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  HorizontalAlignment="Right" Width="{Binding ElementName=userOrder, Path=ActualWidth}" >
                                                     <Grid>
@@ -321,7 +347,11 @@
                                                     <ColumnDefinition Width="1*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label x:Name="ContentComment" Content="// " FontSize="18" VerticalAlignment ="Top" Grid.Column="0" HorizontalAlignment="Left" />
-                                                <TextBlock x:Name="AdminComment" Text="{Binding Path=AdminComment}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontSize="18" Grid.Column="1"  />
+                                                <TextBox x:Name="AdminComment" Text="{Binding Path=AdminComment}" Foreground="{Binding ElementName=prob, Path=Foreground}" IsReadOnly="True" TextWrapping="Wrap" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontSize="18" Grid.Column="1">
+                                                    <TextBox.Style>
+                                                        <Style TargetType="TextBox"/>
+                                                    </TextBox.Style>
+                                                </TextBox>
                                             </Grid>
                                         </Border>
                                         <!-- Было бы неплохо перенести кнопки управления в нижнюю часть заявки, ближе к коментариям -->
@@ -359,16 +389,16 @@
             </Grid>
         </Grid>
         <!-- Блок добавления заявок пользователем -->
-        <Grid x:Name="OrderDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" Visibility="Hidden" Background="White">
+        <Grid x:Name="OrderDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="True" Visibility="Hidden" Background="White">
             <StackPanel VerticalAlignment="Stretch" x:Name="CreateOrderStack">
                 <Border BorderThickness="3" BorderBrush="DimGray" Background="White" CornerRadius="10" Margin="10">
                     <Grid>
                         <StackPanel Margin="10" >
-                            <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" MaxLength="128"  KeyUp="Problem_KeyUp"/>
-                            <TextBox materialDesign:HintAssist.Hint="Укажите дополнительное описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 20" x:Name="description" MaxLength="300"/>
+                            <TextBox materialDesign:HintAssist.Hint="Укажите проблему" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="problem" MaxLength="128"  KeyUp="Problem_KeyUp" />
+                            <TextBox materialDesign:HintAssist.Hint="Укажите описание проблемы" Validation.ErrorTemplate="{StaticResource validationTemplate}" MaxLines="10" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 20" x:Name="description" MaxLength="300" KeyDown="Description_KeyDown"/>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                                 <Button Content="Назад" x:Name="backToOrderList" IsCancel="True" Height="40" Margin="10" Click="BackToOrderList_Click" Width="{Binding ElementName=SaveOrder, Path=ActualWidth}" FontSize="16"/>
-                                <Button Content="Отправить" x:Name="SaveOrder" IsDefault="True" Margin="10" Height="40" Click="SaveOrder_Click" FontSize="16" IsEnabled="False"/>
+                                <Button Content="Отправить" x:Name="SaveOrder"  Margin="10" Height="40" Click="SaveOrder_Click" FontSize="16" IsEnabled="False"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -376,18 +406,20 @@
             </StackPanel>
         </Grid>
         <!-- Блок редактирования заявок Администратором -->
-        <StackPanel x:Name="OrderStatus"   Height="0" VerticalAlignment="Top" IsEnabled="False"  >
+        <StackPanel x:Name="OrderStatus"   VerticalAlignment="Stretch" IsEnabled="False" Visibility="Collapsed" >
             <StackPanel.Background>
                 <SolidColorBrush Color="Transparent" Opacity="0.3" />
             </StackPanel.Background>
+
             <StackPanel>
-            <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
-                <Grid>
-                    <StackPanel Margin="10" >
-                        <Label Content="Проблема"           Style="{StaticResource MainFont}"/>
-                        <TextBlock x:Name="ProblemView"     Style="{StaticResource SubFont}"/>
-                        <Label Content="Описание"           Style="{StaticResource MainFont}"/>
-                        <TextBlock x:Name="DescriptionView" Style="{StaticResource SubFont}"/>
+                <Border BorderThickness="3" BorderBrush="Black" Background="White" CornerRadius="10" Margin="10">
+                    <ScrollViewer MaxHeight="{Binding ElementName=OrdersList, Path=ActualHeight}">
+                    <Grid x:Name="GridForAdmin">
+                        <StackPanel Margin="10" >
+                            <Label Content="Проблема"           Style="{StaticResource MainFont}" />
+                            <TextBlock x:Name="ProblemView" Style="{StaticResource SubFont}" />
+                            <Label Content="Описание"           Style="{StaticResource MainFont}"/>
+                            <TextBlock x:Name="DescriptionView" Style="{StaticResource SubFont}"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -396,8 +428,8 @@
                                 <StackPanel Grid.Column="0">
                                     <Label Content="Дата отправки"           Style="{StaticResource MainFont}"/>
                                     <TextBlock x:Name="DateView"             Style="{StaticResource SubFont}"/>
-                                    <Label Content="Полное имя пользователя"         Style="{StaticResource MainFont}"/>
-                                    <TextBlock x:Name="UserNameView"             Style="{StaticResource SubFont}"/>
+                                    <Label Content="Полное имя пользователя" Style="{StaticResource MainFont}"/>
+                                    <TextBlock x:Name="UserNameView"         Style="{StaticResource SubFont}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <Label Content="Логин пользователя"      Style="{StaticResource MainFont}"/>
@@ -406,15 +438,16 @@
                                     <TextBlock x:Name="RoomView"             Style="{StaticResource SubFont}"/>
                                 </StackPanel>
                             </Grid>
-                            <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" MaxLength="300" />
+                            <TextBox materialDesign:HintAssist.Hint="Комментарий к заявке"  Validation.ErrorTemplate="{StaticResource validationTemplate}" TextWrapping="Wrap" FontSize="18" FontFamily="Segoe UI Light" Margin="0 25 0 0" x:Name="AdminDescription" MaxLength="300" MaxLines="10" KeyDown="AdminDescription_KeyDown" />
                             <ComboBox x:Name="StatusList" materialDesign:HintAssist.Hint="Укажите статус" FontSize ="20" Margin="0 25 0 10" FontFamily="Segoe UI Light"/>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click"/>
-                            <Button Content="Сохранить" x:Name="SaveOrderAdmin" IsDefault="True" Margin="10"  Height="40" Click="SaveOrderAdmin_Click"/>
+                                <Button Content="Назад" x:Name="BackToOrderAdmin" Height="40" IsCancel="True" Margin="10" Click="BackToOrderAdmin_Click"/>
+                                <Button Content="Сохранить" x:Name="SaveOrderAdmin" IsDefault="True" Margin="10"  Height="40" Click="SaveOrderAdmin_Click"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </Border>
+                    </Grid>
+                    </ScrollViewer>
+                </Border>
             </StackPanel>
         </StackPanel>
     </Grid>

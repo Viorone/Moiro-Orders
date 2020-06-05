@@ -278,6 +278,21 @@ namespace Moiro_Orders.XamlView
             }
         }
 
+
+        private void Description_KeyDown(object sender, KeyEventArgs e) // user, for long description
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (description.LineCount < 5)
+                {
+                    description.Text += Environment.NewLine;
+                    description.Select(description.Text.Length, 0);
+                }
+            }
+        }
+
+       
+
         private void OrdersList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //cancel (selected)
         {
             if (click)
@@ -358,6 +373,17 @@ namespace Moiro_Orders.XamlView
             UpdateOrdersListAdmin();
         }
 
+        private void AdminDescription_KeyDown(object sender, KeyEventArgs e) //admin, for long comment 
+        {
+            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl )
+            {
+                if (AdminDescription.LineCount <= 5)
+                {
+                    AdminDescription.Text += Environment.NewLine;
+                    AdminDescription.Select(AdminDescription.Text.Length, 0);
+                }
+            }
+        }
 
         #region Update metods
 
@@ -672,7 +698,8 @@ namespace Moiro_Orders.XamlView
             return sortOrd;
         }
 
-        
+
+
     }
 
     public class DBComparer : IEqualityComparer<Order>
