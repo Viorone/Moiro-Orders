@@ -11,7 +11,7 @@
     </UserControl.Resources>
     <Grid Background="White">
 
-        <dragablz:TabablzControl FixedHeaderCount="3">
+        <dragablz:TabablzControl FixedHeaderCount="3"  x:Name="EventLog"  SelectionChanged="EventLog_SelectionChanged">
             <TabItem >
                 <TabItem.Header>
                     <TextBlock Text="Статистика заявок" Foreground="White" FontSize="16" />
@@ -432,7 +432,7 @@
                     
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem >
                 <TabItem.Header>
                     <TextBlock Text="Мероприятия" Foreground="White" FontSize="16" />
                 </TabItem.Header>
@@ -560,8 +560,8 @@
                 <Grid>
                     <ListBox x:Name="logList"/>
                     <TextBlock Text="Если вы не знаете что делает кнопка внизу - то просто НЕ НАЖИМАЙТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="22" TextWrapping="Wrap"/>
-                    <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
-                    <Button   Content="Подтверждение заявок за предыдущий месяц" Margin="10" Click="CompletePastOrders_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Left"  x:Name="CompletePastOrders"/>
+                    <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160" />
+                    <Button   Content="Подтверждение заявок за предыдущий месяц" Margin="10" Click="CompletePastOrders_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Left"  x:Name="CompletePastOrders" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
         </dragablz:TabablzControl>

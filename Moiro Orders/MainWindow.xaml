@@ -21,32 +21,59 @@
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
-                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0" Value="{Binding ElementName=GridMenu, Path=ActualWidth}"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="{Binding ElementName=GridMenu, Path=ActualWidth}"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="200"/>
             </DoubleAnimationUsingKeyFrames>
-            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
+            <!--<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
                 <SplineThicknessKeyFrame KeyTime="0" Value="{Binding ElementName=BackMainView, Path=Margin}" />
-                <SplineThicknessKeyFrame KeyTime="0" Value="200,0,0,0" />
-            </ThicknessAnimationUsingKeyFrames>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="{Binding ElementName=BackMainView, Path=Margin}" />
+                <SplineThicknessKeyFrame KeyTime="0:0:0.2" Value="200,0,0,0" />
+            </ThicknessAnimationUsingKeyFrames>-->
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OpenMenuButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseMenuButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="MenuClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0" Value="{Binding ElementName=GridMenu, Path=ActualWidth}"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="60"/>
             </DoubleAnimationUsingKeyFrames>
-            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
+            <!--<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Storyboard.TargetName="BackMainView">
                 <SplineThicknessKeyFrame KeyTime="0" Value="{Binding ElementName=BackMainView, Path=Margin}" />
-                <SplineThicknessKeyFrame KeyTime="0" Value="60,0,0,0" />
-            </ThicknessAnimationUsingKeyFrames>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.0" Value="60,0,0,0" />
+            </ThicknessAnimationUsingKeyFrames>-->
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OpenMenuButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseMenuButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <ViewModel:OrderViewModel x:Key="ViewModelOrder"/>
         <ViewModel:UserViewModel x:Key="UserModel"/>
     </Window.Resources>
     <Window.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuButton">
+        <EventTrigger RoutedEvent="MouseEnter" SourceName="GridMenu">
             <BeginStoryboard Storyboard="{StaticResource MenuOpen}" />
         </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuButton">
+        <EventTrigger RoutedEvent="MouseLeave" SourceName="GridMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <!-- При добавлении другой категрии надо и анимацию копирнуть -->
+        <EventTrigger RoutedEvent="MouseLeftButtonUp" SourceName="Orders">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeftButtonUp" SourceName="Events">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeftButtonUp" SourceName="Settings">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeftButtonUp" SourceName="Admins">
             <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
         </EventTrigger>
     </Window.Triggers>

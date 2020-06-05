@@ -54,19 +54,25 @@ namespace Moiro_Orders.XamlView
             }
             UpdateUsersDb().GetAwaiter();
         }
-        // Дописатть получение всех событий (Для саши) и логику подтверждения всех заявок за прошлый месяц
         private void CompletePastOrders_Click(object sender, RoutedEventArgs e)
         {
             //событие на подтверждение всех неподверждённых заявок за прошлый месяц и более
         }
 
-
-
-        // для мероприятий
+        #region Для вкладки "Мероприятия"
         private void EventOutput_Click(object sender, RoutedEventArgs e)
         {
             GetEventsByAdmin();
         }
+
+        private void EventLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EventLog.SelectedIndex == 1 && ListViewEvent.Items.Count == 0)
+            {
+                GetEventsByAdmin();
+            }
+        }
+        #endregion
 
         #region Для вкладки "Статистика"
 
@@ -214,10 +220,10 @@ namespace Moiro_Orders.XamlView
             events = await admin.GetEventsForStatistic(tmpDateStart, tmpDateEnd);
             await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
-
-
         #endregion
 
+        
 
+       
     }
 }
