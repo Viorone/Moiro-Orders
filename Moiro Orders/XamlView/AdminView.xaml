@@ -422,6 +422,14 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
+
+
+                    
+                    
+                    
+                    
+                    
+                    
                 </Grid>
             </TabItem>
             <TabItem>
@@ -441,7 +449,7 @@
                             <ColumnDefinition Width="120"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Выберите диапазон мероприятий :" FontFamily="Segoe UI Light" Margin="20 10 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
-                        <DatePicker  Grid.Column="1" Margin="10 0 0 0" FontSize="18"  FontFamily="Segoe UI Light">
+                        <DatePicker x:Name="EventsDateStart" Grid.Column="1" Margin="10 0 0 0" FontSize="18"  FontFamily="Segoe UI Light">
                             <DatePicker.Resources>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="MinHeight" Value="35"  />
@@ -449,7 +457,7 @@
                                 </Style>
                             </DatePicker.Resources>
                         </DatePicker>
-                        <DatePicker Grid.Column="2" Margin="10 0 10 0" FontSize="18" FontFamily="Segoe UI Light" >
+                        <DatePicker x:Name="EventsDateEnd" Grid.Column="2" Margin="10 0 10 0" FontSize="18" FontFamily="Segoe UI Light" >
                             <DatePicker.Resources>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="MinHeight" Value="35"  />

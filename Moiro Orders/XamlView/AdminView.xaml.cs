@@ -22,9 +22,13 @@ namespace Moiro_Orders.XamlView
                 GetCountOrders(i).GetAwaiter();
             }
             DateTime dTime = DateTime.Now;
+            DateTime dTime2 = DateTime.Now;
             dTime = dTime.AddMonths(-1);
             dateStart.SelectedDate = dTime;
             dateEnd.SelectedDate = DateTime.Now.Date;
+            dTime2 = dTime.AddMonths(2);
+            EventsDateStart.SelectedDate = DateTime.Now.Date;
+            EventsDateEnd.SelectedDate = dTime2;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //Гигантская кнопка
@@ -55,12 +59,13 @@ namespace Moiro_Orders.XamlView
         {
             //событие на подтверждение всех неподверждённых заявок за прошлый месяц и более
         }
+
+
+
         // для мероприятий
         private void EventOutput_Click(object sender, RoutedEventArgs e)
         {
-            //async Task GetEvents()
-            //{ }
-            //await GetAllEvents
+            GetEventsByAdmin();
         }
 
         #region Для вкладки "Статистика"
@@ -187,6 +192,29 @@ namespace Moiro_Orders.XamlView
             //events = await admin.GetAllEventsToday(tmpDateEnd);
             await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
+
+        async void GetEventsByAdmin()
+        {
+            List<Event> events = new List<Event>();
+            DateTime tmpDateEnd = DateTime.Now;
+            DateTime tmpDateStart = DateTime.Now;
+
+            Action action = () =>
+            {
+                tmpDateStart = EventsDateStart.SelectedDate.Value;
+                tmpDateEnd = EventsDateEnd.SelectedDate.Value;
+            };
+            Action action1 = () =>
+            {
+                ListViewEvent.ItemsSource = events;
+            };
+            await dateStart.Dispatcher.BeginInvoke(action);
+
+            IAdmin admin = new CurrentUser();
+            events = await admin.GetEventsForStatistic(tmpDateStart, tmpDateEnd);
+            await ListGettingOrders.Dispatcher.BeginInvoke(action1);
+        }
+
 
         #endregion
 

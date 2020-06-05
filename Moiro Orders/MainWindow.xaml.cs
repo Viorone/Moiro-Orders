@@ -142,7 +142,7 @@ namespace Moiro_Orders
         {
             UsersController currentUser = new UsersController();
             var user = await currentUser.GetUserAsync(Environment.UserName);
-            //var user = await currentUser.GetUserAsync("gybarev2"); 
+            //var user = await currentUser.GetUserAsync("gybarev"); 
             user.LastLogin = DateTime.Now;
             await currentUser.UpdateUserAsync(user);
             HeaderText.Text = PublicResources.Im.FullName + " | " + PublicResources.Im.OrganizationalUnit;
