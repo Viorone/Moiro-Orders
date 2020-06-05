@@ -67,7 +67,7 @@ namespace Moiro_Orders.XamlView
 
         private void EventLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (EventLog.SelectedIndex == 1 && ListViewEvent.Items.Count == 0)
+            if (EventLog.SelectedIndex == 0 && ListViewEvent.Items.Count == 0)
             {
                 GetEventsByAdmin();
             }

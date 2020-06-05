@@ -12,6 +12,128 @@
     <Grid Background="White">
 
         <dragablz:TabablzControl FixedHeaderCount="3"  x:Name="EventLog"  SelectionChanged="EventLog_SelectionChanged">
+       
+            <TabItem >
+                <TabItem.Header>
+                    <TextBlock Text="Мероприятия" Foreground="White" FontSize="16" />
+                </TabItem.Header>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="40" Height="{Binding ElementName=Title, Path=Height}" />
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Выберите диапазон мероприятий :" FontFamily="Segoe UI Light" Margin="20 10 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
+                        <DatePicker x:Name="EventsDateStart" Grid.Column="1" Margin="10 0 0 0" FontSize="18"  FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                            <DatePicker.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                        <DatePicker x:Name="EventsDateEnd" Grid.Column="2" Margin="10 0 10 0" FontSize="18" FontFamily="Segoe UI Light"    SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                            <DatePicker.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="MinHeight" Value="35"  />
+                                    <Setter Property="MinWidth" Value="35" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                        <Button Grid.Column="3" Content="Вывести" FontSize="16" x:Name="EventOutput"  Margin="10" Click="EventOutput_Click"/>
+                    </Grid>
+                    <ListBox Grid.Row="1" x:Name="ListViewEvent"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Webinars}" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderThickness" Value="2" />
+                                            <Setter Property="BorderBrush" Value="Transparent" />
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                 Value="True">
+                                                    <Setter Property="BorderBrush" Value="#FF3F51B5" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <materialDesign:Card UniformCornerRadius="10">
+                                        <Grid Margin="15 5"  Background="Transparent" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"/>
+                                                <RowDefinition Height="1*"/>
+                                                <RowDefinition Height="1*"/>
+                                                <RowDefinition Height="1*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="9*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                            <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
+                                            <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 -5" Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Path=IsCanceled}" FontSize="15" Foreground="Red" Width="0"  x:Name="StatusEvent"/>
+
+                                                <TextBlock Text="Отменено" Foreground="Red" FontSize="15">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=StatusEvent, Path=Text}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0">
+                                                <TextBlock Text="Дата проведения:" HorizontalAlignment="Right" FontSize="15"/>
+                                                <TextBlock  Text="{Binding Path=DateStart, StringFormat='{}{0:d}', ConverterCulture='ru'}" HorizontalAlignment="Right" FontSize="15"  FontWeight="Bold"/>
+                                                <TextBlock Text="Время проведения:" FontSize="15" HorizontalAlignment="Right" />
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <TextBlock Text="c " FontSize="15"/>
+                                                    <TextBlock Text="{Binding Path=DateStart, StringFormat='{}{0:t}', ConverterCulture='ru'}" FontSize="15"/>
+                                                    <TextBlock Text="  по " FontSize="15" />
+                                                    <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:t}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2" FontSize="15" />
+                                                </StackPanel>
+                                            </StackPanel>
+
+
+                                            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0 5">
+                                                <TextBlock Text="Место проведения : " FontSize="15"/>
+                                                <TextBlock Text="{Binding Path=Place}" FontSize="15"/>
+                                            </StackPanel>
+
+
+                                            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15 5 0">
+                                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                                                    <TextBlock Text="Отправлено: "   FontSize="15"/>
+                                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}"   FontSize="15" />
+                                                </StackPanel>
+                                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <TextBlock Text="Заявитель: "   FontSize="15"/>
+                                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2"  FontSize="15"  />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </materialDesign:Card>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
             <TabItem >
                 <TabItem.Header>
                     <TextBlock Text="Статистика заявок" Foreground="White" FontSize="16" />
@@ -30,7 +152,7 @@
                             <ColumnDefinition Width="240"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Выберите временной период и нажмите на категорию :" FontFamily="Segoe UI Light" Margin="20 0 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
-                        
+
                         <TextBlock Text="c: " Grid.Column="1" FontFamily="Segoe UI Light"  VerticalAlignment="Center" FontSize="22" Margin="0 5 0 0"/>
                         <DatePicker Grid.Column="1" x:Name="dateStart" Margin="10 0 5 5"  Height="auto" FontSize="18" FontFamily="Segoe UI Light" Width="180"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
                             <DatePicker.Resources>
@@ -418,136 +540,6 @@
                                     </StackPanel>
                                 </Border>
 
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-
-
-                    
-                    
-                    
-                    
-                    
-                    
-                </Grid>
-            </TabItem>
-            <TabItem >
-                <TabItem.Header>
-                    <TextBlock Text="Мероприятия" Foreground="White" FontSize="16" />
-                </TabItem.Header>
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition MinHeight="40" Height="{Binding ElementName=Title, Path=Height}" />
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="120"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Выберите диапазон мероприятий :" FontFamily="Segoe UI Light" Margin="20 10 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
-                        <DatePicker x:Name="EventsDateStart" Grid.Column="1" Margin="10 0 0 0" FontSize="18"  FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru">
-                            <DatePicker.Resources>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="MinHeight" Value="35"  />
-                                    <Setter Property="MinWidth" Value="35" />
-                                </Style>
-                            </DatePicker.Resources>
-                        </DatePicker>
-                        <DatePicker x:Name="EventsDateEnd" Grid.Column="2" Margin="10 0 10 0" FontSize="18" FontFamily="Segoe UI Light"    SelectedDateFormat="Long" Background="Indigo" Language="ru">
-                            <DatePicker.Resources>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="MinHeight" Value="35"  />
-                                    <Setter Property="MinWidth" Value="35" />
-                                </Style>
-                            </DatePicker.Resources>
-                        </DatePicker>
-                        <Button Grid.Column="3" Content="Вывести" FontSize="16" x:Name="EventOutput"  Margin="10" Click="EventOutput_Click"/>
-                    </Grid>
-                    <ListBox Grid.Row="1" x:Name="ListViewEvent"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Webinars}" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border>
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="BorderThickness" Value="2" />
-                                            <Setter Property="BorderBrush" Value="Transparent" />
-                                            <Setter Property="CornerRadius" Value="10"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
-                                                 Value="True">
-                                                    <Setter Property="BorderBrush" Value="#FF3F51B5" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                    <materialDesign:Card UniformCornerRadius="10">
-                                        <Grid Margin="15 5"  Background="Transparent" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="1*"/>
-                                                <RowDefinition Height="1*"/>
-                                                <RowDefinition Height="1*"/>
-                                                <RowDefinition Height="1*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="9*"/>
-                                                <ColumnDefinition Width="3*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
-                                            <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
-                                            <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 -5" Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Path=IsCanceled}" FontSize="15" Foreground="Red" Width="0"  x:Name="StatusEvent"/>
-
-                                                <TextBlock Text="Отменено" Foreground="Red" FontSize="15">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=StatusEvent, Path=Text}" Value="False">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0">
-                                                <TextBlock Text="Дата проведения:" HorizontalAlignment="Right" FontSize="15"/>
-                                                <TextBlock  Text="{Binding Path=DateStart, StringFormat='{}{0:d}', ConverterCulture='ru'}" HorizontalAlignment="Right" FontSize="15"  FontWeight="Bold"/>
-                                                <TextBlock Text="Время проведения:" FontSize="15" HorizontalAlignment="Right" />
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                    <TextBlock Text="c " FontSize="15"/>
-                                                    <TextBlock Text="{Binding Path=DateStart, StringFormat='{}{0:t}', ConverterCulture='ru'}" FontSize="15"/>
-                                                    <TextBlock Text="  по " FontSize="15" />
-                                                    <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:t}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2" FontSize="15" />
-                                                </StackPanel>
-                                            </StackPanel>
-
-
-                                            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0 5">
-                                                <TextBlock Text="Место проведения : " FontSize="15"/>
-                                                <TextBlock Text="{Binding Path=Place}" FontSize="15"/>
-                                            </StackPanel>
-
-
-                                            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15 5 0">
-                                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
-                                                    <TextBlock Text="Отправлено: "   FontSize="15"/>
-                                                    <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:f}', ConverterCulture='ru'}"   FontSize="15" />
-                                                </StackPanel>
-                                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
-                                                    <TextBlock Text="Заявитель: "   FontSize="15"/>
-                                                    <TextBlock Text="{Binding Path=UserName}" Grid.Row="1" Grid.Column="2"  FontSize="15"  />
-                                                </StackPanel>
-                                            </Grid>
-                                        </Grid>
-                                    </materialDesign:Card>
-                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
