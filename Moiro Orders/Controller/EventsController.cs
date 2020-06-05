@@ -63,5 +63,18 @@ namespace Moiro_Orders.Controller
                 $"api/EventsAPI/{id}");
             return response.StatusCode;
         }
+
+        public async Task<List<Event>> GetEventsForStatisticAsync(DateTime tmpDateStart, DateTime tmpDateEnd)
+        {
+            string dateStart = tmpDateStart.ToString();
+            string dateEnd = tmpDateEnd.ToString();
+            HttpResponseMessage response = await PublicResources.client.GetAsync($"api/EventsAPI?dateStart={dateStart}&dateEnd={dateEnd}");
+            List<Event> events = null;
+            if (response.IsSuccessStatusCode)
+            {
+                events = await response.Content.ReadAsAsync<List<Event>>();
+            }
+            return events;
+        }
     }
 }

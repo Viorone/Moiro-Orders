@@ -26,12 +26,13 @@ namespace Moiro_Orders.Roles
             var events = await eventsController.GetAllEventsAsync(count, id);
             return events;
         }
-        //public async Task<List<Event>> GetEventsListOfDate(int userId, DateTime date)
-        //{
-        //    EventsController eventsController = new EventsController();
-        //    var events = await eventsController.GetEventsListOfDateAsync(userId, date);
-        //    return events;
-        //}
+
+        public async Task<List<Event>> GetEventsForStatistic(DateTime tmpDateStart, DateTime tmpDateEnd)
+        {
+            EventsController eventsController = new EventsController();
+            var events = await eventsController.GetEventsForStatisticAsync(tmpDateStart, tmpDateEnd);
+            return events;
+        }
 
         public async Task<List<Event>> GetAllEventsToday(DateTime date)
         {
@@ -232,6 +233,8 @@ namespace Moiro_Orders.Roles
             var webinars = await webinarsController.GetAllWebinarsTodayAsync(date);
             return webinars;
         }
+
+        
 
         #endregion
     }

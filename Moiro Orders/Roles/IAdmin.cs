@@ -10,7 +10,8 @@ namespace Moiro_Orders.Roles
     {
         Task<List<Event>> GetEventsList(int count, int id);  //Get Events list by current user
         Task<List<Event>> GetAllEventsToday(DateTime date);
-        Task<HttpStatusCode> EditEvent(Event @event); //Change Event Status       
+        Task<HttpStatusCode> EditEvent(Event @event); //Change Event Status   
+        Task<List<Event>> GetEventsForStatistic(DateTime tmpDateStart, DateTime tmpDateEnd); //Get Events for Admin Statistic
 
         Task<HttpStatusCode> EditWebinar(Webinar webinar); 
         Task<List<Webinar>> GetAllWebinarsToday(DateTime date);
