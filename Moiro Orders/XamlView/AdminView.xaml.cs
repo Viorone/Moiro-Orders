@@ -60,11 +60,11 @@ namespace Moiro_Orders.XamlView
         }
 
         #region Для вкладки "Мероприятия"
-        private void EventOutput_Click(object sender, RoutedEventArgs e)
+        private void EventsDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             GetEventsByAdmin();
         }
-
+      
         private void EventLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (EventLog.SelectedIndex == 0 && ListViewEvent.Items.Count == 0)
@@ -220,10 +220,11 @@ namespace Moiro_Orders.XamlView
             events = await admin.GetEventsForStatistic(tmpDateStart, tmpDateEnd);
             await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
+
+
+
         #endregion
 
-        
-
-       
+      
     }
 }

@@ -80,7 +80,6 @@
                         Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.33" Value="{x:Static Visibility.Hidden}"/>
             </ObjectAnimationUsingKeyFrames>
-
         </Storyboard>
     </UserControl.Resources>
 
