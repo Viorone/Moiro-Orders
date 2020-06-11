@@ -79,7 +79,7 @@
                                                 <ColumnDefinition Width="3*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" />
+                                            <TextBox FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" IsReadOnly="True" BorderThickness="0"/>
                                             <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
                                             <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 -5" Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Path=IsCanceled}" FontSize="15" Foreground="Red" Width="0"  x:Name="StatusEvent"/>
