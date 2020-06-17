@@ -136,13 +136,11 @@
                                                 <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:t}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2" FontSize="15" />
                                             </StackPanel>
                                         </StackPanel>
-                                        
-                                        
-                                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0 5">
-                                            <TextBlock Text="Место проведения : " FontSize="15"/>
-                                            <TextBlock Text="{Binding Path=Place}" FontSize="15"/>
-                                        </StackPanel>
 
+                                        <WrapPanel Grid.Row="2" Grid.Column="0"  Margin="0 5" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                            <TextBlock Text="Место проведения : " FontSize="15" />
+                                            <TextBlock Text="{Binding Path=Place}" FontSize="15" TextWrapping="Wrap"  />
+                                        </WrapPanel>
 
                                         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15 5 0">
                                             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">

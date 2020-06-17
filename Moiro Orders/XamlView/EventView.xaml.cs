@@ -2,6 +2,7 @@
 using Moiro_Orders.Roles;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -204,6 +205,7 @@ namespace Moiro_Orders.XamlView
             DateTime selectDate = datePick.SelectedDate.Value.Date;
             IAdmin admin = new CurrentUser();
             var events = await admin.GetAllEventsToday(selectDate);
+            events = events.OrderBy(a => a.DateStart).ToList();
             ListEvents.ItemsSource = events;
         }
 

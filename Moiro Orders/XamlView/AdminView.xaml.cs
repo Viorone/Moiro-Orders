@@ -212,6 +212,7 @@ namespace Moiro_Orders.XamlView
             };
             Action action1 = () =>
             {
+                events = events.OrderBy(a => a.DateStart).ToList();
                 ListViewEvent.ItemsSource = events;
             };
             await dateStart.Dispatcher.BeginInvoke(action);
