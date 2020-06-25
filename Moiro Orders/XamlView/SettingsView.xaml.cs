@@ -1,6 +1,7 @@
 ﻿using Moiro_Orders.Models;
 using Moiro_Orders.Roles;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -94,7 +95,14 @@ namespace Moiro_Orders.XamlView
             }
         }
 
+        async Task GetAdmins()
+        {
+            List<User> users = null;
+            IAdmin admin = new CurrentUser();
+            users = await admin.GetAdminsList();
 
+            // Сюда добавть DropDownList
+        }
         #endregion
 
     }

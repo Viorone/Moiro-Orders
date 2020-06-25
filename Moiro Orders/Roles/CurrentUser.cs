@@ -177,6 +177,13 @@ namespace Moiro_Orders.Roles
             return users;
         }
 
+        public async Task<List<User>> GetAdminsList()
+        {
+            UsersController usersController = new UsersController();
+            var users = await usersController.GetAdminsListAsync();
+            return users;
+        }
+
         public async Task<HttpStatusCode> UpdateUsersDb(User user)
         {
             UsersController usersController = new UsersController();

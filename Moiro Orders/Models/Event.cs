@@ -15,5 +15,7 @@ namespace Moiro_Orders.Models
         public bool IsCanceled { get; set; } = false;
         public int UserId { get; set; } = 0;
         public string UserName { get; set; }
+        public int? AdminId { get; set; }
+        public string AdminName { get; set; }
     }
 }
