@@ -16,6 +16,7 @@ namespace Moiro_Orders.XamlView
     {
         public AdminView()
         {
+            GetAdmins().GetAwaiter();
             InitializeComponent();
             for (int i = 1; i < 6; ++i)
             {
@@ -222,10 +223,23 @@ namespace Moiro_Orders.XamlView
             await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
 
+        async Task GetAdmins()
+        {
+            IEnumerable<User> users = null;
+            IAdmin admin = new CurrentUser();
+            users = await admin.GetAdminsList();
+            adminSelect.DisplayMemberPath = "FullName";
+            users = users.Where(a => a.Admin == true);
+            adminSelect.ItemsSource = users;
+        }
 
 
         #endregion
 
-      
+        private void ListViewEvent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            addingPanel.Visibility = Visibility.Visible;
+
+        }
     }
 }

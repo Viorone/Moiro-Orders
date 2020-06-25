@@ -95,14 +95,7 @@ namespace Moiro_Orders.XamlView
             }
         }
 
-        async Task GetAdmins()
-        {
-            List<User> users = null;
-            IAdmin admin = new CurrentUser();
-            users = await admin.GetAdminsList();
-
-            // Сюда добавть DropDownList
-        }
+        
         #endregion
 
     }

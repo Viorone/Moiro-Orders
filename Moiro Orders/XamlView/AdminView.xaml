@@ -29,6 +29,10 @@
                             <ColumnDefinition Width="240"/>
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                         <TextBlock Text="Выберите диапазон мероприятий :" FontFamily="Segoe UI Light" Margin="20 10 0 0" VerticalAlignment="Top" FontSize="22" TextWrapping="Wrap" />
                         <DatePicker x:Name="EventsDateStart" Grid.Column="1" Margin="10 0 0 0" FontSize="18"  FontFamily="Segoe UI Light"  SelectedDateFormat="Long" Background="Indigo" Language="ru" SelectedDateChanged="EventsDate_SelectedDateChanged">
                             <DatePicker.Resources>
@@ -46,10 +50,13 @@
                                 </Style>
                             </DatePicker.Resources>
                         </DatePicker>
-                     
+                        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" x:Name="addingPanel" Visibility="Collapsed">
+                            <TextBlock  Text="Назначенный сопровождающий:" FontFamily="Segoe UI Light" Margin="20 10 0 0" FontSize="18"/>
+                            <ComboBox x:Name="adminSelect"  MinWidth="200" VerticalAlignment="Bottom" Margin="10 5 0 0" FontSize="16"/>
+                        </StackPanel>
                     </Grid>
                     <ListBox Grid.Row="1" x:Name="ListViewEvent"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Webinars}" >
+                     HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Webinars}"  SelectionChanged="ListViewEvent_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Border>
@@ -107,6 +114,7 @@
                                                     <TextBlock Text="  по " FontSize="15" />
                                                     <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:t}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2" FontSize="15" />
                                                 </StackPanel>
+                                                <TextBlock Text="{Binding Path=AdminName}"/>
                                             </StackPanel>
 
                                             <WrapPanel Grid.Row="2" Grid.Column="0"  Margin="0 5" HorizontalAlignment="Stretch" Orientation="Horizontal">
