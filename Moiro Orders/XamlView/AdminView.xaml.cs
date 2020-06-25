@@ -229,7 +229,6 @@ namespace Moiro_Orders.XamlView
             IAdmin admin = new CurrentUser();
             users = await admin.GetAdminsList();
             adminSelect.DisplayMemberPath = "FullName";
-            users = users.Where(a => a.Admin == true);
             adminSelect.ItemsSource = users;
         }
 
@@ -240,6 +239,24 @@ namespace Moiro_Orders.XamlView
         {
             addingPanel.Visibility = Visibility.Visible;
 
+        }
+
+        private void AdminSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Event tmpEvent = (Event)ListViewEvent.SelectedItem;
+
+            if (tmpEvent.AdminName != null)
+            {
+                //допилить бы выборку по ид админа
+                
+                //adminSelect.Items.IndexOf((User)a => ((User)a).Id == tmpEvent.AdminId);
+                //adminSelect.SelectedItem = 1;
+            }
+            tmpEvent.AdminId = ((User)adminSelect.SelectedItem).Id;
+            IAdmin admin = new CurrentUser();
+            admin.EditEvent(tmpEvent);
+            addingPanel.Visibility = Visibility.Collapsed;
+            ListViewEvent.SelectedItem = -1;
         }
     }
 }

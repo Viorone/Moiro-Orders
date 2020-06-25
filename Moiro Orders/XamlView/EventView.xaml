@@ -135,6 +135,18 @@
                                                 <TextBlock Text="  по " FontSize="15" />
                                                 <TextBlock Text="{Binding Path=DateEnd, StringFormat='{}{0:t}', ConverterCulture='ru'}" Grid.Row="5" Grid.Column="2" FontSize="15" />
                                             </StackPanel>
+                                            <TextBlock Text="Тех. специалист:" Margin="0 10 0 0" FontSize="14" HorizontalAlignment="Right">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=AdminName, Path=Text}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Path=AdminName}" TextWrapping="Wrap" FontSize="14"  FontStyle="Italic" x:Name="AdminName"/>
                                         </StackPanel>
 
                                         <WrapPanel Grid.Row="2" Grid.Column="0"  Margin="0 5" HorizontalAlignment="Stretch" Orientation="Horizontal">
