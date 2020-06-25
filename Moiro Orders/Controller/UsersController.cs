@@ -35,6 +35,19 @@ namespace Moiro_Orders.Controller
             return users;
         }
 
+        public async Task<List<User>> GetAdminsListAsync()
+        {
+            bool admin = true;
+            HttpResponseMessage response = await PublicResources.client.GetAsync(
+                $"api/UsersAPI?admin={admin}");
+            List<User> users = null;
+            if (response.IsSuccessStatusCode)
+            {
+                users = await response.Content.ReadAsAsync<List<User>>();
+            }
+            return users;
+        }
+
         public async Task<HttpStatusCode> UpdateUsersDbAsync(User user)
         {
 

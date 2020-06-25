@@ -32,6 +32,7 @@ namespace Moiro_Orders.Roles
         List<User> GetNewADUsersList();
         Task<List<User>> GetAllUserName();
         Task<HttpStatusCode> UpdateUsersDb(User user);
+        Task<List<User>> GetAdminsList();
 
         Task<List<Status>> GetStatuses();
     }
