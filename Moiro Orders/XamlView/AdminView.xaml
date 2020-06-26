@@ -52,7 +52,7 @@
                         </DatePicker>
                         <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" x:Name="addingPanel" Visibility="Collapsed">
                             <TextBlock  Text="Назначенный сопровождающий:" FontFamily="Segoe UI Light" Margin="20 10 0 0" FontSize="18"/>
-                            <ComboBox x:Name="adminSelect"  MinWidth="200" VerticalAlignment="Bottom" Margin="10 5 0 0" FontSize="16" SelectionChanged="AdminSelect_SelectionChanged"/>
+                            <ComboBox x:Name="adminSelect"  MinWidth="200" VerticalAlignment="Bottom" Margin="10 5 0 0" FontSize="16" SelectionChanged="AdminSelect_SelectionChanged" materialDesign:HintAssist.Hint="Выберите сопровождающего" />
                         </StackPanel>
                     </Grid>
                     <ListBox Grid.Row="1" x:Name="ListViewEvent"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
@@ -125,7 +125,7 @@
                                                         </Style>
                                                     </TextBlock.Style>
                                                 </TextBlock>
-                                                <TextBlock Text="{Binding Path=AdminName}" TextWrapping="Wrap" FontSize="14"  FontStyle="Italic"/>
+                                                <TextBlock Text="{Binding Path=AdminName}" TextWrapping="Wrap" FontSize="14"  FontStyle="Italic" x:Name="AdminName"/>
                                             </StackPanel>
 
                                             <WrapPanel Grid.Row="2" Grid.Column="0"  Margin="0 5" HorizontalAlignment="Stretch" Orientation="Horizontal">

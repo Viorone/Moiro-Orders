@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Moiro_Orders.Models;
 using System;
+using System.Net.Http;
 
 namespace Moiro_Orders.XamlView
 {
@@ -195,8 +196,6 @@ namespace Moiro_Orders.XamlView
             await dateStart.Dispatcher.BeginInvoke(action);
 
             IAdmin admin = new CurrentUser();
-            //реализовать в контроллере событие на чтение мероприятий по двум датам
-            //events = await admin.GetAllEventsToday(tmpDateEnd);
             await ListGettingOrders.Dispatcher.BeginInvoke(action1);
         }
 
@@ -231,32 +230,37 @@ namespace Moiro_Orders.XamlView
             adminSelect.DisplayMemberPath = "FullName";
             adminSelect.ItemsSource = users;
         }
-
+        async Task SetAdminToEvent()
+        {
+            Event tmpEvent = (Event)ListViewEvent.SelectedItem;
+            tmpEvent.AdminId = ((User)adminSelect.SelectedItem).Id;
+            IAdmin admin = new CurrentUser();
+            var response = await admin.EditEvent(tmpEvent);
+            addingPanel.Visibility = Visibility.Collapsed;
+            ListViewEvent.SelectedItem = -1;
+            adminSelect.SelectedIndex = -1;
+            if (response == System.Net.HttpStatusCode.NoContent)
+            {
+                GetEventsByAdmin();
+            }
+        }
 
         #endregion
 
         private void ListViewEvent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ListViewEvent.SelectedIndex == -1) { return; }
             addingPanel.Visibility = Visibility.Visible;
-
         }
 
         private void AdminSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Event tmpEvent = (Event)ListViewEvent.SelectedItem;
-
-            if (tmpEvent.AdminName != null)
+            if (adminSelect.SelectedIndex == -1)
             {
-                //допилить бы выборку по ид админа
-                
-                //adminSelect.Items.IndexOf((User)a => ((User)a).Id == tmpEvent.AdminId);
-                //adminSelect.SelectedItem = 1;
+                return;
             }
-            tmpEvent.AdminId = ((User)adminSelect.SelectedItem).Id;
-            IAdmin admin = new CurrentUser();
-            admin.EditEvent(tmpEvent);
-            addingPanel.Visibility = Visibility.Collapsed;
-            ListViewEvent.SelectedItem = -1;
+            SetAdminToEvent().GetAwaiter();
+
         }
     }
 }
