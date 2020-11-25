@@ -96,6 +96,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
+                                <!-- Модель карточки для отображения -->
                                 <materialDesign:Card UniformCornerRadius="10">
                                     <Grid Margin="15 5"  Background="Transparent" >
                                         <Grid.RowDefinitions>
@@ -196,10 +197,10 @@
                 <ScrollViewer Margin="0 0 0 50">
                     <StackPanel Margin="10">
                         <Label Content="Название мероприятия" FontSize="22" FontFamily="Segoe UI Light"/>
-                        <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light" MaxLength="128"  Margin="5 0 5 15"/>
+                        <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название мероприятия или другого события" FontSize="18" FontFamily="Segoe UI Light" MaxLength="256"  Margin="5 0 5 15"/>
 
                         <Label Content="Место проведения" FontSize="22" FontFamily="Segoe UI Light"/>
-                        <TextBox x:Name="PlaceEvent" materialDesign:HintAssist.Hint="Город, сторонняя организация, аудитория" FontSize="18" FontFamily="Segoe UI Light" MaxLength="256"  Margin="5,0,5,15" />
+                        <TextBox x:Name="PlaceEvent" materialDesign:HintAssist.Hint="Город, сторонняя организация, аудитория" FontSize="18" FontFamily="Segoe UI Light" MaxLength="512"  Margin="5,0,5,15" />
                         <Label Content="Дополнительное описание" FontSize="22" FontFamily="Segoe UI Light"/>
                         <TextBox x:Name="DescriptionEvent" materialDesign:HintAssist.Hint="Необходимое оборудование, помощь от тех. персонала и прочее..." FontSize="18" FontFamily="Segoe UI Light" MaxLength="256" Margin="5 0 5 15"/>
                         <Grid>

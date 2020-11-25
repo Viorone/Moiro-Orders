@@ -7,12 +7,21 @@
       xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
       mc:Ignorable="d" >
     <UserControl.Resources>
-
+        <Style x:Key="Font">
+            <Setter Property="TextBlock.FontSize" Value="20" />
+            <Setter Property="TextBlock.FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+        </Style>
+        <!-- пока не применяется -->
+        <Style x:Key="FontBox">
+            <Setter Property="TextBlock.FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="TextBlock.FontSize" Value="20"/>
+        </Style>
     </UserControl.Resources>
     <Grid Background="White">
 
         <dragablz:TabablzControl FixedHeaderCount="3"  x:Name="EventLog"  SelectionChanged="EventLog_SelectionChanged">
-       
+         <!-- Мероприятия -->
             <TabItem >
                 <TabItem.Header>
                     <TextBlock Text="Мероприятия" Foreground="White" FontSize="16" />
@@ -87,7 +96,7 @@
                                             </Grid.ColumnDefinitions>
                                         
                                             <TextBox FontSize="22" Text="{Binding Path=NameEvent}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" IsReadOnly="True" BorderThickness="0"/>
-                                            <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" />
+                                            <TextBox TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Description}" Grid.Row="1" Grid.Column="0" IsReadOnly="True"  BorderThickness="0"/>
                                             <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="5 -5" Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Path=IsCanceled}" FontSize="15" Foreground="Red" Width="0"  x:Name="StatusEvent"/>
 
@@ -151,6 +160,7 @@
                     </ListBox>
                 </Grid>
             </TabItem>
+            <!-- Статистика  -->
             <TabItem >
                 <TabItem.Header>
                     <TextBlock Text="Статистика заявок" Foreground="White" FontSize="16" />
@@ -562,13 +572,93 @@
                     </ListBox>
                 </Grid>
             </TabItem>
+            <!-- Отчёты  --> 
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Отчёты " Foreground="White" FontSize="16"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                  <!-- Заявки -->
+                    <TextBlock Grid.ColumnSpan="4" Text="Отчёт по заявкам" Style="{StaticResource Font}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+                    <TextBlock Grid.Row="1" Text="Выберите дату начала" Grid.Column="0" HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Center" Style="{StaticResource Font}"/>
+                    <DatePicker Grid.Row="1" Grid.Column="1" Margin="10" FontFamily="Segoe UI Light" FontSize="18" Name="dateStartReport" SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                        <DatePicker.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="MinHeight" Value="30"  />
+                                <Setter Property="MinWidth" Value="30" />
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                    <TextBlock Grid.Row="1" Text="и дату окончания" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Font}"/>
+                    <DatePicker Grid.Row="1" Grid.Column="3" Margin="10" FontFamily="Segoe UI Light" FontSize="18" Name="dateEndReport" SelectedDateFormat="Long" Background="Indigo" Language="ru" >
+                        <DatePicker.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="MinHeight" Value="30"/>
+                                <Setter Property="MinWidth" Value="30"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                    <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3" >
+                        <TextBox Name="logText" Margin="10,0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontFamily="Segoe UI Light" IsReadOnly="True"/>
+                    </ScrollViewer>
+                    <Button Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Content="Сохранить на компьютере" Height="35" Name="SaveDocxFile" Click="SaveDocxFile_Click"/>
+              <!-- Мероприятия -->
+                    <TextBlock Grid.ColumnSpan="4" Grid.Row="4" Text="Отчёт по мероприятиям" Style="{StaticResource Font}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+                    <TextBlock Grid.Row="5" Text="Выберите дату начала" Grid.Column="0" HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Center" Style="{StaticResource Font}"/>
+                    <DatePicker Grid.Row="5" Grid.Column="1" Margin="10" FontFamily="Segoe UI Light" FontSize="18" Name="dateStartReportEvent" SelectedDateFormat="Long" Background="Indigo" Language="ru">
+                        <DatePicker.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="MinHeight" Value="30"  />
+                                <Setter Property="MinWidth" Value="30" />
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                    <TextBlock Grid.Row="5" Text="и дату окончания" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Font}"/>
+                    <DatePicker Grid.Row="5" Grid.Column="3" Margin="10" FontFamily="Segoe UI Light" FontSize="18" Name="dateEndReportEvent" SelectedDateFormat="Long" Background="Indigo" Language="ru" >
+                        <DatePicker.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="MinHeight" Value="30"/>
+                                <Setter Property="MinWidth" Value="30"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                    <CheckBox x:Name="cancelEvent" Grid.Row="6" FontFamily="Segoe UI Light" Margin="10,0"  Grid.ColumnSpan="4" >
+                        <TextBlock Text="Учитывать отменённые мероприятия" Margin="0,-3,0,0" FontSize="12"/>
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.7" ScaleY="1.7" />
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <ScrollViewer Grid.Row="7" Grid.ColumnSpan="3" >
+                        <TextBox Name="logTextEvent" Margin="10,0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontFamily="Segoe UI Light" IsReadOnly="True"/>
+                    </ScrollViewer>
+                    <Button Grid.Row="7" Grid.Column="3" HorizontalAlignment="Center" Content="Сохранить на компьютере" Height="35" Name="SaveDocxFileEvent" Click="SaveDocxFileEvent_Click"/>
+
+                </Grid>
+            </TabItem>
+            <!-- Власть админа -->
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Власть Админа" Foreground="White" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
                     <ListBox x:Name="logList"/>
-                    <TextBlock Text="Если вы не знаете что делает кнопка внизу - то просто НЕ НАЖИМАЙТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="22" TextWrapping="Wrap"/>
+                    <TextBlock Text="Если вы не знаете что делает кнопка внизу - то просто НЕ НАЖИМАЙТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource Font}"/>
                     <Button   Content="Гиганстская кнопка" Margin="10" Click="Button_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160" />
                     <Button   Content="Подтверждение заявок за предыдущий месяц" Margin="10" Click="CompletePastOrders_Click" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Left"  x:Name="CompletePastOrders" Visibility="Hidden"/>
                 </Grid>

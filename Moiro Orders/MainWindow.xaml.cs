@@ -239,6 +239,8 @@ namespace Moiro_Orders
     public static class PublicResources
     {
         internal static User Im = new User();
+
+      
         internal static int sortCount = -1;
         internal static string version = "0.45 beta";
         internal static CancellationTokenSource ordersCts = new CancellationTokenSource();
@@ -246,6 +248,7 @@ namespace Moiro_Orders
 
         public static HttpClient client = new HttpClient()
         {
+            
             //BaseAddress = new Uri("http://localhost:55544/")
             BaseAddress = new Uri("http://10.10.0.34/")
         };
@@ -253,6 +256,7 @@ namespace Moiro_Orders
 
         static PublicResources()
         {
+
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));

@@ -88,7 +88,7 @@ namespace Moiro_Orders.XamlView
             var nowTime = DateTime.Now;
             var changeTime = nowTime - selectedEvent.Date;
             DateTime time = Convert.ToDateTime("23:59:59");
-            if (selectedEvent.UserId == PublicResources.Im.Id && changeTime < time.TimeOfDay && !selectedEvent.IsCanceled)
+            if (selectedEvent.UserId == PublicResources.Im.Id && changeTime < time.TimeOfDay && !selectedEvent.IsCanceled || PublicResources.Im.Admin )
             {
                 ChangeEvent.Visibility = Visibility.Visible;
                 CancelEvent.Visibility = Visibility.Visible;
